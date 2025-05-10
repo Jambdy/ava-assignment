@@ -1,2 +1,2 @@
 # ava-assignment
-Flutter application for Ava take home assignment
+Flutter application for Ava take home assignment.
