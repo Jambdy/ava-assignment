@@ -1,4 +1,5 @@
 import 'package:ava_assignment/router.dart';
+import 'package:ava_assignment/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,6 +16,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Ava Assignment',
+      theme: AppTheme.lightTheme,
       routerConfig: _appRouter.config(),
     );
   }
