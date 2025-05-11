@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../view_models/home_viewmodel.dart';
+import 'credit_factors_card.dart';
 import 'credit_history_card.dart';
 import 'credit_score_card.dart';
 
@@ -75,6 +76,19 @@ class HomeScreen extends ConsumerWidget {
                           nextUpdate: data.creditScore.nextUpdate,
                           creditAgency: data.creditScore.creditAgency,
                           creditScoreGraphData: data.creditScoreGraphData,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 40.0,
+                            bottom: 20.0,
+                          ),
+                          child: Text(
+                            'Credit Factors',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        CreditFactorsCard(
+                          creditFactorsDisplay: data.creditFactorsDisplay,
                         ),
                       ],
                     ),

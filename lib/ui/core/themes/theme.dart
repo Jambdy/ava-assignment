@@ -12,6 +12,10 @@ abstract final class AppTheme {
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
   );
+  static TextStyle interSmallBold = GoogleFonts.inter(
+    fontSize: 11.0,
+    fontWeight: FontWeight.w700,
+  );
   static TextStyle graphSmall = GoogleFonts.inter(
     fontSize: 14.0,
     fontWeight: FontWeight.w600,
@@ -56,7 +60,8 @@ abstract final class AppTheme {
     brightness: Brightness.light,
     colorScheme: AppColors.lightColorScheme,
     textTheme: _textTheme,
-    fontFamily: 'At Hauss',
+    // TODO: get 'At Hauss' font from UX
+    fontFamily: 'Liter',
     scaffoldBackgroundColor: AppColors.manilla,
   );
 }

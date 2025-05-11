@@ -1,9 +1,11 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../data/repositories/credit_score_repository.dart';
 import '../../../models/credit_score.dart';
+import '../../core/themes/color.dart';
 import '../state/home_state.dart';
 
 part 'home_viewmodel.g.dart';
@@ -18,10 +20,14 @@ class HomeViewModel extends _$HomeViewModel {
     final creditScoreGraphData = _generateCreditScoreGraphData(
       creditScore.scoreHistory,
     );
+    final creditFactorDisplays = _generateCreditFactorDisplays(
+      creditScore.creditFactors,
+    );
     return HomeState(
       creditScore: creditScore,
       creditScoreStatus: creditScoreStatus,
       creditScoreGraphData: creditScoreGraphData,
+      creditFactorsDisplay: creditFactorDisplays,
     );
   }
 
@@ -31,6 +37,58 @@ class HomeViewModel extends _$HomeViewModel {
     if (score >= 600) return 'Good';
     if (score >= 500) return 'Fair';
     return 'Poor';
+  }
+
+  List<CreditFactorDisplay> _generateCreditFactorDisplays(
+    List<CreditFactor> creditFactors,
+  ) {
+    return creditFactors.map((factor) {
+      Color displayColor;
+      Color textColor;
+      String impactText;
+      switch (factor.impact) {
+        case Impact.high:
+          displayColor = AppColors.textGreen;
+          textColor = AppColors.textWhite;
+          impactText = 'High Impact';
+          break;
+        case Impact.medium:
+          displayColor = AppColors.avaSecondary;
+          textColor = AppColors.textWhite;
+          impactText = 'Medium Impact';
+          break;
+        case Impact.low:
+          displayColor = AppColors.avaSecondaryLight;
+          textColor = AppColors.textGreen;
+          impactText = 'Low Impact';
+          break;
+      }
+      String displayValue;
+      switch (factor.type) {
+        case Type.number:
+          displayValue = factor.value.toString();
+          break;
+        case Type.percentage:
+          displayValue = '${factor.value}%';
+          break;
+        case Type.months:
+          var y = factor.value ~/ 12;
+          var m = factor.value % 12;
+          displayValue = '$y yrs $m';
+          break;
+      }
+
+      return CreditFactorDisplay(
+        name: factor.name,
+        value: factor.value,
+        impact: factor.impact,
+        type: factor.type,
+        displayValue: displayValue,
+        displayColor: displayColor,
+        textColor: textColor,
+        impactText: impactText,
+      );
+    }).toList();
   }
 
   CreditScoreGraphData _generateCreditScoreGraphData(

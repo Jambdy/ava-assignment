@@ -28,13 +28,17 @@ class ScoreEntry {
 class CreditFactor {
   final String name;
   final int value;
-  final String displayValue;
-  final String impact;
+  final Impact impact;
+  final Type type;
 
   CreditFactor({
     required this.name,
     required this.value,
-    required this.displayValue,
     required this.impact,
+    required this.type,
   });
 }
+
+enum Impact { high, medium, low }
+
+enum Type { number, percentage, months }
