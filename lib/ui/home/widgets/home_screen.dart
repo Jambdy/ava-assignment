@@ -6,6 +6,7 @@ import '../../core/themes/theme.dart';
 import '../../core/widgets/ava_title.dart';
 import '../view_models/home_viewmodel.dart';
 import 'account_details_card.dart';
+import 'credit_card_accounts_card.dart';
 import 'credit_card_balance_card.dart';
 import 'credit_factors_card.dart';
 import 'credit_history_card.dart';
@@ -87,6 +88,14 @@ class HomeScreen extends ConsumerWidget {
                         CreditCardBalanceCard(
                           cCData: data.creditCardAccountsAggregate,
                         ),
+                        AvaTitle(title: 'Open credit card accounts'),
+                        CreditCardAccountsCard(
+                          cCAccounts:
+                              data
+                                  .creditCardAccountsAggregate
+                                  .creditCardAccountsDisplay,
+                        ),
+                        SizedBox(height: 34),
                       ],
                     ),
                   ),

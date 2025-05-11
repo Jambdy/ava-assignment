@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class AvaCard extends StatelessWidget {
   const AvaCard({
     super.key,
-    required this.height,
     required this.width,
+    this.height,
     this.outlined = true,
     this.borderRadius = 20,
     required this.child,
   });
 
-  final double height;
+  final double? height;
   final double width;
   final bool outlined;
   final Widget child;

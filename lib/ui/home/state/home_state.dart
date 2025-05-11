@@ -102,13 +102,19 @@ class CreditUtilizationGrade {
 }
 
 class CreditCardAccountDisplay extends CreditCardAccount {
-  String get formattedReportedDate =>
-      DateFormat('MMMM d, y').format(reportedDate);
+  final String formattedReportedDate;
+  final String balanceDisplay;
+  final String limitDisplay;
+  final int utilization;
 
   CreditCardAccountDisplay({
     required super.accountName,
     required super.reportedDate,
     required super.limit,
     required super.balance,
+    required this.formattedReportedDate,
+    required this.balanceDisplay,
+    required this.limitDisplay,
+    required this.utilization,
   });
 }

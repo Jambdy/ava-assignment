@@ -192,6 +192,16 @@ class HomeViewModel extends _$HomeViewModel {
                 reportedDate: account.reportedDate,
                 limit: account.limit,
                 balance: account.balance,
+                formattedReportedDate: DateFormat(
+                  'MMMM d, y',
+                ).format(account.reportedDate),
+                balanceDisplay: NumberFormat(
+                  '#,###',
+                ).format(account.balance.toInt()),
+                limitDisplay: NumberFormat(
+                  '#,###',
+                ).format(account.limit.toInt()),
+                utilization: (account.balance / account.limit * 100).toInt(),
               ),
             )
             .toList();
