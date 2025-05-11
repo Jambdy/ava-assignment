@@ -28,10 +28,7 @@ class CreditScoreStatus extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: Text(
-                'Credit Score',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+              child: Text('Credit Score', style: AppTheme.bodyEmphasis),
             ),
             AvaChip(text: '+${scoreChange}pts'),
           ],

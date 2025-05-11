@@ -8,7 +8,7 @@ class CreditScoreAnimation extends StatefulWidget {
   /// Diameter of the widget.
   final double size;
 
-  /// How many degrees the arc should sweep to (0 → 360).
+  /// Current credit score.
   final int creditScore;
 
   /// Text to display under counter
@@ -34,7 +34,6 @@ class AnimatedArcCountCircleState extends State<CreditScoreAnimation>
   late final AnimationController _ctrl;
   late final Animation<double> _angleAnim;
 
-  //TODO: add bottom text
   @override
   void initState() {
     super.initState();
@@ -97,9 +96,7 @@ class AnimatedArcCountCircleState extends State<CreditScoreAnimation>
                       padding: const EdgeInsets.only(top: 0.0),
                       child: Text(
                         widget.underText!,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium!.copyWith(fontSize: 8),
+                        style: AppTheme.smallEmphasis,
                       ),
                     ),
                 ],

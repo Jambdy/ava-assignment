@@ -40,9 +40,7 @@ class CreditFactorsCard extends StatelessWidget {
                           ),
                           Text(
                             factor.displayValue,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium?.copyWith(
+                            style: AppTheme.title.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
