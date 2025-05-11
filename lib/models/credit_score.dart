@@ -31,7 +31,6 @@ class CreditFactor {
   final String displayValue;
   final String impact;
 
-
   CreditFactor({
     required this.name,
     required this.value,

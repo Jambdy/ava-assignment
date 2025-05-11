@@ -22,7 +22,7 @@ abstract final class AppTheme {
     fontSize: 36.0,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimaryDark,
-    height: 1
+    height: 1,
   );
   static const TextStyle overlineEmphasis = TextStyle(
     fontSize: 12.0,

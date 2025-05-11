@@ -22,7 +22,7 @@ class CreditScoreAnimation extends StatefulWidget {
     this.size = 100,
     this.creditScore = 270,
     this.strokeWidth = 6,
-    this.underText
+    this.underText,
   });
 
   @override
@@ -38,11 +38,14 @@ class AnimatedArcCountCircleState extends State<CreditScoreAnimation>
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(vsync: this,
+    _ctrl = AnimationController(
+      vsync: this,
       duration: Duration(
-          milliseconds: (2000 * 850 / widget.creditScore).toInt()));
-      // Tween from 0 → creditScore
-      _angleAnim = Tween<double>(
+        milliseconds: (2000 * 850 / widget.creditScore).toInt(),
+      ),
+    );
+    // Tween from 0 → creditScore
+    _angleAnim = Tween<double>(
       begin: 0,
       end: widget.creditScore.toDouble(),
     ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.linear));
@@ -78,10 +81,7 @@ class AnimatedArcCountCircleState extends State<CreditScoreAnimation>
                 size: Size.square(widget.size),
                 painter: _ArcPainter(
                   sweepAngle: _angleAnim.value,
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .secondary,
+                  color: Theme.of(context).colorScheme.secondary,
                   strokeWidth: widget.strokeWidth,
                 ),
               ),
@@ -97,9 +97,9 @@ class AnimatedArcCountCircleState extends State<CreditScoreAnimation>
                       padding: const EdgeInsets.only(top: 0.0),
                       child: Text(
                         widget.underText!,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 8,
-                        ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium!.copyWith(fontSize: 8),
                       ),
                     ),
                 ],
@@ -127,11 +127,11 @@ class _ArcPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
     final paint =
-    Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
-      ..color = color
-      ..strokeCap = StrokeCap.round;
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = strokeWidth
+          ..color = color
+          ..strokeCap = StrokeCap.round;
 
     canvas.drawArc(rect, 3 * pi / 2, sweepAngle / 850 * pi * 2, false, paint);
   }
