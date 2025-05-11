@@ -6,8 +6,7 @@ import '../../models/credit_score.dart';
 part 'credit_score_repository.g.dart';
 
 @riverpod
-CreditScoreRepository creditScoreRepository(Ref ref) =>
-    CreditScoreRepository();
+CreditScoreRepository creditScoreRepository(Ref ref) => CreditScoreRepository();
 
 class CreditScoreRepository {
   Future<CreditScore> getCreditScore() async {
@@ -20,13 +19,25 @@ class CreditScoreRepository {
       scoreHistory: [
         ScoreEntry(
           score: 650,
-          date: DateTime.now().subtract(const Duration(days: 60)),
+          date: DateTime.now().subtract(const Duration(days: 10)),
         ),
         ScoreEntry(
           score: 710,
-          date: DateTime.now().subtract(const Duration(days: 30)),
+          date: DateTime.now().subtract(const Duration(days: 9)),
         ),
-        ScoreEntry(score: 720, date: DateTime.now()),
+        ScoreEntry(
+          score: 720,
+          date: DateTime.now().subtract(const Duration(days: 8)),
+        ),
+        ScoreEntry(
+          score: 750,
+          date: DateTime.now().subtract(const Duration(days: 7)),
+        ),
+        ScoreEntry(
+          score: 710,
+          date: DateTime.now().subtract(const Duration(days: 6)),
+        ),
+        ScoreEntry(score: 680, date: DateTime.now()),
       ],
       creditAgency: 'Experian',
       creditFactors: [

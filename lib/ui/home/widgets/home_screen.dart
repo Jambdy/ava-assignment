@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../view_models/home_viewmodel.dart';
+import 'credit_history_card.dart';
 import 'credit_score_card.dart';
-
 
 @RoutePage()
 class HomeScreen extends ConsumerWidget {
@@ -41,14 +41,44 @@ class HomeScreen extends ConsumerWidget {
                       bottomRight: Radius.circular(32),
                     ),
                   ),
-                  child: Center(child: CreditScoreCard(
-                    currentScore: data.creditScore.currentScore,
-                    creditScoreStatus: data.creditScoreStatus,
-                    scoreChange: data.creditScore.scoreChange,
-                    lastUpdated: data.creditScore.lastUpdated,
-                    nextUpdate: data.creditScore.nextUpdate,
-                    creditAgency: data.creditScore.creditAgency,
-                  )),
+                  child: Center(
+                    child: CreditScoreCard(
+                      currentScore: data.creditScore.currentScore,
+                      creditScoreStatus: data.creditScoreStatus,
+                      scoreChange: data.creditScore.scoreChange,
+                      lastUpdated: data.creditScore.lastUpdated,
+                      nextUpdate: data.creditScore.nextUpdate,
+                      creditAgency: data.creditScore.creditAgency,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    width: 375,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 40.0,
+                            bottom: 20.0,
+                          ),
+                          child: Text(
+                            'Chart',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        CreditHistoryCard(
+                          scoreChange: data.creditScore.scoreChange,
+                          lastUpdated: data.creditScore.lastUpdated,
+                          nextUpdate: data.creditScore.nextUpdate,
+                          creditAgency: data.creditScore.creditAgency,
+                          creditScoreGraphData: data.creditScoreGraphData,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
