@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +20,17 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       title: 'Ava Assignment',
       theme: AppTheme.lightTheme,
+      scrollBehavior: MyCustomScrollBehavior(),
       routerConfig: _appRouter.config(),
     );
   }
+}
+
+// This is a custom scroll behavior that allows mouse dragging on all platforms
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    ...super.dragDevices,
+    PointerDeviceKind.mouse,
+  };
 }
