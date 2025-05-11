@@ -6,6 +6,7 @@ import '../../core/themes/theme.dart';
 import '../../core/widgets/ava_title.dart';
 import '../view_models/home_viewmodel.dart';
 import 'account_details_card.dart';
+import 'credit_card_balance_card.dart';
 import 'credit_factors_card.dart';
 import 'credit_history_card.dart';
 import 'credit_score_card.dart';
@@ -82,6 +83,10 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         AvaTitle(title: 'Account Details'),
                         AccountDetailsCard(accountDetails: data.accountDetails),
+                        SizedBox(height: 34),
+                        CreditCardBalanceCard(
+                          cCData: data.creditCardAccountsAggregate,
+                        ),
                       ],
                     ),
                   ),

@@ -6,6 +6,7 @@ class CreditScore {
   final List<ScoreEntry> scoreHistory;
   final String creditAgency;
   final List<CreditFactor> creditFactors;
+  final List<CreditCardAccount> creditCardAccounts;
 
   CreditScore({
     required this.currentScore,
@@ -15,6 +16,7 @@ class CreditScore {
     required this.scoreHistory,
     required this.creditAgency,
     required this.creditFactors,
+    required this.creditCardAccounts,
   });
 }
 
@@ -42,3 +44,17 @@ class CreditFactor {
 enum Impact { high, medium, low }
 
 enum Type { number, percentage, months }
+
+class CreditCardAccount {
+  final String accountName;
+  final DateTime reportedDate;
+  final int limit;
+  final double balance;
+
+  CreditCardAccount({
+    required this.accountName,
+    required this.reportedDate,
+    required this.limit,
+    required this.balance,
+  });
+}

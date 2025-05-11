@@ -78,6 +78,26 @@ class CreditScoreRepository {
           type: Type.number,
         ),
       ],
+      creditCardAccounts: [
+        CreditCardAccount(
+          accountName: 'Chase Freedom',
+          reportedDate: DateTime.now().subtract(const Duration(days: 30)),
+          limit: 5000,
+          balance: 200,
+        ),
+        CreditCardAccount(
+          accountName: 'Discover It',
+          reportedDate: DateTime.now().subtract(const Duration(days: 60)),
+          limit: 3000,
+          balance: 1500,
+        ),
+        CreditCardAccount(
+          accountName: 'Capital One Quicksilver',
+          reportedDate: DateTime.now().subtract(const Duration(days: 90)),
+          limit: 10000,
+          balance: 5000,
+        ),
+      ],
     );
   }
 }

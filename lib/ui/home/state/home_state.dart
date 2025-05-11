@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:intl/intl.dart';
+
 import '../../../models/account_details.dart';
 import '../../../models/credit_score.dart';
 
@@ -9,6 +11,7 @@ class HomeState {
   final CreditScoreGraphData creditScoreGraphData;
   final List<CreditFactorDisplay> creditFactorsDisplay;
   final AccountDetailsDisplay accountDetails;
+  final CreditCardAccountsAggregate creditCardAccountsAggregate;
 
   HomeState({
     required this.creditScore,
@@ -16,6 +19,7 @@ class HomeState {
     required this.creditScoreGraphData,
     required this.creditFactorsDisplay,
     required this.accountDetails,
+    required this.creditCardAccountsAggregate,
   });
 }
 
@@ -57,11 +61,54 @@ class CreditFactorDisplay extends CreditFactor {
 
 class AccountDetailsDisplay extends AccountDetails {
   int get utilization => (balance / creditLimit).toInt() * 100;
+
   double get balanceRatio => balance / spendLimit;
+
+  String get balanceDisplay => balance.toInt().toString();
 
   AccountDetailsDisplay({
     required super.spendLimit,
     required super.balance,
     required super.creditLimit,
+  });
+}
+
+class CreditCardAccountsAggregate {
+  final String totalBalanceDisplay;
+  final String totalLimitDisplay;
+  final int totalUtilization;
+  final CreditUtilizationGrade utilizationGrade;
+  final List<CreditCardAccountDisplay> creditCardAccountsDisplay;
+
+  CreditCardAccountsAggregate({
+    required this.totalBalanceDisplay,
+    required this.totalLimitDisplay,
+    required this.totalUtilization,
+    required this.utilizationGrade,
+    required this.creditCardAccountsDisplay,
+  });
+}
+
+class CreditUtilizationGrade {
+  final String gradeText;
+  final int gradeRank;
+  final int section;
+
+  CreditUtilizationGrade({
+    required this.gradeText,
+    required this.gradeRank,
+    required this.section,
+  });
+}
+
+class CreditCardAccountDisplay extends CreditCardAccount {
+  String get formattedReportedDate =>
+      DateFormat('MMMM d, y').format(reportedDate);
+
+  CreditCardAccountDisplay({
+    required super.accountName,
+    required super.reportedDate,
+    required super.limit,
+    required super.balance,
   });
 }

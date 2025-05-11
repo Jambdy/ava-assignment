@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../data/repositories/account_details_repository.dart';
@@ -22,11 +23,14 @@ class HomeViewModel extends _$HomeViewModel {
     final creditScoreGraphData = _generateCreditScoreGraphData(
       creditScore.scoreHistory,
     );
-    final creditFactorDisplays = _generateCreditFactorDisplays(
+    final creditFactorDisplays = _mapCreditFactorDisplays(
       creditScore.creditFactors,
     );
     final accountDetails = _mapAccountDetails(
       await ref.read(accountDetailsRepositoryProvider).getAccountDetails(),
+    );
+    final creditCardAccountsAggregate = _mapCreditCardAccountsAggregate(
+      creditScore.creditCardAccounts,
     );
     return HomeState(
       creditScore: creditScore,
@@ -34,6 +38,7 @@ class HomeViewModel extends _$HomeViewModel {
       creditScoreGraphData: creditScoreGraphData,
       creditFactorsDisplay: creditFactorDisplays,
       accountDetails: accountDetails,
+      creditCardAccountsAggregate: creditCardAccountsAggregate,
     );
   }
 
@@ -45,7 +50,7 @@ class HomeViewModel extends _$HomeViewModel {
     return 'Poor';
   }
 
-  List<CreditFactorDisplay> _generateCreditFactorDisplays(
+  List<CreditFactorDisplay> _mapCreditFactorDisplays(
     List<CreditFactor> creditFactors,
   ) {
     return creditFactors.map((factor) {
@@ -137,6 +142,65 @@ class HomeViewModel extends _$HomeViewModel {
       spendLimit: accountDetails.spendLimit,
       balance: accountDetails.balance,
       creditLimit: accountDetails.creditLimit,
+    );
+  }
+
+  CreditUtilizationGrade _mapCreditUtilization(int utilization) {
+    if (utilization < 10) {
+      return CreditUtilizationGrade(
+        gradeText: 'Excellent',
+        gradeRank: 1,
+        section: 0,
+      );
+    }
+    if (utilization < 75) {
+      return CreditUtilizationGrade(
+        gradeText: 'Fair',
+        gradeRank: 2,
+        section:
+            (utilization < 30)
+                ? 1
+                : (utilization < 50)
+                ? 2
+                : 3,
+      );
+    }
+    return CreditUtilizationGrade(gradeText: 'Poor', gradeRank: 3, section: 4);
+  }
+
+  CreditCardAccountsAggregate _mapCreditCardAccountsAggregate(
+    List<CreditCardAccount> creditCardAccounts,
+  ) {
+    var totalLimit = 0;
+    var totalBalance = 0.0;
+    for (var account in creditCardAccounts) {
+      totalLimit += account.limit;
+      totalBalance += account.balance;
+    }
+    var totalBalanceDisplay = NumberFormat(
+      '#,###',
+    ).format(totalBalance.toInt());
+    var totalLimitDisplay = NumberFormat('#,###').format(totalLimit);
+    var totalUtilization = (totalBalance / totalLimit * 100).toInt();
+    var utilizationGrade = _mapCreditUtilization(totalUtilization);
+
+    var creditCardAccountsDisplay =
+        creditCardAccounts
+            .map(
+              (account) => CreditCardAccountDisplay(
+                accountName: account.accountName,
+                reportedDate: account.reportedDate,
+                limit: account.limit,
+                balance: account.balance,
+              ),
+            )
+            .toList();
+    return CreditCardAccountsAggregate(
+      totalBalanceDisplay: totalBalanceDisplay,
+      totalLimitDisplay: totalLimitDisplay,
+      totalUtilization: totalUtilization,
+      utilizationGrade: utilizationGrade,
+      creditCardAccountsDisplay: creditCardAccountsDisplay,
     );
   }
 }
