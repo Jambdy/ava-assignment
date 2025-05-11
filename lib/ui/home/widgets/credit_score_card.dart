@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/widgets/ava_card.dart';
-import 'credit_score_animation.dart';
+import '../../core/widgets/ava_outlined_circle_animation.dart';
 import 'credit_score_status.dart';
 
 class CreditScoreCard extends ConsumerWidget {
@@ -38,9 +38,9 @@ class CreditScoreCard extends ConsumerWidget {
             nextUpdate: nextUpdate,
             creditAgency: creditAgency,
           ),
-          CreditScoreAnimation(
-            creditScore: currentScore,
-            size: 72,
+          AvaOutlinedCircleAnimation(
+            currentValue: currentScore,
+            maxValue: 850,
             underText: creditScoreStatus,
           ),
         ],
