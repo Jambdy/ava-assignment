@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import '../../../models/account_details.dart';
 import '../../../models/credit_score.dart';
 
 class HomeState {
@@ -7,12 +8,14 @@ class HomeState {
   final String creditScoreStatus;
   final CreditScoreGraphData creditScoreGraphData;
   final List<CreditFactorDisplay> creditFactorsDisplay;
+  final AccountDetailsDisplay accountDetails;
 
   HomeState({
     required this.creditScore,
     required this.creditScoreStatus,
     required this.creditScoreGraphData,
     required this.creditFactorsDisplay,
+    required this.accountDetails,
   });
 }
 
@@ -49,5 +52,16 @@ class CreditFactorDisplay extends CreditFactor {
     required this.displayColor,
     required this.textColor,
     required this.impactText,
+  });
+}
+
+class AccountDetailsDisplay extends AccountDetails {
+  int get utilization => (balance / creditLimit).toInt() * 100;
+  double get balanceRatio => balance / spendLimit;
+
+  AccountDetailsDisplay({
+    required super.spendLimit,
+    required super.balance,
+    required super.creditLimit,
   });
 }

@@ -2,7 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/themes/theme.dart';
+import '../../core/widgets/ava_title.dart';
 import '../view_models/home_viewmodel.dart';
+import 'account_details_card.dart';
 import 'credit_factors_card.dart';
 import 'credit_history_card.dart';
 import 'credit_score_card.dart';
@@ -25,7 +28,12 @@ class HomeScreen extends ConsumerWidget {
             // Handle menu button press
           },
         ),
-        title: Text('Home', style: Theme.of(context).textTheme.headlineMedium),
+        title: Text(
+          'Home',
+          style: AppTheme.bodyEmphasis.copyWith(
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
         centerTitle: true,
       ),
       body: homeState.when(
@@ -60,16 +68,7 @@ class HomeScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 40.0,
-                            bottom: 20.0,
-                          ),
-                          child: Text(
-                            'Chart',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ),
+                        AvaTitle(title: 'Chart'),
                         CreditHistoryCard(
                           scoreChange: data.creditScore.scoreChange,
                           lastUpdated: data.creditScore.lastUpdated,
@@ -77,19 +76,12 @@ class HomeScreen extends ConsumerWidget {
                           creditAgency: data.creditScore.creditAgency,
                           creditScoreGraphData: data.creditScoreGraphData,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 40.0,
-                            bottom: 20.0,
-                          ),
-                          child: Text(
-                            'Credit Factors',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ),
+                        AvaTitle(title: 'Credit Factors'),
                         CreditFactorsCard(
                           creditFactorsDisplay: data.creditFactorsDisplay,
                         ),
+                        AvaTitle(title: 'Account Details'),
+                        AccountDetailsCard(accountDetails: data.accountDetails),
                       ],
                     ),
                   ),

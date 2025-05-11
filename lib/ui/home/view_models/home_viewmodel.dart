@@ -3,7 +3,9 @@ import 'dart:ui';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../data/repositories/account_details_repository.dart';
 import '../../../data/repositories/credit_score_repository.dart';
+import '../../../models/account_details.dart';
 import '../../../models/credit_score.dart';
 import '../../core/themes/color.dart';
 import '../state/home_state.dart';
@@ -23,11 +25,15 @@ class HomeViewModel extends _$HomeViewModel {
     final creditFactorDisplays = _generateCreditFactorDisplays(
       creditScore.creditFactors,
     );
+    final accountDetails = _mapAccountDetails(
+      await ref.read(accountDetailsRepositoryProvider).getAccountDetails(),
+    );
     return HomeState(
       creditScore: creditScore,
       creditScoreStatus: creditScoreStatus,
       creditScoreGraphData: creditScoreGraphData,
       creditFactorsDisplay: creditFactorDisplays,
+      accountDetails: accountDetails,
     );
   }
 
@@ -123,6 +129,14 @@ class HomeViewModel extends _$HomeViewModel {
       midScore: midScore,
       duration: duration,
       maxIntervals: maxIntervals,
+    );
+  }
+
+  AccountDetailsDisplay _mapAccountDetails(AccountDetails accountDetails) {
+    return AccountDetailsDisplay(
+      spendLimit: accountDetails.spendLimit,
+      balance: accountDetails.balance,
+      creditLimit: accountDetails.creditLimit,
     );
   }
 }
