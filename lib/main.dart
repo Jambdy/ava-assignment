@@ -1,7 +1,8 @@
-import 'package:ava_assignment/router.dart';
-import 'package:ava_assignment/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'routing/router.dart';
+import 'ui/core/themes/theme.dart';
 
 void main() {
   runApp(ProviderScope(child: App()));

@@ -1,6 +1,7 @@
-import 'package:ava_assignment/ui/core/themes/color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'color.dart';
 
 abstract final class AppTheme {
   static const TextStyle detailEmphasis = TextStyle(
