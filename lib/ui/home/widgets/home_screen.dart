@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../routing/router.gr.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava_title.dart';
 import '../view_models/home_viewmodel.dart';
@@ -27,7 +28,7 @@ class HomeScreen extends ConsumerWidget {
           icon: const Icon(Icons.settings_outlined),
           color: Theme.of(context).colorScheme.onPrimary,
           onPressed: () {
-            // Handle menu button press
+            context.router.push(EmploymentRoute());
           },
         ),
         title: Text(

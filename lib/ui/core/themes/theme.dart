@@ -24,18 +24,19 @@ abstract final class AppTheme {
     fontWeight: FontWeight.w400,
     color: AppColors.textPrimaryDark,
   );
-  static TextStyle interSmallBold = GoogleFonts.inter(
+  static final TextStyle interSmallBold = GoogleFonts.inter(
     fontSize: 11.0,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimaryDark,
   );
-  static TextStyle graphSmall = GoogleFonts.inter(
+  static final TextStyle graphSmall = GoogleFonts.inter(
     fontSize: 14.0,
     fontWeight: FontWeight.w600,
     color: AppColors.textLight,
   );
+
   // TODO: get 'At Slam Cnd' font from UX
-  static TextStyle graphMedium = GoogleFonts.bebasNeue(
+  static final TextStyle graphMedium = GoogleFonts.bebasNeue(
     fontSize: 36.0,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimaryDark,
@@ -62,11 +63,70 @@ abstract final class AppTheme {
     color: AppColors.textPrimaryDark,
   );
 
+  // TODO: get 'At Slam Cnd' font from UX, update size to 40
+  static final TextStyle titleLarge = GoogleFonts.oswald(
+    fontSize: 28.0,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimaryDark,
+    letterSpacing: -0.5,
+  );
+
+  static final InputDecorationTheme _inputDecorationTheme =
+      InputDecorationTheme(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+        disabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: BorderSide(color: AppColors.gray),
+        ),
+        filled: true,
+        fillColor: AppColors.bgWhite,
+        hintStyle: bodyRegular.copyWith(color: AppColors.textLight),
+      );
+
+  static final ElevatedButtonThemeData _elevatedButtonTheme =
+      ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.avaPrimary,
+          foregroundColor: AppColors.textWhite,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          textStyle: bodyEmphasis.copyWith(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textWhite,
+          ),
+        ),
+      );
+
+  static final OutlinedButtonThemeData _outlinedButtonTheme =
+      OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          backgroundColor: AppColors.bgWhite,
+          foregroundColor: AppColors.avaPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          side: BorderSide(color: AppColors.avaPrimary, width: 2.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          textStyle: bodyEmphasis.copyWith(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w600,
+            color: AppColors.avaPrimary,
+          ),
+        ),
+      );
+
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     colorScheme: AppColors.lightColorScheme,
     // TODO: get 'At Hauss' font from UX
     fontFamily: 'Liter',
+    elevatedButtonTheme: _elevatedButtonTheme,
+    inputDecorationTheme: _inputDecorationTheme,
+    outlinedButtonTheme: _outlinedButtonTheme,
     scaffoldBackgroundColor: AppColors.manilla,
   );
 }
