@@ -27,7 +27,6 @@ class CreditScoreCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AvaCard(
       height: 104,
-      width: 335,
       outlined: false,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

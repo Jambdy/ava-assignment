@@ -10,13 +10,17 @@ import '../state/home_state.dart';
 
 class AccountDetailsCard extends StatelessWidget {
   final AccountDetailsDisplay accountDetails;
+  final double width;
 
-  const AccountDetailsCard({super.key, required this.accountDetails});
+  const AccountDetailsCard({
+    super.key,
+    required this.accountDetails,
+    required this.width,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AvaCard(
-      width: 343,
       height: 225,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,7 +30,7 @@ class AccountDetailsCard extends StatelessWidget {
               _SpendLimitProgress(
                 balanceDisplay: accountDetails.balanceDisplay,
                 progressPercent: accountDetails.balanceRatio,
-                width: 343 - 2 * 16,
+                width: width - 2 * 16,
               ),
               const SizedBox(height: 8),
               Row(

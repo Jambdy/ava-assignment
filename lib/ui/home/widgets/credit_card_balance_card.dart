@@ -16,7 +16,6 @@ class CreditCardBalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AvaCard(
       height: 196,
-      width: 343,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

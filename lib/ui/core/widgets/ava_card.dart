@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants/constants.dart';
+
 class AvaCard extends StatelessWidget {
   const AvaCard({
     super.key,
-    required this.width,
+    this.width,
     this.height,
     this.outlined = true,
     this.borderRadius = 20,
@@ -11,7 +13,7 @@ class AvaCard extends StatelessWidget {
   });
 
   final double? height;
-  final double width;
+  final double? width;
   final bool outlined;
   final Widget child;
   final double borderRadius;
@@ -21,6 +23,7 @@ class AvaCard extends StatelessWidget {
     return Container(
       height: height,
       width: width,
+      constraints: const BoxConstraints(maxWidth: Constants.maxWidth),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(borderRadius),

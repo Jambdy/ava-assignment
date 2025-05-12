@@ -7,6 +7,13 @@ import '../state/home_state.dart';
 import 'credit_score_status.dart';
 
 class CreditHistoryCard extends StatelessWidget {
+  final int scoreChange;
+  final String lastUpdated;
+  final String nextUpdate;
+  final String creditAgency;
+  final CreditScoreGraphData creditScoreGraphData;
+  final double width;
+
   const CreditHistoryCard({
     super.key,
     required this.scoreChange,
@@ -14,19 +21,13 @@ class CreditHistoryCard extends StatelessWidget {
     required this.nextUpdate,
     required this.creditAgency,
     required this.creditScoreGraphData,
+    required this.width,
   });
-
-  final int scoreChange;
-  final String lastUpdated;
-  final String nextUpdate;
-  final String creditAgency;
-  final CreditScoreGraphData creditScoreGraphData;
 
   @override
   Widget build(BuildContext context) {
     return AvaCard(
       height: 260,
-      width: 340,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,6 +42,7 @@ class CreditHistoryCard extends StatelessWidget {
             height: 97,
             child: _CreditHistoryChart(
               creditScoreGraphData: creditScoreGraphData,
+              width: width,
             ),
           ),
           Center(
@@ -63,9 +65,13 @@ class CreditHistoryCard extends StatelessWidget {
 }
 
 class _CreditHistoryChart extends StatefulWidget {
-  const _CreditHistoryChart({required this.creditScoreGraphData});
-
   final CreditScoreGraphData creditScoreGraphData;
+  final double width;
+
+  const _CreditHistoryChart({
+    required this.creditScoreGraphData,
+    required this.width,
+  });
 
   @override
   _CreditHistoryChartState createState() => _CreditHistoryChartState();
@@ -118,7 +124,7 @@ class _CreditHistoryChartState extends State<_CreditHistoryChart>
                           ),
                           Container(
                             height: 1,
-                            width: 250,
+                            width: widget.width - 122,
                             color: Theme.of(context).colorScheme.outline,
                           ),
                         ],
