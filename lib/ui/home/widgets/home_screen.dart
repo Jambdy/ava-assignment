@@ -40,7 +40,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           builder:
               (_) => BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                child: FeedbackOverlay(),
+                child: const FeedbackOverlay(),
               ),
         );
       });
@@ -58,7 +58,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           icon: const Icon(Icons.settings_outlined),
           color: Theme.of(context).colorScheme.onPrimary,
           onPressed: () {
-            context.router.push(EmploymentRoute());
+            context.router.push(const EmploymentRoute());
           },
         ),
         title: Text(
@@ -78,7 +78,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   height: 180,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32),
                       bottomRight: Radius.circular(32),
                     ),
@@ -101,7 +101,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AvaTitle(title: 'Chart'),
+                        const AvaTitle(title: 'Chart'),
                         CreditHistoryCard(
                           scoreChange: data.creditScore.scoreChange,
                           lastUpdated: data.creditScore.lastUpdated,
@@ -109,24 +109,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           creditAgency: data.creditScore.creditAgency,
                           creditScoreGraphData: data.creditScoreGraphData,
                         ),
-                        AvaTitle(title: 'Credit Factors'),
+                        const AvaTitle(title: 'Credit Factors'),
                         CreditFactorsCard(
                           creditFactorsDisplay: data.creditFactorsDisplay,
                         ),
-                        AvaTitle(title: 'Account Details'),
+                        const AvaTitle(title: 'Account Details'),
                         AccountDetailsCard(accountDetails: data.accountDetails),
-                        SizedBox(height: 34),
+                        const SizedBox(height: 34),
                         CreditCardBalanceCard(
                           cCData: data.creditCardAccountsAggregate,
                         ),
-                        AvaTitle(title: 'Open credit card accounts'),
+                        const AvaTitle(title: 'Open credit card accounts'),
                         CreditCardAccountsCard(
                           cCAccounts:
                               data
                                   .creditCardAccountsAggregate
                                   .creditCardAccountsDisplay,
                         ),
-                        SizedBox(height: 34),
+                        const SizedBox(height: 34),
                       ],
                     ),
                   ),

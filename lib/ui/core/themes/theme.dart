@@ -74,10 +74,10 @@ abstract final class AppTheme {
   static final InputDecorationTheme _inputDecorationTheme =
       InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
-        disabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
+        disabledBorder: const OutlineInputBorder(borderSide: BorderSide.none),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.gray),
+          borderSide: const BorderSide(color: AppColors.gray),
         ),
         filled: true,
         fillColor: AppColors.bgWhite,
@@ -108,7 +108,7 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
-          side: BorderSide(color: AppColors.avaPrimary, width: 2.0),
+          side: const BorderSide(color: AppColors.avaPrimary, width: 2.0),
           textStyle: bodyEmphasis.copyWith(
             fontSize: 16.0,
             fontWeight: FontWeight.w600,

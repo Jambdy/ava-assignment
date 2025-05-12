@@ -27,11 +27,11 @@ class CreditCardBalanceCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 4.0),
+                  const SizedBox(height: 4.0),
                   Text.rich(
                     TextSpan(
                       children: [
-                        TextSpan(
+                        const TextSpan(
                           text: 'Total balance: ',
                           style: AppTheme.bodyEmphasis,
                         ),

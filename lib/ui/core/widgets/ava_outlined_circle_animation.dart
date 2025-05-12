@@ -106,7 +106,7 @@ class AnimatedArcCountCircleState extends State<AvaOutlinedCircleAnimation>
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     '${_angleAnim.value.toInt()}${widget.textSuffix}',
                     style: AppTheme.graphMedium,

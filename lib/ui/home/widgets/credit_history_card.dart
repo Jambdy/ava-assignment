@@ -46,7 +46,7 @@ class CreditHistoryCard extends StatelessWidget {
           Center(
             child: Column(
               children: [
-                Text('Last 12 months', style: AppTheme.overlineEmphasis),
+                const Text('Last 12 months', style: AppTheme.overlineEmphasis),
                 Text(
                   'Score calculated using VantageScore 3.0',
                   style: AppTheme.overlineRegular.copyWith(

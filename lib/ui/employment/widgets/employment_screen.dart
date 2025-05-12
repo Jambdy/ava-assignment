@@ -201,7 +201,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 displayValue: widget.eState?.employmentTypeDisplay,
                 label: 'Employment type',
                 inputWidget: DropdownButtonFormField<EmploymentType>(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Select Employment Type',
                   ),
                   value: _selectedEmploymentType,
@@ -226,7 +226,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                     }
                     return null;
                   },
-                  icon: Icon(Icons.keyboard_arrow_down_outlined),
+                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
                 ),
                 enabled: _isEditing,
               ),
@@ -235,7 +235,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 label: 'Employer',
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.employer],
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your employment details',
                   ),
                   validator: (value) {
@@ -252,7 +252,9 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 label: 'Job Title',
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.jobTitle],
-                  decoration: InputDecoration(hintText: 'Enter your job title'),
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your job title',
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a job title';
@@ -268,7 +270,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.grossAnnualIncome],
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your annual income',
                     prefixText: '\$',
                     suffixText: '/year',
@@ -297,7 +299,9 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 displayValue: widget.eState?.payFrequencyDisplay,
                 label: 'Pay Frequency',
                 inputWidget: DropdownButtonFormField<PayFrequency>(
-                  decoration: InputDecoration(hintText: 'Select Pay Frequency'),
+                  decoration: const InputDecoration(
+                    hintText: 'Select Pay Frequency',
+                  ),
                   value: _selectedPayFrequency,
                   items:
                       widget.payFrequencyOptions.entries
@@ -319,7 +323,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                     }
                     return null;
                   },
-                  icon: Icon(Icons.keyboard_arrow_down_outlined),
+                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
                 ),
                 enabled: _isEditing,
               ),
@@ -329,7 +333,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.nextPayday],
                   readOnly: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Select Date',
                     suffixIcon: Icon(Icons.calendar_month_rounded),
                   ),
@@ -352,7 +356,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.employerAddress],
                   maxLines: 2,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your employer address',
                   ),
                   validator: (value) {
@@ -378,7 +382,9 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                     SizedBox(
                       width: 146,
                       child: DropdownButtonFormField<int>(
-                        decoration: InputDecoration(hintText: 'Select Year'),
+                        decoration: const InputDecoration(
+                          hintText: 'Select Year',
+                        ),
                         value: _selectedEmploymentYears,
                         items:
                             _employmentYearsOptions
@@ -402,13 +408,15 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                           }
                           return null;
                         },
-                        icon: Icon(Icons.keyboard_arrow_down_outlined),
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
                       ),
                     ),
                     SizedBox(
                       width: 146,
                       child: DropdownButtonFormField<int>(
-                        decoration: InputDecoration(hintText: 'Select Month'),
+                        decoration: const InputDecoration(
+                          hintText: 'Select Month',
+                        ),
                         value: _selectedEmploymentMonths,
                         items:
                             _employmentMonthsOptions
@@ -432,7 +440,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                           }
                           return null;
                         },
-                        icon: Icon(Icons.keyboard_arrow_down_outlined),
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
                       ),
                     ),
                   ],
@@ -500,7 +508,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   _isEditing = true;
                 });
               },
-              child: Text('Edit'),
+              child: const Text('Edit'),
             ),
           ),
         ),
@@ -512,7 +520,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
               onPressed: () {
                 context.router.push(HomeRoute(requestFeedback: true));
               },
-              child: Text('Confirm'),
+              child: const Text('Confirm'),
             ),
           ),
         ),
@@ -544,7 +552,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   });
                 }
               },
-              child: Text('Continue'),
+              child: const Text('Continue'),
             ),
           ),
         ),

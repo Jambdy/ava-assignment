@@ -64,7 +64,7 @@ class AccountDetailsCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Balance', style: AppTheme.detailRegular),
@@ -73,11 +73,11 @@ class AccountDetailsCard extends StatelessWidget {
               ),
             ],
           ),
-          Divider(color: AppColors.gray, thickness: 1),
+          const Divider(color: AppColors.gray, thickness: 1),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Utilization', style: AppTheme.bodyRegular),
+              const Text('Utilization', style: AppTheme.bodyRegular),
               Text(
                 '${accountDetails.utilization}%',
                 style: AppTheme.bodyEmphasis,
@@ -173,7 +173,9 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
                         left: max(widget.width * _progressAnim.value - 2, 0),
                       ),
                       width: 4,
-                      decoration: BoxDecoration(color: AppColors.avaSecondary),
+                      decoration: const BoxDecoration(
+                        color: AppColors.avaSecondary,
+                      ),
                     ),
                   ],
                 ),

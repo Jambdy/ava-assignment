@@ -53,13 +53,13 @@ class AvaGradeBar extends StatelessWidget {
             Spacer(flex: 6 - (section * 2 - 1)),
           ],
         ),
-        SizedBox(height: 4.0),
+        const SizedBox(height: 4.0),
         Row(
           children: [
             Expanded(
               child: Container(
                 height: 24,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.avaSecondary,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4),
@@ -72,13 +72,13 @@ class AvaGradeBar extends StatelessWidget {
               child: Container(
                 width: 102,
                 height: 24,
-                decoration: BoxDecoration(color: AppColors.lightOrange),
+                decoration: const BoxDecoration(color: AppColors.lightOrange),
               ),
             ),
             Expanded(
               child: Container(
                 height: 24,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.lightRed,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(4),
@@ -89,7 +89,7 @@ class AvaGradeBar extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 2.0),
+        const SizedBox(height: 2.0),
         Row(
           children: [
             ...Iterable<int>.generate(5)
@@ -104,7 +104,7 @@ class AvaGradeBar extends StatelessWidget {
                 .expand((e) => e),
           ],
         ),
-        SizedBox(height: 2.0),
+        const SizedBox(height: 2.0),
         Row(
           children: [
             ...Iterable<int>.generate(5)

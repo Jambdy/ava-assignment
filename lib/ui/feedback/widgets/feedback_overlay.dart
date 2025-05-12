@@ -36,34 +36,34 @@ class _FeedbackOverlayState extends ConsumerState<FeedbackOverlay> {
           children: [
             Container(
               width: maxWidth - 16,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.lightPurp,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
             ),
             Container(
               height: maxHeight - 14,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.manilla,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
               padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32.0),
               child: Column(
                 children: [
-                  Text('Give us feedback', style: AppTheme.bodyRegular),
-                  SizedBox(height: 32),
+                  const Text('Give us feedback', style: AppTheme.bodyRegular),
+                  const SizedBox(height: 32),
                   Expanded(
                     child: TextField(
                       expands: true,
                       maxLines: null,
                       controller: _feedbackController,
                       textAlignVertical: TextAlignVertical.top,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter feedback here',
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   SizedBox(
                     height: 44,
                     width: double.infinity,
@@ -74,7 +74,7 @@ class _FeedbackOverlayState extends ConsumerState<FeedbackOverlay> {
                         );
                         context.router.pop();
                       },
-                      child: Text('Submit Feedback'),
+                      child: const Text('Submit Feedback'),
                     ),
                   ),
                 ],

@@ -19,9 +19,9 @@ class CreditCardAccountsCard extends StatelessWidget {
         itemCount: cCAccounts.length,
         itemBuilder: (_, i) => _CreditCardAccount(cCAccount: cCAccounts[i]),
         separatorBuilder:
-            (_, __) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: const Divider(color: AppColors.gray, height: 1),
+            (_, __) => const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Divider(color: AppColors.gray, height: 1),
             ),
       ),
     );
@@ -138,11 +138,12 @@ class _AnimatedProgressBarState extends State<_AnimatedProgressBar>
                 decoration: BoxDecoration(
                   color: AppColors.avaSecondary,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(999),
-                    bottomLeft: Radius.circular(999),
-                    topRight: roundedEnd ? Radius.circular(999) : Radius.zero,
+                    topLeft: const Radius.circular(999),
+                    bottomLeft: const Radius.circular(999),
+                    topRight:
+                        roundedEnd ? const Radius.circular(999) : Radius.zero,
                     bottomRight:
-                        roundedEnd ? Radius.circular(999) : Radius.zero,
+                        roundedEnd ? const Radius.circular(999) : Radius.zero,
                   ),
                 ),
               );

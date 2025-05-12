@@ -26,8 +26,8 @@ class CreditScoreStatus extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+            const Padding(
+              padding: EdgeInsets.only(right: 8.0),
               child: Text('Credit Score', style: AppTheme.bodyEmphasis),
             ),
             AvaChip(text: '+${scoreChange}pts'),
