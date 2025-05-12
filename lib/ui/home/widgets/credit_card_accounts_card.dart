@@ -65,10 +65,12 @@ class _CreditCardAccount extends StatelessWidget {
               ),
             ],
           ),
-          Text('Reported on ${cCAccount.formattedReportedDate}',
-              style: AppTheme.overlineRegular.copyWith(
-                color: AppColors.textLight,
-              )),
+          Text(
+            'Reported on ${cCAccount.formattedReportedDate}',
+            style: AppTheme.overlineRegular.copyWith(
+              color: AppColors.textLight,
+            ),
+          ),
         ],
       ),
     );

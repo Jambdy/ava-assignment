@@ -24,7 +24,7 @@ class AccountDetailsCard extends StatelessWidget {
           Column(
             children: [
               _SpendLimitProgress(
-                balance: accountDetails.balance,
+                balanceDisplay: accountDetails.balanceDisplay,
                 progressPercent: accountDetails.balanceRatio,
                 width: 343 - 2 * 16,
               ),
@@ -91,12 +91,12 @@ class AccountDetailsCard extends StatelessWidget {
 }
 
 class _SpendLimitProgress extends StatefulWidget {
-  final double balance;
+  final String balanceDisplay;
   final double progressPercent;
   final double width;
 
   const _SpendLimitProgress({
-    required this.balance,
+    required this.balanceDisplay,
     required this.progressPercent,
     required this.width,
   });
@@ -153,7 +153,7 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
                 child: Opacity(
                   opacity: _progressAnim.value / widget.progressPercent,
                   child: AvaSpeechBubble(
-                    text: '\$${widget.balance.toInt()}',
+                    text: '\$${widget.balanceDisplay}',
                     width: _speechWidth,
                   ),
                 ),

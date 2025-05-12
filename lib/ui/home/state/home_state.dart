@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:intl/intl.dart';
-
 import '../../../models/account_details.dart';
 import '../../../models/credit_score.dart';
 
