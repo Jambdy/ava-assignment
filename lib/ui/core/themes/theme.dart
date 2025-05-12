@@ -92,7 +92,6 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
           textStyle: bodyEmphasis.copyWith(
             fontSize: 16.0,
             fontWeight: FontWeight.w600,
@@ -110,7 +109,6 @@ abstract final class AppTheme {
             borderRadius: BorderRadius.circular(12.0),
           ),
           side: BorderSide(color: AppColors.avaPrimary, width: 2.0),
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
           textStyle: bodyEmphasis.copyWith(
             fontSize: 16.0,
             fontWeight: FontWeight.w600,

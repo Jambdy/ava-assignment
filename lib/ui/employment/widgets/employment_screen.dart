@@ -457,7 +457,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                           children: [
                             ...['Yes', 'No'].map(
                               (value) => SizedBox(
-                                width: 120,
+                                width: 130,
                                 child: RadioListTile<String>(
                                   title: Text(
                                     value,
@@ -494,8 +494,9 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
         const SizedBox(height: 16.0),
         Visibility(
           visible: !_isEditing,
-          child: SizedBox(
+          child: Container(
             width: double.infinity,
+            padding: const EdgeInsets.only(bottom: 8.0),
             child: OutlinedButton(
               onPressed: () {
                 setState(() {
@@ -506,7 +507,6 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
             ),
           ),
         ),
-        SizedBox(height: 8.0),
         Visibility(
           visible: !_isEditing,
           child: SizedBox(
@@ -551,6 +551,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
             ),
           ),
         ),
+        const SizedBox(height: 16.0),
       ],
     );
   }
