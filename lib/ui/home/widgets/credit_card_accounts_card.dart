@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava_card.dart';
@@ -7,13 +8,8 @@ import '../state/home_state.dart';
 
 class CreditCardAccountsCard extends StatelessWidget {
   final List<CreditCardAccountDisplay> cCAccounts;
-  final double width;
 
-  const CreditCardAccountsCard({
-    super.key,
-    required this.cCAccounts,
-    required this.width,
-  });
+  const CreditCardAccountsCard({super.key, required this.cCAccounts});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +17,7 @@ class CreditCardAccountsCard extends StatelessWidget {
       child: ListView.separated(
         shrinkWrap: true,
         itemCount: cCAccounts.length,
-        itemBuilder:
-            (_, i) =>
-                _CreditCardAccount(cCAccount: cCAccounts[i], width: width),
+        itemBuilder: (_, i) => _CreditCardAccount(cCAccount: cCAccounts[i]),
         separatorBuilder:
             (_, __) => const Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -36,9 +30,8 @@ class CreditCardAccountsCard extends StatelessWidget {
 
 class _CreditCardAccount extends StatelessWidget {
   final CreditCardAccountDisplay cCAccount;
-  final double width;
 
-  const _CreditCardAccount({required this.cCAccount, required this.width});
+  const _CreditCardAccount({required this.cCAccount});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +50,7 @@ class _CreditCardAccount extends StatelessWidget {
           ),
           _AnimatedProgressBar(
             progressPercent: cCAccount.balance / cCAccount.limit,
-            width: width - 2 * 16,
+            width: LayoutUtils.constrainedWidth(context) - 2 * 16,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

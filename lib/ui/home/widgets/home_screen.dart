@@ -1,12 +1,11 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../constants/constants.dart';
 import '../../../routing/router.gr.dart';
+import '../../../utils/layout_utils.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava_title.dart';
 import '../../feedback/widgets/feedback_overlay.dart';
@@ -52,7 +51,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeState = ref.watch(homeViewModelProvider);
-    double width = min(MediaQuery.of(context).size.width, Constants.maxWidth);
 
     return Scaffold(
       appBar: AppBar(
@@ -99,7 +97,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
                 Center(
                   child: Container(
-                    width: width,
+                    width: LayoutUtils.constrainedWidth(context),
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,17 +109,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           nextUpdate: data.creditScore.nextUpdate,
                           creditAgency: data.creditScore.creditAgency,
                           creditScoreGraphData: data.creditScoreGraphData,
-                          width: width,
                         ),
                         const AvaTitle(title: 'Credit Factors'),
                         CreditFactorsCard(
                           creditFactorsDisplay: data.creditFactorsDisplay,
                         ),
                         const AvaTitle(title: 'Account Details'),
-                        AccountDetailsCard(
-                          accountDetails: data.accountDetails,
-                          width: width,
-                        ),
+                        AccountDetailsCard(accountDetails: data.accountDetails),
                         const SizedBox(height: 34),
                         CreditCardBalanceCard(
                           cCData: data.creditCardAccountsAggregate,
@@ -132,7 +126,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               data
                                   .creditCardAccountsAggregate
                                   .creditCardAccountsDisplay,
-                          width: width,
                         ),
                         const SizedBox(height: 34),
                       ],

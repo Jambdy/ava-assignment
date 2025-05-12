@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava_card.dart';
@@ -10,13 +11,8 @@ import '../state/home_state.dart';
 
 class AccountDetailsCard extends StatelessWidget {
   final AccountDetailsDisplay accountDetails;
-  final double width;
 
-  const AccountDetailsCard({
-    super.key,
-    required this.accountDetails,
-    required this.width,
-  });
+  const AccountDetailsCard({super.key, required this.accountDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +26,7 @@ class AccountDetailsCard extends StatelessWidget {
               _SpendLimitProgress(
                 balanceDisplay: accountDetails.balanceDisplay,
                 progressPercent: accountDetails.balanceRatio,
-                width: width - 2 * 16,
+                width: LayoutUtils.constrainedWidth(context) - 2 * 16,
               ),
               const SizedBox(height: 8),
               Row(

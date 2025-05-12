@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava_card.dart';
@@ -12,7 +13,6 @@ class CreditHistoryCard extends StatelessWidget {
   final String nextUpdate;
   final String creditAgency;
   final CreditScoreGraphData creditScoreGraphData;
-  final double width;
 
   const CreditHistoryCard({
     super.key,
@@ -21,7 +21,6 @@ class CreditHistoryCard extends StatelessWidget {
     required this.nextUpdate,
     required this.creditAgency,
     required this.creditScoreGraphData,
-    required this.width,
   });
 
   @override
@@ -42,7 +41,6 @@ class CreditHistoryCard extends StatelessWidget {
             height: 97,
             child: _CreditHistoryChart(
               creditScoreGraphData: creditScoreGraphData,
-              width: width,
             ),
           ),
           Center(
@@ -66,12 +64,8 @@ class CreditHistoryCard extends StatelessWidget {
 
 class _CreditHistoryChart extends StatefulWidget {
   final CreditScoreGraphData creditScoreGraphData;
-  final double width;
 
-  const _CreditHistoryChart({
-    required this.creditScoreGraphData,
-    required this.width,
-  });
+  const _CreditHistoryChart({required this.creditScoreGraphData});
 
   @override
   _CreditHistoryChartState createState() => _CreditHistoryChartState();
@@ -124,7 +118,7 @@ class _CreditHistoryChartState extends State<_CreditHistoryChart>
                           ),
                           Container(
                             height: 1,
-                            width: widget.width - 122,
+                            width: LayoutUtils.constrainedWidth(context) - 122,
                             color: Theme.of(context).colorScheme.outline,
                           ),
                         ],
