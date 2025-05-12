@@ -7,27 +7,56 @@ import '../state/employment_state.dart';
 
 part 'employment_viewmodel.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class EmploymentViewModel extends _$EmploymentViewModel {
   @override
   Future<EmploymentState> build() async {
     final employment =
         await ref.read(employmentRepositoryProvider).getEmploymentInfo();
     return EmploymentState(
-      employmentDisplay: _mapToEmploymentDisplay(employment),
+      employmentDisplay:
+          employment != null ? _mapToEmploymentDisplay(employment) : null,
     );
+  }
+
+  Future<void> updateEmploymentInfo(EmploymentUpdate employmentUpdate) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final updated = await ref
+          .read(employmentRepositoryProvider)
+          .updateEmploymentInfo(
+            Employment(
+              employmentType: employmentUpdate.employmentType,
+              employer: employmentUpdate.employer,
+              jobTitle: employmentUpdate.jobTitle,
+              grossAnnualIncome: int.parse(
+                employmentUpdate.grossAnnualIncomeString.replaceAll(',', ''),
+              ),
+              payFrequency: employmentUpdate.payFrequency,
+              employerAddress: employmentUpdate.employerAddress,
+              monthsWithEmployer:
+                  (employmentUpdate.yearsPartWithEmployer * 12) +
+                  employmentUpdate.monthsPartWithEmployer,
+              nextPayDay: employmentUpdate.nextPayDay,
+              isDirectDeposit: employmentUpdate.isDirectDeposit,
+            ),
+          );
+      return EmploymentState(
+        employmentDisplay: _mapToEmploymentDisplay(updated),
+      );
+    });
   }
 
   EmploymentDisplay _mapToEmploymentDisplay(Employment employment) {
     var employmentTypeDisplay = _mapEmploymentTypeDisplay(
       employment.employmentType,
     );
-    var grossAnnualIncomeDisplay =
-        '\$${NumberFormat('#,###').format(employment.grossAnnualIncome)}/year';
+    var grossAnnualIncomeString = getFormattedNumber(
+      employment.grossAnnualIncome,
+    );
+    var grossAnnualIncomeDisplay = '\$$grossAnnualIncomeString/year';
     var payFrequencyDisplay = _mapPayFrequencyDisplay(employment.payFrequency);
-    var nextPayDayDisplay = DateFormat(
-      "MMM d'${_getDaySuffix(employment.nextPayDay.day)}', y (EEEE)",
-    ).format(employment.nextPayDay);
+    var nextPayDayDisplay = getFormattedDate(employment.nextPayDay);
     var yearsEmp = employment.monthsWithEmployer ~/ 12;
     var monthsEmp = employment.monthsWithEmployer % 12;
     var timeWithEmployerDisplay =
@@ -46,6 +75,7 @@ class EmploymentViewModel extends _$EmploymentViewModel {
       nextPayDay: employment.nextPayDay,
       isDirectDeposit: employment.isDirectDeposit,
       employmentTypeDisplay: employmentTypeDisplay,
+      grossAnnualIncomeString: grossAnnualIncomeString,
       grossAnnualIncomeDisplay: grossAnnualIncomeDisplay,
       payFrequencyDisplay: payFrequencyDisplay,
       nextPayDayDisplay: nextPayDayDisplay,
@@ -98,13 +128,25 @@ class EmploymentViewModel extends _$EmploymentViewModel {
     }
   }
 
-  List<String> getEmploymentTypes() {
-    return EmploymentType.values
-        .map((e) => _mapEmploymentTypeDisplay(e))
-        .toList();
+  Map<EmploymentType, String> getEmploymentTypes() {
+    return EmploymentType.values.asMap().map(
+      (_, value) => MapEntry(value, _mapEmploymentTypeDisplay(value)),
+    );
   }
 
-  List<String> getPayFrequencies() {
-    return PayFrequency.values.map((e) => _mapPayFrequencyDisplay(e)).toList();
+  Map<PayFrequency, String> getPayFrequencies() {
+    return PayFrequency.values.asMap().map(
+      (_, value) => MapEntry(value, _mapPayFrequencyDisplay(value)),
+    );
+  }
+
+  String getFormattedDate(DateTime date) {
+    return DateFormat(
+      "MMM d'${_getDaySuffix(date.day)}', y (EEEE)",
+    ).format(date);
+  }
+
+  String getFormattedNumber(num number) {
+    return NumberFormat('#,###').format(number);
   }
 }
