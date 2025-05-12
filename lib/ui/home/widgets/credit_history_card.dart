@@ -98,34 +98,34 @@ class _CreditHistoryChartState extends State<_CreditHistoryChart>
       children: [
         Column(
           children:
-          [
-            widget.creditScoreGraphData.maxScore,
-            widget.creditScoreGraphData.midScore,
-            widget.creditScoreGraphData.minScore,
-          ]
-              .map(
-                (e) => SizedBox(
-              height: 30,
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Text(
-                      e.toString(),
-                      style: AppTheme.graphSmall,
+              [
+                    widget.creditScoreGraphData.maxScore,
+                    widget.creditScoreGraphData.midScore,
+                    widget.creditScoreGraphData.minScore,
+                  ]
+                  .map(
+                    (e) => SizedBox(
+                      height: 30,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text(
+                              e.toString(),
+                              style: AppTheme.graphSmall,
+                            ),
+                          ),
+                          Container(
+                            height: 1,
+                            width: 250,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 1,
-                    width: 250,
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                ],
-              ),
-            ),
-          )
-              .toList(),
+                  )
+                  .toList(),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(44.0, 16.0, 18.0, 22.0),
@@ -166,23 +166,23 @@ class _LineChartPainter extends CustomPainter {
     if (data.isEmpty) return;
 
     final paintLine =
-    Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
-      ..color = color
-      ..strokeCap = StrokeCap.round;
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = strokeWidth
+          ..color = color
+          ..strokeCap = StrokeCap.round;
 
     final paintDot =
-    Paint()
-      ..style = PaintingStyle.fill
-      ..color = AppColors.bgWhite
-      ..strokeWidth = 1.5;
+        Paint()
+          ..style = PaintingStyle.fill
+          ..color = AppColors.bgWhite
+          ..strokeWidth = 1.5;
 
     final paintDotBorder =
-    Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5
-      ..color = color;
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.5
+          ..color = color;
 
     // Build our full list of points
     final bucketWidth = size.width / 11;
@@ -235,4 +235,3 @@ class _LineChartPainter extends CustomPainter {
   bool shouldRepaint(covariant _LineChartPainter old) =>
       old.progress != progress || old.data != data;
 }
-
