@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/employment.dart';
 import '../../../routing/router.gr.dart';
+import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../state/employment_state.dart';
@@ -35,7 +36,7 @@ class EmploymentScreen extends ConsumerWidget {
           return SingleChildScrollView(
             child: Center(
               child: Container(
-                width: 343,
+                width: LayoutUtils.constrainedWidth(context),
                 padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -379,8 +380,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 inputWidget: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: 146,
+                    Expanded(
                       child: DropdownButtonFormField<int>(
                         decoration: const InputDecoration(
                           hintText: 'Select Year',
@@ -411,8 +411,8 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                       ),
                     ),
-                    SizedBox(
-                      width: 146,
+                    const SizedBox(width: 16.0),
+                    Expanded(
                       child: DropdownButtonFormField<int>(
                         decoration: const InputDecoration(
                           hintText: 'Select Month',
@@ -501,7 +501,8 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           visible: !_isEditing,
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(bottom: 8.0),
+            height: 44,
+            margin: const EdgeInsets.only(bottom: 8.0),
             child: OutlinedButton(
               onPressed: () {
                 setState(() {
@@ -516,6 +517,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           visible: !_isEditing,
           child: SizedBox(
             width: double.infinity,
+            height: 44,
             child: ElevatedButton(
               onPressed: () {
                 context.router.push(HomeRoute(requestFeedback: true));
@@ -528,6 +530,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           visible: _isEditing,
           child: SizedBox(
             width: double.infinity,
+            height: 44,
             child: ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
