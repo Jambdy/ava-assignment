@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/employment.dart';
+import '../../../routing/router.gr.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../state/employment_state.dart';
@@ -142,8 +143,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           widget.employmentDisplay!.yearsPartWithEmployer;
       _selectedEmploymentMonths =
           widget.employmentDisplay!.monthsPartWithEmployer;
-      _isDirectDeposit =
-          widget.employmentDisplay!.isDirectDeposit ? 'Yes' : 'No';
+      _isDirectDeposit = widget.employmentDisplay!.isDirectDepositDisplay;
       _selectedDate = widget.employmentDisplay!.nextPayDay;
 
       // Initialize the text controllers with the current values
@@ -513,7 +513,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                context.router.pop();
+                context.router.push(HomeRoute(requestFeedback: true));
               },
               child: Text('Confirm'),
             ),

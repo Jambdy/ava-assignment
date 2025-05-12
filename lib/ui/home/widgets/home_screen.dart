@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../routing/router.gr.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava_title.dart';
+import '../../feedback/widgets/feedback_overlay.dart';
 import '../view_models/home_viewmodel.dart';
 import 'account_details_card.dart';
 import 'credit_card_accounts_card.dart';
@@ -14,11 +17,38 @@ import 'credit_history_card.dart';
 import 'credit_score_card.dart';
 
 @RoutePage()
-class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends ConsumerStatefulWidget {
+  final bool requestFeedback;
+
+  const HomeScreen({super.key, this.requestFeedback = false});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.requestFeedback) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showModalBottomSheet(
+          context: context,
+          isDismissible: true,
+          enableDrag: true,
+          backgroundColor: Colors.transparent,
+          builder:
+              (_) => BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                child: FeedbackOverlay(),
+              ),
+        );
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final homeState = ref.watch(homeViewModelProvider);
 
     return Scaffold(

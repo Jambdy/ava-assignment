@@ -13,7 +13,7 @@ import '../state/home_state.dart';
 
 part 'home_viewmodel.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class HomeViewModel extends _$HomeViewModel {
   @override
   Future<HomeState> build() async {
