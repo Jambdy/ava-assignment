@@ -1,33 +1,38 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../models/employment.dart';
+import '../services/shared_preferences_service.dart';
 
 part 'employment_repository.g.dart';
 
 @riverpod
-EmploymentRepository employmentRepository(Ref ref) => EmploymentRepository();
+EmploymentRepository employmentRepository(Ref ref) {
+  final sharedPrefService = ref.read(sharedPreferencesServiceProvider);
+  return EmploymentRepository(sharedPrefService);
+}
 
 class EmploymentRepository {
+  final SharedPreferencesService _sharedPrefService;
+  final String _key = 'employment';
+
+  EmploymentRepository(this._sharedPrefService);
+
   Future<Employment?> getEmploymentInfo() async {
-    // TODO: Implement conversion from mock API response
+    final storedEmployment = await _sharedPrefService.getValue<String>(_key);
+    if (storedEmployment != null) {
+      final Map<String, dynamic> json = jsonDecode(storedEmployment);
+      return Employment.fromJson(json);
+    }
     return null;
-    // return Employment(
-    //   employmentType: EmploymentType.fullTime,
-    //   employer: 'Tech Corp',
-    //   jobTitle: 'Software Engineer',
-    //   grossAnnualIncome: 85000,
-    //   payFrequency: PayFrequency.monthly,
-    //   employerAddress: '123 Tech Street, Silicon Valley, CA',
-    //   monthsWithEmployer: 24,
-    //   nextPayDay: DateTime.now().add(Duration(days: 15)),
-    //   isDirectDeposit: true,
-    // );
   }
 
   Future<Employment> updateEmploymentInfo(Employment employment) async {
-    // Dummy call to simulate an API request
+    // Wait to simulate an API latency
     await Future.delayed(const Duration(milliseconds: 200));
+    await _sharedPrefService.setValue(_key, jsonEncode(employment.toJson()));
     return employment;
   }
 }
