@@ -49,7 +49,7 @@ class EmploymentScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 32.0),
                     EmploymentInfoForm(
-                      employmentDisplay: data.employmentDisplay,
+                      eState: data,
                       employmentTypeOptions:
                           employmentViewModel.getEmploymentTypes(),
                       payFrequencyOptions:
@@ -82,7 +82,7 @@ enum _TextInputs {
 }
 
 class EmploymentInfoForm extends StatefulWidget {
-  final EmploymentDisplay? employmentDisplay;
+  final EmploymentState? eState;
   final Map<EmploymentType, String> employmentTypeOptions;
   final Map<PayFrequency, String> payFrequencyOptions;
   final Function(DateTime) getFormattedDate;
@@ -91,7 +91,7 @@ class EmploymentInfoForm extends StatefulWidget {
 
   const EmploymentInfoForm({
     super.key,
-    required this.employmentDisplay,
+    required this.eState,
     required this.employmentTypeOptions,
     required this.payFrequencyOptions,
     required this.getFormattedDate,
@@ -135,28 +135,26 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
   @override
   void initState() {
     super.initState();
-    if (widget.employmentDisplay != null) {
+    if (widget.eState?.employment != null) {
       // Initialize the selected values with the current values from the widget
-      _selectedEmploymentType = widget.employmentDisplay!.employmentType;
-      _selectedPayFrequency = widget.employmentDisplay!.payFrequency;
-      _selectedEmploymentYears =
-          widget.employmentDisplay!.yearsPartWithEmployer;
-      _selectedEmploymentMonths =
-          widget.employmentDisplay!.monthsPartWithEmployer;
-      _isDirectDeposit = widget.employmentDisplay!.isDirectDepositDisplay;
-      _selectedDate = widget.employmentDisplay!.nextPayDay;
+      _selectedEmploymentType = widget.eState!.employment!.employmentType;
+      _selectedPayFrequency = widget.eState!.employment!.payFrequency;
+      _selectedEmploymentYears = widget.eState!.yearsPartWithEmployer;
+      _selectedEmploymentMonths = widget.eState!.monthsPartWithEmployer;
+      _isDirectDeposit = widget.eState!.isDirectDepositDisplay;
+      _selectedDate = widget.eState!.employment!.nextPayDay;
 
       // Initialize the text controllers with the current values
       _controllerMap[_TextInputs.employer]!.text =
-          widget.employmentDisplay!.employer;
+          widget.eState!.employment!.employer;
       _controllerMap[_TextInputs.jobTitle]!.text =
-          widget.employmentDisplay!.jobTitle;
+          widget.eState!.employment!.jobTitle;
       _controllerMap[_TextInputs.grossAnnualIncome]!.text =
-          widget.employmentDisplay!.grossAnnualIncomeString;
+          widget.eState!.grossAnnualIncomeString;
       _controllerMap[_TextInputs.nextPayday]!.text =
-          widget.employmentDisplay!.nextPayDayDisplay;
+          widget.eState!.nextPayDayDisplay;
       _controllerMap[_TextInputs.employerAddress]!.text =
-          widget.employmentDisplay!.employerAddress;
+          widget.eState!.employment!.employerAddress;
     } else {
       // If no employment display is provided, enable inputs for initial collection
       _isEditing = true;
@@ -200,7 +198,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InputWrapper(
-                displayValue: widget.employmentDisplay?.employmentTypeDisplay,
+                displayValue: widget.eState?.employmentTypeDisplay,
                 label: 'Employment type',
                 inputWidget: DropdownButtonFormField<EmploymentType>(
                   decoration: InputDecoration(
@@ -233,7 +231,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               InputWrapper(
-                displayValue: widget.employmentDisplay?.employer,
+                displayValue: widget.eState?.employment?.employer,
                 label: 'Employer',
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.employer],
@@ -250,7 +248,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               InputWrapper(
-                displayValue: widget.employmentDisplay?.jobTitle,
+                displayValue: widget.eState?.employment!.jobTitle,
                 label: 'Job Title',
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.jobTitle],
@@ -265,8 +263,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               InputWrapper(
-                displayValue:
-                    widget.employmentDisplay?.grossAnnualIncomeDisplay,
+                displayValue: widget.eState?.grossAnnualIncomeDisplay,
                 label: 'Gross annual income',
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.grossAnnualIncome],
@@ -297,7 +294,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               InputWrapper(
-                displayValue: widget.employmentDisplay?.payFrequencyDisplay,
+                displayValue: widget.eState?.payFrequencyDisplay,
                 label: 'Pay Frequency',
                 inputWidget: DropdownButtonFormField<PayFrequency>(
                   decoration: InputDecoration(hintText: 'Select Pay Frequency'),
@@ -327,7 +324,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               InputWrapper(
-                displayValue: widget.employmentDisplay?.payFrequencyDisplay,
+                displayValue: widget.eState?.payFrequencyDisplay,
                 label: 'My next payday is',
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.nextPayday],
@@ -350,7 +347,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               InputWrapper(
-                displayValue: widget.employmentDisplay?.employerAddress,
+                displayValue: widget.eState?.employment!.employerAddress,
                 label: 'Employer address',
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.employerAddress],
@@ -373,7 +370,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               InputWrapper(
-                displayValue: widget.employmentDisplay?.timeWithEmployerDisplay,
+                displayValue: widget.eState?.timeWithEmployerDisplay,
                 label: 'Time with employer',
                 inputWidget: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -443,7 +440,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               InputWrapper(
-                displayValue: widget.employmentDisplay?.isDirectDepositDisplay,
+                displayValue: widget.eState?.isDirectDepositDisplay,
                 label: 'Is your pay a direct deposit?',
                 inputWidget: FormField<String>(
                   initialValue: _isDirectDeposit,

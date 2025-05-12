@@ -10,13 +10,10 @@ part 'employment_viewmodel.g.dart';
 @Riverpod(keepAlive: true)
 class EmploymentViewModel extends _$EmploymentViewModel {
   @override
-  Future<EmploymentState> build() async {
+  Future<EmploymentState?> build() async {
     final employment =
         await ref.read(employmentRepositoryProvider).getEmploymentInfo();
-    return EmploymentState(
-      employmentDisplay:
-          employment != null ? _mapToEmploymentDisplay(employment) : null,
-    );
+    return employment != null ? _mapToEmploymentState(employment) : null;
   }
 
   Future<void> updateEmploymentInfo(EmploymentUpdate employmentUpdate) async {
@@ -41,13 +38,11 @@ class EmploymentViewModel extends _$EmploymentViewModel {
               isDirectDeposit: employmentUpdate.isDirectDeposit,
             ),
           );
-      return EmploymentState(
-        employmentDisplay: _mapToEmploymentDisplay(updated),
-      );
+      return _mapToEmploymentState(updated);
     });
   }
 
-  EmploymentDisplay _mapToEmploymentDisplay(Employment employment) {
+  EmploymentState _mapToEmploymentState(Employment employment) {
     var employmentTypeDisplay = _mapEmploymentTypeDisplay(
       employment.employmentType,
     );
@@ -64,16 +59,8 @@ class EmploymentViewModel extends _$EmploymentViewModel {
         '$monthsEmp ${monthsEmp == 1 ? 'month' : 'months'}';
     var isDirectDepositDisplay = employment.isDirectDeposit ? 'Yes' : 'No';
 
-    return EmploymentDisplay(
-      employmentType: employment.employmentType,
-      employer: employment.employer,
-      jobTitle: employment.jobTitle,
-      grossAnnualIncome: employment.grossAnnualIncome,
-      payFrequency: employment.payFrequency,
-      employerAddress: employment.employerAddress,
-      monthsWithEmployer: employment.monthsWithEmployer,
-      nextPayDay: employment.nextPayDay,
-      isDirectDeposit: employment.isDirectDeposit,
+    return EmploymentState(
+      employment: employment.copyWith(),
       employmentTypeDisplay: employmentTypeDisplay,
       grossAnnualIncomeString: grossAnnualIncomeString,
       grossAnnualIncomeDisplay: grossAnnualIncomeDisplay,

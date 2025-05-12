@@ -1,12 +1,7 @@
 import '../../../models/employment.dart';
 
 class EmploymentState {
-  final EmploymentDisplay? employmentDisplay;
-
-  EmploymentState({required this.employmentDisplay});
-}
-
-class EmploymentDisplay extends Employment {
+  final Employment? employment;
   final String employmentTypeDisplay;
   final String grossAnnualIncomeString;
   final String grossAnnualIncomeDisplay;
@@ -17,16 +12,8 @@ class EmploymentDisplay extends Employment {
   final int monthsPartWithEmployer;
   final String isDirectDepositDisplay;
 
-  EmploymentDisplay({
-    required super.employmentType,
-    required super.employer,
-    required super.jobTitle,
-    required super.grossAnnualIncome,
-    required super.payFrequency,
-    required super.employerAddress,
-    required super.monthsWithEmployer,
-    required super.nextPayDay,
-    required super.isDirectDeposit,
+  EmploymentState({
+    required this.employment,
     required this.employmentTypeDisplay,
     required this.grossAnnualIncomeString,
     required this.grossAnnualIncomeDisplay,
