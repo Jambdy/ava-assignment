@@ -35,7 +35,7 @@ class EmploymentViewModel extends _$EmploymentViewModel {
                   (employmentUpdate.yearsPartWithEmployer * 12) +
                   employmentUpdate.monthsPartWithEmployer,
               nextPayDay: employmentUpdate.nextPayDay,
-              isDirectDeposit: employmentUpdate.isDirectDeposit,
+              isDirectDeposit: employmentUpdate.isDirectDepositDisplay == 'Yes',
             ),
           );
       return _mapToEmploymentState(updated);
@@ -135,5 +135,94 @@ class EmploymentViewModel extends _$EmploymentViewModel {
 
   String getFormattedNumber(num number) {
     return NumberFormat('#,###').format(number);
+  }
+
+  /// Validate Employment Type dropdown
+  String? validateEmploymentType(EmploymentType? value) {
+    if (value == null) {
+      return 'Please select an employment type';
+    }
+    return null;
+  }
+
+  /// Validate Employer text field
+  String? validateEmployer(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter an employer';
+    }
+    return null;
+  }
+
+  /// Validate Job Title text field
+  String? validateJobTitle(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a job title';
+    }
+    return null;
+  }
+
+  /// Validate Gross Annual Income text field
+  String? validateGrossAnnualIncome(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter an annual income';
+    }
+    // Remove non-digit characters and parse
+    final numeric = value.replaceAll(RegExp(r'[^0-9]'), '');
+    if (numeric.isEmpty) {
+      return 'Income must be a number';
+    }
+    return null;
+  }
+
+  /// Validate Pay Frequency dropdown
+  String? validatePayFrequency(PayFrequency? value) {
+    if (value == null) {
+      return 'Please select a pay frequency';
+    }
+    return null;
+  }
+
+  /// Validate Next Payday date picker
+  String? validateNextPayday(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please select a date';
+    }
+    return null;
+  }
+
+  /// Validate Employer Address text field
+  String? validateEmployerAddress(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter an address';
+    }
+    final regex = RegExp(r'^\d+\s+.+');
+    if (!regex.hasMatch(value)) {
+      return 'Enter a valid address (e.g., 123 Main St)';
+    }
+    return null;
+  }
+
+  /// Validate Time with Employer - Years dropdown
+  String? validateEmploymentYears(int? value) {
+    if (value == null) {
+      return 'Please select year';
+    }
+    return null;
+  }
+
+  /// Validate Time with Employer - Months dropdown
+  String? validateEmploymentMonths(int? value) {
+    if (value == null) {
+      return 'Please select month';
+    }
+    return null;
+  }
+
+  /// Validate Direct Deposit radio field
+  String? validateDirectDeposit(String? value) {
+    if (value == null) {
+      return 'Please select one';
+    }
+    return null;
   }
 }

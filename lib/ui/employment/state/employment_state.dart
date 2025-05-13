@@ -36,7 +36,7 @@ class EmploymentUpdate {
   final int yearsPartWithEmployer;
   final int monthsPartWithEmployer;
   final DateTime nextPayDay;
-  final bool isDirectDeposit;
+  final String isDirectDepositDisplay;
 
   EmploymentUpdate({
     required this.employmentType,
@@ -48,6 +48,6 @@ class EmploymentUpdate {
     required this.yearsPartWithEmployer,
     required this.monthsPartWithEmployer,
     required this.nextPayDay,
-    required this.isDirectDeposit,
+    required this.isDirectDepositDisplay,
   });
 }

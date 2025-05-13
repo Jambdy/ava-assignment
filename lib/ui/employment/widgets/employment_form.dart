@@ -151,12 +151,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   onChanged:
                       (value) =>
                           setState(() => _selectedEmploymentType = value),
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please select an employment type';
-                    }
-                    return null;
-                  },
+                  validator: widget.eVM.validateEmploymentType,
                   icon: const Icon(Icons.keyboard_arrow_down_outlined),
                 ),
                 enabled: _isEditing,
@@ -169,12 +164,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   decoration: const InputDecoration(
                     hintText: 'Enter your employment details',
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an employer';
-                    }
-                    return null;
-                  },
+                  validator: widget.eVM.validateEmployer,
                 ),
                 enabled: _isEditing,
               ),
@@ -186,12 +176,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   decoration: const InputDecoration(
                     hintText: 'Enter your job title',
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a job title';
-                    }
-                    return null;
-                  },
+                  validator: widget.eVM.validateJobTitle,
                 ),
                 enabled: _isEditing,
               ),
@@ -206,12 +191,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                     prefixText: '\$',
                     suffixText: '/year',
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an annual income';
-                    }
-                    return null;
-                  },
+                  validator: widget.eVM.validateGrossAnnualIncome,
                   onChanged: (value) {
                     final formattedValue = widget.eVM.getFormattedNumber(
                       int.tryParse(value) ?? 0,
@@ -250,12 +230,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                           .toList(),
                   onChanged:
                       (value) => setState(() => _selectedPayFrequency = value),
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please select an pay frequency';
-                    }
-                    return null;
-                  },
+                  validator: widget.eVM.validatePayFrequency,
                   icon: const Icon(Icons.keyboard_arrow_down_outlined),
                 ),
                 enabled: _isEditing,
@@ -273,12 +248,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   onTap: () {
                     _pickDate(context, _controllerMap[_TextInputs.nextPayday]!);
                   },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select a date';
-                    }
-                    return null;
-                  },
+                  validator: widget.eVM.validateNextPayday,
                 ),
 
                 enabled: _isEditing,
@@ -292,17 +262,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   decoration: const InputDecoration(
                     hintText: 'Enter your employer address',
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an address';
-                    }
-                    // Simple validation: starts with number and space
-                    final regex = RegExp(r'^\d+\s+.+');
-                    if (!regex.hasMatch(value)) {
-                      return 'Enter a valid address (e.g., 123 Main St)';
-                    }
-                    return null;
-                  },
+                  validator: widget.eVM.validateEmployerAddress,
                 ),
                 enabled: _isEditing,
               ),
@@ -334,12 +294,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                             (value) => setState(
                               () => _selectedEmploymentYears = value,
                             ),
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please select year';
-                          }
-                          return null;
-                        },
+                        validator: widget.eVM.validateEmploymentYears,
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                       ),
                     ),
@@ -366,12 +321,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                             (value) => setState(
                               () => _selectedEmploymentMonths = value,
                             ),
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please select month';
-                          }
-                          return null;
-                        },
+                        validator: widget.eVM.validateEmploymentMonths,
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                       ),
                     ),
@@ -476,7 +426,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                       yearsPartWithEmployer: _selectedEmploymentYears!,
                       monthsPartWithEmployer: _selectedEmploymentMonths!,
                       nextPayDay: _selectedDate!,
-                      isDirectDeposit: _isDirectDeposit == 'Yes',
+                      isDirectDepositDisplay: _isDirectDeposit!,
                     ),
                   );
                   setState(() {
