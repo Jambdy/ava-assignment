@@ -124,7 +124,7 @@ class HomeViewModel extends _$HomeViewModel {
             .reversed
             .map((e) => e.score.toDouble())
             .toList();
-    var minScore = ((data.reduce(min) + 49) ~/ 50) * 50;
+    var minScore = ((data.reduce(min) - 49) ~/ 50) * 50;
     var maxScore = ((data.reduce(max) + 49) ~/ 50) * 50;
     var midScore = ((maxScore + minScore) / 2).round();
     var duration = Duration(
