@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -12,6 +14,10 @@ AccountDetailsRepository accountDetailsRepository(Ref ref) =>
 class AccountDetailsRepository {
   Future<AccountDetails> getAccountDetails() async {
     // TODO: Implement conversion from mock API response
-    return AccountDetails(balance: 75, spendLimit: 100, creditLimit: 6000);
+    return AccountDetails(
+      balance: Random().nextInt(101).toDouble(),
+      spendLimit: 100,
+      creditLimit: 6000,
+    );
   }
 }

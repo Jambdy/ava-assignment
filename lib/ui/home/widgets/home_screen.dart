@@ -118,7 +118,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           creditFactorsDisplay: data.creditFactorsDisplay,
                         ),
                         const AvaTitle(title: 'Account Details'),
-                        AccountDetailsCard(accountDetails: data.accountDetails),
+                        AccountDetailsCard(details: data.accountDetails),
                         const SizedBox(height: 34),
                         CreditCardBalanceCard(
                           cCData: data.creditCardAccountsAggregate,

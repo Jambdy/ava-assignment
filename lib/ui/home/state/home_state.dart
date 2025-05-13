@@ -57,17 +57,17 @@ class CreditFactorDisplay extends CreditFactor {
   });
 }
 
-class AccountDetailsDisplay extends AccountDetails {
-  int get utilization => (balance / creditLimit).toInt() * 100;
-
-  double get balanceRatio => balance / spendLimit;
-
-  String get balanceDisplay => balance.toInt().toString();
+class AccountDetailsDisplay {
+  final AccountDetails accountDetails;
+  final int utilization;
+  final double balanceRatio;
+  final String balanceDisplay;
 
   AccountDetailsDisplay({
-    required super.spendLimit,
-    required super.balance,
-    required super.creditLimit,
+    required this.accountDetails,
+    required this.utilization,
+    required this.balanceRatio,
+    required this.balanceDisplay,
   });
 }
 

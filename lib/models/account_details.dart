@@ -1,11 +1,16 @@
-class AccountDetails {
-  final int spendLimit;
-  final double balance;
-  final int creditLimit;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  AccountDetails({
-    required this.spendLimit,
-    required this.balance,
-    required this.creditLimit,
-  });
+part 'account_details.freezed.dart';
+part 'account_details.g.dart';
+
+@freezed
+abstract class AccountDetails with _$AccountDetails {
+  const factory AccountDetails({
+    required int spendLimit,
+    required double balance,
+    required int creditLimit,
+  }) = _AccountDetails;
+
+  factory AccountDetails.fromJson(Map<String, dynamic> json) =>
+      _$AccountDetailsFromJson(json);
 }

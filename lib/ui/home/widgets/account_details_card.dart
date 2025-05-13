@@ -10,9 +10,9 @@ import '../../core/widgets/ava.dart';
 import '../state/home_state.dart';
 
 class AccountDetailsCard extends StatelessWidget {
-  final AccountDetailsDisplay accountDetails;
+  final AccountDetailsDisplay details;
 
-  const AccountDetailsCard({super.key, required this.accountDetails});
+  const AccountDetailsCard({super.key, required this.details});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +24,8 @@ class AccountDetailsCard extends StatelessWidget {
           Column(
             children: [
               _SpendLimitProgress(
-                balanceDisplay: accountDetails.balanceDisplay,
-                progressPercent: accountDetails.balanceRatio,
+                balanceDisplay: details.balanceDisplay,
+                progressPercent: details.balanceRatio,
                 width:
                     LayoutUtils.constrainedWidth(context) -
                     2 * Constants.paddingDefault,
@@ -35,7 +35,7 @@ class AccountDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Spend limit: \$${accountDetails.spendLimit}',
+                    'Spend limit: \$${details.accountDetails.spendLimit}',
                     style: AppTheme.detailRegular,
                   ),
                   const SizedBox(width: 4),
@@ -57,11 +57,11 @@ class AccountDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '\$${accountDetails.balance.toInt()}',
+                    '\$${details.accountDetails.balance.toInt()}',
                     style: AppTheme.bodyEmphasis,
                   ),
                   Text(
-                    '\$${accountDetails.spendLimit}',
+                    '\$${details.accountDetails.spendLimit}',
                     style: AppTheme.bodyEmphasis,
                   ),
                 ],
@@ -81,7 +81,7 @@ class AccountDetailsCard extends StatelessWidget {
             children: [
               const Text('Utilization', style: AppTheme.bodyRegular),
               Text(
-                '${accountDetails.utilization}%',
+                '${details.utilization}%',
                 style: AppTheme.bodyEmphasis,
               ),
             ],

@@ -21,7 +21,7 @@ class HomeViewModel extends _$HomeViewModel {
     final creditScore =
         await ref.read(creditScoreRepositoryProvider).getCreditScore();
     final creditScoreStatus = _mapCreditScoreStatus(creditScore.currentScore);
-    final creditScoreGraphData = _generateCreditScoreGraphData(
+    final creditScoreGraphData = _mapCreditScoreGraphData(
       creditScore.scoreHistory,
     );
     final creditFactorDisplays = _mapCreditFactorDisplays(
@@ -103,9 +103,7 @@ class HomeViewModel extends _$HomeViewModel {
     }).toList();
   }
 
-  CreditScoreGraphData _generateCreditScoreGraphData(
-    List<ScoreEntry> scoreHistory,
-  ) {
+  CreditScoreGraphData _mapCreditScoreGraphData(List<ScoreEntry> scoreHistory) {
     var maxIntervals = 12;
 
     // Sort the score history by date in descending order
@@ -140,10 +138,16 @@ class HomeViewModel extends _$HomeViewModel {
   }
 
   AccountDetailsDisplay _mapAccountDetails(AccountDetails accountDetails) {
+    var utilization =
+        (accountDetails.balance / accountDetails.creditLimit).toInt() * 100;
+    var balanceRatio = accountDetails.balance / accountDetails.spendLimit;
+    var balanceDisplay = accountDetails.balance.toInt().toString();
+
     return AccountDetailsDisplay(
-      spendLimit: accountDetails.spendLimit,
-      balance: accountDetails.balance,
-      creditLimit: accountDetails.creditLimit,
+      accountDetails: accountDetails.copyWith(),
+      utilization: utilization,
+      balanceRatio: balanceRatio,
+      balanceDisplay: balanceDisplay,
     );
   }
 
