@@ -104,23 +104,34 @@ class _SpendLimitProgress extends StatefulWidget {
 class _SpendLimitProgressState extends State<_SpendLimitProgress>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
-  late final Animation<double> _progressAnim;
+  late final CurvedAnimation _curve;
 
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(
-      vsync: this,
-      duration: Duration(
+    _ctrl = AnimationController(vsync: this);
+    _curve = CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut);
+    _startAnimation();
+  }
+
+  void _startAnimation() {
+    // configure duration based on widget params
+    _ctrl
+      ..stop()
+      ..duration = Duration(
         milliseconds:
             (Constants.animationDuration * widget.progressPercent).toInt(),
-      ),
-    );
-    _progressAnim = Tween<double>(
-      begin: 0,
-      end: widget.progressPercent,
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
-    _ctrl.forward();
+      )
+      ..value = 0
+      ..forward();
+  }
+
+  @override
+  void didUpdateWidget(covariant _SpendLimitProgress oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.progressPercent != widget.progressPercent) {
+      _startAnimation();
+    }
   }
 
   @override
@@ -135,8 +146,9 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
       builder: (context, constraints) {
         final width = constraints.maxWidth;
         return AnimatedBuilder(
-          animation: _progressAnim,
+          animation: _curve,
           builder: (_, __) {
+            final animatedValue = _curve.value * widget.progressPercent;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -157,7 +169,7 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
                       opacity:
                           widget.progressPercent == 0
                               ? 1
-                              : _progressAnim.value / widget.progressPercent,
+                              : animatedValue / widget.progressPercent,
                       child: AvaSpeechBubble(
                         text: '\$${widget.balanceDisplay}',
                       ),
@@ -177,7 +189,7 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
                       Container(
                         margin: EdgeInsets.only(
                           left: min(
-                            max(width * _progressAnim.value - 2, 0),
+                            max(width * animatedValue - 2, 0),
                             width - 4,
                           ),
                         ),

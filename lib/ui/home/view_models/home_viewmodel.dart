@@ -20,6 +20,26 @@ class HomeViewModel extends _$HomeViewModel {
   Future<HomeState> build() async {
     final creditScore =
         await ref.read(creditScoreRepositoryProvider).getCreditScore();
+    final accountDetails =
+        await ref.read(accountDetailsRepositoryProvider).getAccountDetails();
+    return _mapToHomeState(creditScore, accountDetails);
+  }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final creditScore =
+          await ref.read(creditScoreRepositoryProvider).getCreditScore();
+      final accountDetails =
+          await ref.read(accountDetailsRepositoryProvider).getAccountDetails();
+      return _mapToHomeState(creditScore, accountDetails);
+    });
+  }
+
+  HomeState _mapToHomeState(
+    CreditScore creditScore,
+    AccountDetails accountDetails,
+  ) {
     final creditScoreDisplay = _mapCreditScoreDisplay(creditScore);
     final creditScoreGraphData = _mapCreditScoreGraphData(
       creditScore.scoreHistory.map((e) => e.copyWith()).toList(),
@@ -27,9 +47,7 @@ class HomeViewModel extends _$HomeViewModel {
     final creditFactorDisplays = _mapCreditFactorDisplays(
       creditScore.creditFactors,
     );
-    final accountDetails = _mapAccountDetails(
-      await ref.read(accountDetailsRepositoryProvider).getAccountDetails(),
-    );
+    final accountDetailsDisplay = _mapAccountDetails(accountDetails);
     final creditCardAccountsAggregate = _mapCreditCardAccountsAggregate(
       creditScore.creditCardAccounts,
     );
@@ -37,7 +55,7 @@ class HomeViewModel extends _$HomeViewModel {
       creditScoreDisplay: creditScoreDisplay,
       creditScoreGraphData: creditScoreGraphData,
       creditFactorsDisplay: creditFactorDisplays,
-      accountDetails: accountDetails,
+      accountDetails: accountDetailsDisplay,
       creditCardAccountsAggregate: creditCardAccountsAggregate,
     );
   }
