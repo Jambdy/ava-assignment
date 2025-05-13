@@ -102,12 +102,15 @@ class EmploymentViewModel extends _$EmploymentViewModel {
   }
 
 
+
+  /// Get Employment Type dropdown values
   Map<EmploymentType, String> getEmploymentTypes() {
     return EmploymentType.values.asMap().map(
       (_, value) => MapEntry(value, _mapEmploymentTypeDisplay(value)),
     );
   }
 
+  /// Get Pay Frequency dropdown values
   Map<PayFrequency, String> getPayFrequencies() {
     return PayFrequency.values.asMap().map(
       (_, value) => MapEntry(value, _mapPayFrequencyDisplay(value)),

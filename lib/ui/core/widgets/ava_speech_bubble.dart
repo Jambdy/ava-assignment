@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../themes/theme.dart';
 
 class AvaSpeechBubble extends StatelessWidget {
+  /// Text to display in the speech bubble.
   final String text;
 
   const AvaSpeechBubble({super.key, required this.text});

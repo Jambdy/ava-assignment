@@ -8,7 +8,7 @@ FeedbackRepository feedbackRepository(Ref ref) => FeedbackRepository();
 
 class FeedbackRepository {
   Future<void> sendFeedback(String message) async {
-    // Simulate API call
+    // Wait to simulate an API latency
     await Future.delayed(const Duration(milliseconds: 200));
   }
 }

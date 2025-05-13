@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../themes/theme.dart';
 
 class AvaChip extends StatelessWidget {
+  /// Text to display in the chip.
   final String text;
 
   const AvaChip({super.key, required this.text});

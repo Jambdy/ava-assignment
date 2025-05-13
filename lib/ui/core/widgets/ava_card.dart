@@ -3,6 +3,21 @@ import 'package:flutter/material.dart';
 import '../../../constants/constants.dart';
 
 class AvaCard extends StatelessWidget {
+  /// The height of the card. If null, the card will adjust to its content.
+  final double? height;
+
+  /// The width of the card. If null, the card will adjust to its content.
+  final double? width;
+
+  /// Whether the card has an outlined border.
+  final bool outlined;
+
+  /// The child widget to display inside the card.
+  final Widget child;
+
+  /// The border radius of the card.
+  final double borderRadius;
+
   const AvaCard({
     super.key,
     this.width,
@@ -11,12 +26,6 @@ class AvaCard extends StatelessWidget {
     this.borderRadius = 20,
     required this.child,
   });
-
-  final double? height;
-  final double? width;
-  final bool outlined;
-  final Widget child;
-  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {

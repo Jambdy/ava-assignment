@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../themes/theme.dart';
 
 class AvaTitle extends StatelessWidget {
-  const AvaTitle({super.key, required this.title});
-
+  /// Title to display.
   final String title;
+
+  const AvaTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

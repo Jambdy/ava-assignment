@@ -66,7 +66,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
   void initState() {
     super.initState();
     if (widget.eState?.employment != null) {
-      // Initialize the selected values with the current values from the widget
+      // Initialize the selected values with the current values
       _selectedEmploymentType = widget.eState!.employment!.employmentType;
       _selectedPayFrequency = widget.eState!.employment!.payFrequency;
       _selectedEmploymentYears = widget.eState!.yearsPartWithEmployer;
@@ -86,7 +86,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
       _controllerMap[_TextInputs.employerAddress]!.text =
           widget.eState!.employment!.employerAddress;
     } else {
-      // If no employment display is provided, enable inputs for initial collection
+      // Start in editing mode if employment data not currently set
       _isEditing = true;
     }
   }
@@ -127,6 +127,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Dropdown for Employment Type
               AvaInputWrapper(
                 displayValue: widget.eState?.employmentTypeDisplay,
                 label: 'Employment type',
@@ -157,6 +158,8 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 ),
                 enabled: _isEditing,
               ),
+
+              // Text input for Employer
               AvaInputWrapper(
                 displayValue: widget.eState?.employment?.employer,
                 label: 'Employer',
@@ -169,6 +172,8 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 ),
                 enabled: _isEditing,
               ),
+
+              // Text input for Job Title
               AvaInputWrapper(
                 displayValue: widget.eState?.employment!.jobTitle,
                 label: 'Job Title',
@@ -181,6 +186,8 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 ),
                 enabled: _isEditing,
               ),
+
+              // Text input for Gross Annual Income
               AvaInputWrapper(
                 displayValue: widget.eState?.grossAnnualIncomeDisplay,
                 label: 'Gross annual income',
@@ -207,6 +214,8 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 ),
                 enabled: _isEditing,
               ),
+
+              // Dropdown for Pay Frequency
               AvaInputWrapper(
                 displayValue: widget.eState?.payFrequencyDisplay,
                 label: 'Pay Frequency',
@@ -236,6 +245,8 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 ),
                 enabled: _isEditing,
               ),
+
+              // Date picker for Next Pay Day
               AvaInputWrapper(
                 displayValue: widget.eState?.nextPayDayDisplay,
                 label: 'My next payday is',
@@ -254,6 +265,56 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
 
                 enabled: _isEditing,
               ),
+
+              // Radio buttons for Direct Deposit
+              AvaInputWrapper(
+                displayValue: widget.eState?.isDirectDepositDisplay,
+                label: 'Is your pay a direct deposit?',
+                inputWidget: FormField<String>(
+                  initialValue: _isDirectDeposit,
+                  validator: (v) => v == null ? 'Please select one' : null,
+                  builder: (field) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ...['Yes', 'No'].map(
+                                  (value) => SizedBox(
+                                width: 130,
+                                child: RadioListTile<String>(
+                                  title: Text(
+                                    value,
+                                    style: AppTheme.bodyRegular,
+                                  ),
+                                  value: value,
+                                  groupValue: field.value,
+                                  onChanged: (v) {
+                                    field.didChange(v);
+                                    setState(() => _isDirectDeposit = v);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (field.hasError)
+                          Text(
+                            field.errorText!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12,
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+                enabled: _isEditing,
+              ),
+
+              // Text input for Employer Address
               AvaInputWrapper(
                 displayValue: widget.eState?.employment!.employerAddress,
                 label: 'Employer address',
@@ -267,6 +328,8 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 ),
                 enabled: _isEditing,
               ),
+
+              // Dropdown for Time with Employer
               AvaInputWrapper(
                 displayValue: widget.eState?.timeWithEmployerDisplay,
                 label: 'Time with employer',
@@ -327,52 +390,6 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                       ),
                     ),
                   ],
-                ),
-                enabled: _isEditing,
-              ),
-              AvaInputWrapper(
-                displayValue: widget.eState?.isDirectDepositDisplay,
-                label: 'Is your pay a direct deposit?',
-                inputWidget: FormField<String>(
-                  initialValue: _isDirectDeposit,
-                  validator: (v) => v == null ? 'Please select one' : null,
-                  builder: (field) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ...['Yes', 'No'].map(
-                              (value) => SizedBox(
-                                width: 130,
-                                child: RadioListTile<String>(
-                                  title: Text(
-                                    value,
-                                    style: AppTheme.bodyRegular,
-                                  ),
-                                  value: value,
-                                  groupValue: field.value,
-                                  onChanged: (v) {
-                                    field.didChange(v);
-                                    setState(() => _isDirectDeposit = v);
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (field.hasError)
-                          Text(
-                            field.errorText!,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
-                              fontSize: 12,
-                            ),
-                          ),
-                      ],
-                    );
-                  },
                 ),
                 enabled: _isEditing,
               ),
