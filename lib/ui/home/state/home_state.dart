@@ -1,23 +1,38 @@
 import 'dart:ui';
 
-import '../../../models/account_details.dart';
-import '../../../models/credit_score.dart';
-
 class HomeState {
-  final CreditScore creditScore;
-  final String creditScoreStatus;
+  final CreditScoreDisplay creditScoreDisplay;
   final CreditScoreGraphData creditScoreGraphData;
   final List<CreditFactorDisplay> creditFactorsDisplay;
   final AccountDetailsDisplay accountDetails;
   final CreditCardAccountsAggregate creditCardAccountsAggregate;
 
   HomeState({
-    required this.creditScore,
-    required this.creditScoreStatus,
+    required this.creditScoreDisplay,
     required this.creditScoreGraphData,
     required this.creditFactorsDisplay,
     required this.accountDetails,
     required this.creditCardAccountsAggregate,
+  });
+}
+
+class CreditScoreDisplay {
+  final int currentScore;
+  final String creditScoreStatus;
+  final String creditAgency;
+  final String lastUpdated;
+  final String nextUpdate;
+  final String scoreChangeDisplay;
+  final Color scoreChangeColor;
+
+  CreditScoreDisplay({
+    required this.currentScore,
+    required this.creditScoreStatus,
+    required this.creditAgency,
+    required this.lastUpdated,
+    required this.nextUpdate,
+    required this.scoreChangeDisplay,
+    required this.scoreChangeColor,
   });
 }
 
@@ -27,7 +42,6 @@ class CreditScoreGraphData {
   final int maxScore;
   final int midScore;
   final Duration duration;
-  final int maxIntervals;
 
   CreditScoreGraphData({
     required this.data,
@@ -35,21 +49,18 @@ class CreditScoreGraphData {
     required this.maxScore,
     required this.midScore,
     required this.duration,
-    required this.maxIntervals,
   });
 }
 
-class CreditFactorDisplay extends CreditFactor {
+class CreditFactorDisplay {
+  final String name;
   final String displayValue;
   final Color displayColor;
   final Color textColor;
   final String impactText;
 
   CreditFactorDisplay({
-    required super.name,
-    required super.value,
-    required super.impact,
-    required super.type,
+    required this.name,
     required this.displayValue,
     required this.displayColor,
     required this.textColor,
@@ -57,17 +68,19 @@ class CreditFactorDisplay extends CreditFactor {
   });
 }
 
-class AccountDetailsDisplay extends AccountDetails {
-  int get utilization => (balance / creditLimit).toInt() * 100;
-
-  double get balanceRatio => balance / spendLimit;
-
-  String get balanceDisplay => balance.toInt().toString();
+class AccountDetailsDisplay {
+  final String balanceDisplay;
+  final double balanceRatio;
+  final String creditLimitDisplay;
+  final String spendLimitDisplay;
+  final String utilizationDisplay;
 
   AccountDetailsDisplay({
-    required super.spendLimit,
-    required super.balance,
-    required super.creditLimit,
+    required this.balanceDisplay,
+    required this.balanceRatio,
+    required this.creditLimitDisplay,
+    required this.spendLimitDisplay,
+    required this.utilizationDisplay,
   });
 }
 
@@ -99,17 +112,19 @@ class CreditUtilizationGrade {
   });
 }
 
-class CreditCardAccountDisplay extends CreditCardAccount {
+class CreditCardAccountDisplay {
+  final String accountName;
+  final int limit;
+  final double balance;
   final String formattedReportedDate;
   final String balanceDisplay;
   final String limitDisplay;
   final int utilization;
 
   CreditCardAccountDisplay({
-    required super.accountName,
-    required super.reportedDate,
-    required super.limit,
-    required super.balance,
+    required this.accountName,
+    required this.limit,
+    required this.balance,
     required this.formattedReportedDate,
     required this.balanceDisplay,
     required this.limitDisplay,

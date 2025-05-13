@@ -1,57 +1,62 @@
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../data/repositories/employment_repository.dart';
 import '../../../models/employment.dart';
+import '../../../utils/format_utils.dart';
 import '../state/employment_state.dart';
 
 part 'employment_viewmodel.g.dart';
 
-@Riverpod(keepAlive: true)
+@Riverpod(keepAlive: false)
 class EmploymentViewModel extends _$EmploymentViewModel {
   @override
   Future<EmploymentState?> build() async {
+    print('Building EmploymentViewModel');
     final employment =
         await ref.read(employmentRepositoryProvider).getEmploymentInfo();
     return employment != null ? _mapToEmploymentState(employment) : null;
   }
 
+  /// Update employment information state
   Future<void> updateEmploymentInfo(EmploymentUpdate employmentUpdate) async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      final updated = await ref
-          .read(employmentRepositoryProvider)
-          .updateEmploymentInfo(
-            Employment(
-              employmentType: employmentUpdate.employmentType,
-              employer: employmentUpdate.employer,
-              jobTitle: employmentUpdate.jobTitle,
-              grossAnnualIncome: int.parse(
-                employmentUpdate.grossAnnualIncomeString.replaceAll(',', ''),
-              ),
-              payFrequency: employmentUpdate.payFrequency,
-              employerAddress: employmentUpdate.employerAddress,
-              monthsWithEmployer:
-                  (employmentUpdate.yearsPartWithEmployer * 12) +
-                  employmentUpdate.monthsPartWithEmployer,
-              nextPayDay: employmentUpdate.nextPayDay,
-              isDirectDeposit: employmentUpdate.isDirectDepositDisplay == 'Yes',
-            ),
-          );
-      return _mapToEmploymentState(updated);
-    });
+    state = AsyncValue.data(
+      _mapToEmploymentState(
+        Employment(
+          employmentType: employmentUpdate.employmentType,
+          employer: employmentUpdate.employer,
+          jobTitle: employmentUpdate.jobTitle,
+          grossAnnualIncome: int.parse(
+            employmentUpdate.grossAnnualIncomeString.replaceAll(',', ''),
+          ),
+          payFrequency: employmentUpdate.payFrequency,
+          employerAddress: employmentUpdate.employerAddress,
+          monthsWithEmployer:
+              (employmentUpdate.yearsPartWithEmployer * 12) +
+              employmentUpdate.monthsPartWithEmployer,
+          nextPayDay: employmentUpdate.nextPayDay,
+          isDirectDeposit: employmentUpdate.isDirectDepositDisplay == 'Yes',
+        ),
+      ),
+    );
+  }
+
+  /// Persist employment information on confirm
+  Future<void> persistEmploymentInfo() async {
+    await ref
+        .read(employmentRepositoryProvider)
+        .persistEmploymentInfo(state.value!.employment!);
   }
 
   EmploymentState _mapToEmploymentState(Employment employment) {
     var employmentTypeDisplay = _mapEmploymentTypeDisplay(
       employment.employmentType,
     );
-    var grossAnnualIncomeString = getFormattedNumber(
+    var grossAnnualIncomeString = FormatUtils.formatNumberComma(
       employment.grossAnnualIncome,
     );
     var grossAnnualIncomeDisplay = '\$$grossAnnualIncomeString/year';
     var payFrequencyDisplay = _mapPayFrequencyDisplay(employment.payFrequency);
-    var nextPayDayDisplay = getFormattedDate(employment.nextPayDay);
+    var nextPayDayDisplay = FormatUtils.formatDateFull(employment.nextPayDay);
     var yearsEmp = employment.monthsWithEmployer ~/ 12;
     var monthsEmp = employment.monthsWithEmployer % 12;
     var timeWithEmployerDisplay =
@@ -101,40 +106,18 @@ class EmploymentViewModel extends _$EmploymentViewModel {
     }
   }
 
-  String _getDaySuffix(int day) {
-    if (day >= 11 && day <= 13) return 'th';
-    switch (day % 10) {
-      case 1:
-        return 'st';
-      case 2:
-        return 'nd';
-      case 3:
-        return 'rd';
-      default:
-        return 'th';
-    }
-  }
-
+  /// Get Employment Type dropdown values
   Map<EmploymentType, String> getEmploymentTypes() {
     return EmploymentType.values.asMap().map(
       (_, value) => MapEntry(value, _mapEmploymentTypeDisplay(value)),
     );
   }
 
+  /// Get Pay Frequency dropdown values
   Map<PayFrequency, String> getPayFrequencies() {
     return PayFrequency.values.asMap().map(
       (_, value) => MapEntry(value, _mapPayFrequencyDisplay(value)),
     );
-  }
-
-  String getFormattedDate(DateTime date) {
-    return DateFormat(
-      "MMM d'${_getDaySuffix(date.day)}', y (EEEE)",
-    ).format(date);
-  }
-
-  String getFormattedNumber(num number) {
-    return NumberFormat('#,###').format(number);
   }
 
   /// Validate Employment Type dropdown

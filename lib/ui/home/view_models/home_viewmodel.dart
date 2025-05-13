@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../constants/constants.dart';
@@ -9,6 +8,7 @@ import '../../../data/repositories/account_details_repository.dart';
 import '../../../data/repositories/credit_score_repository.dart';
 import '../../../models/account_details.dart';
 import '../../../models/credit_score.dart';
+import '../../../utils/format_utils.dart';
 import '../../core/themes/color.dart';
 import '../state/home_state.dart';
 
@@ -20,26 +20,59 @@ class HomeViewModel extends _$HomeViewModel {
   Future<HomeState> build() async {
     final creditScore =
         await ref.read(creditScoreRepositoryProvider).getCreditScore();
-    final creditScoreStatus = _mapCreditScoreStatus(creditScore.currentScore);
-    final creditScoreGraphData = _generateCreditScoreGraphData(
-      creditScore.scoreHistory,
+    final accountDetails =
+        await ref.read(accountDetailsRepositoryProvider).getAccountDetails();
+    return _mapToHomeState(creditScore, accountDetails);
+  }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final creditScore =
+          await ref.read(creditScoreRepositoryProvider).getCreditScore();
+      final accountDetails =
+          await ref.read(accountDetailsRepositoryProvider).getAccountDetails();
+      return _mapToHomeState(creditScore, accountDetails);
+    });
+  }
+
+  HomeState _mapToHomeState(
+    CreditScore creditScore,
+    AccountDetails accountDetails,
+  ) {
+    final creditScoreDisplay = _mapCreditScoreDisplay(creditScore);
+    final creditScoreGraphData = _mapCreditScoreGraphData(
+      creditScore.scoreHistory.map((e) => e.copyWith()).toList(),
     );
     final creditFactorDisplays = _mapCreditFactorDisplays(
       creditScore.creditFactors,
     );
-    final accountDetails = _mapAccountDetails(
-      await ref.read(accountDetailsRepositoryProvider).getAccountDetails(),
-    );
+    final accountDetailsDisplay = _mapAccountDetails(accountDetails);
     final creditCardAccountsAggregate = _mapCreditCardAccountsAggregate(
       creditScore.creditCardAccounts,
     );
     return HomeState(
-      creditScore: creditScore,
-      creditScoreStatus: creditScoreStatus,
+      creditScoreDisplay: creditScoreDisplay,
       creditScoreGraphData: creditScoreGraphData,
       creditFactorsDisplay: creditFactorDisplays,
-      accountDetails: accountDetails,
+      accountDetails: accountDetailsDisplay,
       creditCardAccountsAggregate: creditCardAccountsAggregate,
+    );
+  }
+
+  CreditScoreDisplay _mapCreditScoreDisplay(CreditScore creditScore) {
+    return CreditScoreDisplay(
+      currentScore: creditScore.currentScore,
+      creditScoreStatus: _mapCreditScoreStatus(creditScore.currentScore),
+      creditAgency: creditScore.creditAgency,
+      lastUpdated: FormatUtils.formatDateRelative(creditScore.lastUpdated),
+      nextUpdate: FormatUtils.formatDateRelative(creditScore.nextUpdate),
+      scoreChangeDisplay:
+          '${creditScore.scoreChange >= 0 ? '+' : '-'}${creditScore.scoreChange.abs()}pts',
+      scoreChangeColor:
+          creditScore.scoreChange >= 0
+              ? AppColors.avaSecondary
+              : AppColors.lightRed,
     );
   }
 
@@ -92,9 +125,6 @@ class HomeViewModel extends _$HomeViewModel {
 
       return CreditFactorDisplay(
         name: factor.name,
-        value: factor.value,
-        impact: factor.impact,
-        type: factor.type,
         displayValue: displayValue,
         displayColor: displayColor,
         textColor: textColor,
@@ -103,10 +133,19 @@ class HomeViewModel extends _$HomeViewModel {
     }).toList();
   }
 
-  CreditScoreGraphData _generateCreditScoreGraphData(
-    List<ScoreEntry> scoreHistory,
-  ) {
-    var maxIntervals = 12;
+  CreditScoreGraphData _mapCreditScoreGraphData(List<ScoreEntry> scoreHistory) {
+    var maxIntervals = Constants.historyIntervalMax;
+
+    // Handle empty score history
+    if (scoreHistory.isEmpty) {
+      return CreditScoreGraphData(
+        data: [],
+        minScore: 600,
+        maxScore: 800,
+        midScore: 700,
+        duration: const Duration(milliseconds: 0),
+      );
+    }
 
     // Sort the score history by date in descending order
     scoreHistory.sort((a, b) => b.date.compareTo(a.date));
@@ -118,7 +157,7 @@ class HomeViewModel extends _$HomeViewModel {
             .reversed
             .map((e) => e.score.toDouble())
             .toList();
-    var minScore = ((data.reduce(min) + 49) ~/ 50) * 50;
+    var minScore = ((data.reduce(min) - 49) ~/ 50) * 50;
     var maxScore = ((data.reduce(max) + 49) ~/ 50) * 50;
     var midScore = ((maxScore + minScore) / 2).round();
     var duration = Duration(
@@ -135,15 +174,24 @@ class HomeViewModel extends _$HomeViewModel {
       maxScore: maxScore,
       midScore: midScore,
       duration: duration,
-      maxIntervals: maxIntervals,
     );
   }
 
   AccountDetailsDisplay _mapAccountDetails(AccountDetails accountDetails) {
+    var utilization =
+        (accountDetails.balance / accountDetails.creditLimit * 100).toInt();
+    var balanceRatio = accountDetails.balance / accountDetails.spendLimit;
+
     return AccountDetailsDisplay(
-      spendLimit: accountDetails.spendLimit,
-      balance: accountDetails.balance,
-      creditLimit: accountDetails.creditLimit,
+      utilizationDisplay: utilization.toString(),
+      balanceRatio: balanceRatio,
+      balanceDisplay: FormatUtils.formatNumberComma(accountDetails.balance),
+      creditLimitDisplay: FormatUtils.formatNumberComma(
+        accountDetails.creditLimit,
+      ),
+      spendLimitDisplay: FormatUtils.formatNumberComma(
+        accountDetails.spendLimit,
+      ),
     );
   }
 
@@ -155,19 +203,18 @@ class HomeViewModel extends _$HomeViewModel {
         section: 0,
       );
     }
-    if (utilization < 75) {
+    if (utilization < 50) {
       return CreditUtilizationGrade(
         gradeText: 'Fair',
         gradeRank: 2,
-        section:
-            (utilization < 30)
-                ? 1
-                : (utilization < 50)
-                ? 2
-                : 3,
+        section: (utilization < 30) ? 1 : 2,
       );
     }
-    return CreditUtilizationGrade(gradeText: 'Poor', gradeRank: 3, section: 4);
+    return CreditUtilizationGrade(
+      gradeText: 'Poor',
+      gradeRank: 3,
+      section: (utilization < 75) ? 3 : 4,
+    );
   }
 
   CreditCardAccountsAggregate _mapCreditCardAccountsAggregate(
@@ -179,10 +226,10 @@ class HomeViewModel extends _$HomeViewModel {
       totalLimit += account.limit;
       totalBalance += account.balance;
     }
-    var totalBalanceDisplay = NumberFormat(
-      '#,###',
-    ).format(totalBalance.toInt());
-    var totalLimitDisplay = NumberFormat('#,###').format(totalLimit);
+    var totalBalanceDisplay = FormatUtils.formatNumberComma(
+      totalBalance.toInt(),
+    );
+    var totalLimitDisplay = FormatUtils.formatNumberComma(totalLimit);
     var totalUtilization = (totalBalance / totalLimit * 100).toInt();
     var utilizationGrade = _mapCreditUtilization(totalUtilization);
 
@@ -191,18 +238,17 @@ class HomeViewModel extends _$HomeViewModel {
             .map(
               (account) => CreditCardAccountDisplay(
                 accountName: account.accountName,
-                reportedDate: account.reportedDate,
                 limit: account.limit,
                 balance: account.balance,
-                formattedReportedDate: DateFormat(
-                  'MMMM d, y',
-                ).format(account.reportedDate),
-                balanceDisplay: NumberFormat(
-                  '#,###',
-                ).format(account.balance.toInt()),
-                limitDisplay: NumberFormat(
-                  '#,###',
-                ).format(account.limit.toInt()),
+                formattedReportedDate: FormatUtils.formatDateShort(
+                  account.reportedDate,
+                ),
+                balanceDisplay: FormatUtils.formatNumberComma(
+                  account.balance.toInt(),
+                ),
+                limitDisplay: FormatUtils.formatNumberComma(
+                  account.limit.toInt(),
+                ),
                 utilization: (account.balance / account.limit * 100).toInt(),
               ),
             )

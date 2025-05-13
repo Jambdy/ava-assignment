@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../themes/theme.dart';
 
 class AvaSpeechBubble extends StatelessWidget {
+  /// Text to display in the speech bubble.
   final String text;
-  final double width;
 
-  const AvaSpeechBubble({super.key, required this.text, required this.width});
+  const AvaSpeechBubble({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +14,8 @@ class AvaSpeechBubble extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: width,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 6),
+          // alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(4),

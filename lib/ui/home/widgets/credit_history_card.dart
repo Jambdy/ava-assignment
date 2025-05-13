@@ -8,7 +8,8 @@ import '../state/home_state.dart';
 import 'credit_score_status.dart';
 
 class CreditHistoryCard extends StatelessWidget {
-  final int scoreChange;
+  final String scoreChange;
+  final Color scoreChangeColor;
   final String lastUpdated;
   final String nextUpdate;
   final String creditAgency;
@@ -17,6 +18,7 @@ class CreditHistoryCard extends StatelessWidget {
   const CreditHistoryCard({
     super.key,
     required this.scoreChange,
+    required this.scoreChangeColor,
     required this.lastUpdated,
     required this.nextUpdate,
     required this.creditAgency,
@@ -32,7 +34,8 @@ class CreditHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CreditScoreStatus(
-            scoreChange: scoreChange,
+            scoreChangeDisplay: scoreChange,
+            scoreChangeColor: scoreChangeColor,
             lastUpdated: lastUpdated,
             nextUpdate: nextUpdate,
             creditAgency: creditAgency,
@@ -74,16 +77,31 @@ class _CreditHistoryChart extends StatefulWidget {
 class _CreditHistoryChartState extends State<_CreditHistoryChart>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
-  late final Animation<double> _anim;
+  late final CurvedAnimation _curve;
 
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(
-      vsync: this,
-      duration: widget.creditScoreGraphData.duration,
-    )..forward();
-    _anim = CurvedAnimation(parent: _ctrl, curve: Curves.linear);
+    _ctrl = AnimationController(vsync: this);
+    _curve = CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut);
+    _startAnimation();
+  }
+
+  void _startAnimation() {
+    // configure duration based on widget params
+    _ctrl
+      ..stop()
+      ..duration = widget.creditScoreGraphData.duration
+      ..value = 0
+      ..forward();
+  }
+
+  @override
+  void didUpdateWidget(covariant _CreditHistoryChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.creditScoreGraphData != widget.creditScoreGraphData) {
+      _startAnimation();
+    }
   }
 
   @override
@@ -130,13 +148,13 @@ class _CreditHistoryChartState extends State<_CreditHistoryChart>
         Padding(
           padding: const EdgeInsets.fromLTRB(44, 16, 18, 22),
           child: AnimatedBuilder(
-            animation: _anim,
+            animation: _curve,
             builder: (_, __) {
               return CustomPaint(
                 size: Size.infinite,
                 painter: _LineChartPainter(
                   data: widget.creditScoreGraphData.data,
-                  progress: _anim.value,
+                  progress: _curve.value,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               );

@@ -45,27 +45,38 @@ class AvaOutlinedCircleAnimation extends StatefulWidget {
 class AnimatedArcCountCircleState extends State<AvaOutlinedCircleAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
-  late final Animation<double> _angleAnim;
+  late final CurvedAnimation _curve;
 
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(
-      vsync: this,
-      duration: Duration(
+    _ctrl = AnimationController(vsync: this);
+    _curve = CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut);
+    _startAnimation();
+  }
+
+  void _startAnimation() {
+    // configure duration based on widget params
+    _ctrl
+      ..stop()
+      ..duration = Duration(
         milliseconds:
             (widget.durationInMilliseconds *
                     widget.currentValue /
                     widget.maxValue)
                 .toInt(),
-      ),
-    );
-    // Tween from 0 → creditScore
-    _angleAnim = Tween<double>(
-      begin: 0,
-      end: widget.currentValue.toDouble(),
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.linear));
-    _ctrl.forward();
+      )
+      ..value = 0
+      ..forward();
+  }
+
+  @override
+  void didUpdateWidget(covariant AvaOutlinedCircleAnimation oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentValue != widget.currentValue ||
+        oldWidget.maxValue != widget.maxValue) {
+      _startAnimation();
+    }
   }
 
   @override
@@ -80,8 +91,9 @@ class AnimatedArcCountCircleState extends State<AvaOutlinedCircleAnimation>
       width: widget.size,
       height: widget.size,
       child: AnimatedBuilder(
-        animation: _angleAnim,
+        animation: _curve,
         builder: (_, __) {
+          final animatedValue = _curve.value * widget.currentValue;
           return Stack(
             alignment: Alignment.center,
             children: [
@@ -97,7 +109,7 @@ class AnimatedArcCountCircleState extends State<AvaOutlinedCircleAnimation>
               CustomPaint(
                 size: Size.square(widget.size),
                 painter: _ArcPainter(
-                  currentValue: _angleAnim.value,
+                  currentValue: animatedValue,
                   maxValue: widget.maxValue,
                   color: Theme.of(context).colorScheme.secondary,
                   strokeWidth: widget.strokeWidth,
@@ -105,11 +117,10 @@ class AnimatedArcCountCircleState extends State<AvaOutlinedCircleAnimation>
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 4),
                   Text(
-                    '${_angleAnim.value.toInt()}${widget.textSuffix}',
+                    '${animatedValue.toInt()}${widget.textSuffix}',
                     style: AppTheme.graphMedium,
                   ),
                   if (widget.underText != null)

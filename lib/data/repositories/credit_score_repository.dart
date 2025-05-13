@@ -2,102 +2,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../models/credit_score.dart';
+import '../services/api_client.dart';
 
 part 'credit_score_repository.g.dart';
 
 @riverpod
-CreditScoreRepository creditScoreRepository(Ref ref) => CreditScoreRepository();
+CreditScoreRepository creditScoreRepository(Ref ref) {
+  final apiClient = ref.read(apiClientProvider);
+  return CreditScoreRepository(apiClient);
+}
 
 class CreditScoreRepository {
+  final ApiClient _apiClient;
+
+  CreditScoreRepository(this._apiClient);
+
   Future<CreditScore> getCreditScore() async {
-    // TODO: Implement conversion from mock API response
-    return CreditScore(
-      currentScore: 720,
-      scoreChange: 2,
-      lastUpdated: 'Today',
-      nextUpdate: 'May 12',
-      scoreHistory: [
-        ScoreEntry(
-          score: 650,
-          date: DateTime.now().subtract(const Duration(days: 10)),
-        ),
-        ScoreEntry(
-          score: 710,
-          date: DateTime.now().subtract(const Duration(days: 9)),
-        ),
-        ScoreEntry(
-          score: 720,
-          date: DateTime.now().subtract(const Duration(days: 8)),
-        ),
-        ScoreEntry(
-          score: 750,
-          date: DateTime.now().subtract(const Duration(days: 7)),
-        ),
-        ScoreEntry(
-          score: 710,
-          date: DateTime.now().subtract(const Duration(days: 6)),
-        ),
-        ScoreEntry(score: 680, date: DateTime.now()),
-      ],
-      creditAgency: 'Experian',
-      creditFactors: [
-        CreditFactor(
-          name: 'Payment History',
-          value: 100,
-          impact: Impact.high,
-          type: Type.percentage,
-        ),
-        CreditFactor(
-          name: 'Credit Card Utilization',
-          value: 4,
-          impact: Impact.low,
-          type: Type.percentage,
-        ),
-        CreditFactor(
-          name: 'Derogatory Marks',
-          value: 0,
-          impact: Impact.medium,
-          type: Type.number,
-        ),
-        CreditFactor(
-          name: 'Age of Credit History',
-          value: 68,
-          impact: Impact.medium,
-          type: Type.months,
-        ),
-        CreditFactor(
-          name: 'Hard Inquiries',
-          value: 0,
-          impact: Impact.low,
-          type: Type.number,
-        ),
-        CreditFactor(
-          name: 'Total Accounts',
-          value: 15,
-          impact: Impact.low,
-          type: Type.number,
-        ),
-      ],
-      creditCardAccounts: [
-        CreditCardAccount(
-          accountName: 'Chase Freedom',
-          reportedDate: DateTime.now().subtract(const Duration(days: 30)),
-          limit: 5000,
-          balance: 200,
-        ),
-        CreditCardAccount(
-          accountName: 'Discover It',
-          reportedDate: DateTime.now().subtract(const Duration(days: 60)),
-          limit: 3000,
-          balance: 1500,
-        ),
-        CreditCardAccount(
-          accountName: 'Capital One Quicksilver',
-          reportedDate: DateTime.now().subtract(const Duration(days: 90)),
-          limit: 10000,
-          balance: 5000,
-        ),
-      ],
-    );
+    var creditScore = await _apiClient.getCreditScore();
+    return creditScore.copyWith();
   }
 }

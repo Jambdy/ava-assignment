@@ -10,6 +10,7 @@ import '../../../utils/layout_utils.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava.dart';
 import '../../feedback/widgets/feedback_overlay.dart';
+import '../state/home_state.dart';
 import '../view_models/home_viewmodel.dart';
 import 'account_details_card.dart';
 import 'credit_card_accounts_card.dart';
@@ -53,6 +54,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final homeState = ref.watch(homeViewModelProvider);
 
+    // If still loading and there no data, show full‐screen spinner
+    if (homeState.isLoading && !homeState.hasValue) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    // If we have an error and no data, show error:
+    if (homeState.hasError && !homeState.hasValue) {
+      return Center(child: Text('Error: ${homeState.error}'));
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -63,6 +74,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             context.router.push(const EmploymentRoute());
           },
         ),
+
+        /// TODO: Remove if app actually released
+        /// Included to demonstrate the animations during refresh
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh_outlined),
+            color: Theme.of(context).colorScheme.onPrimary,
+            onPressed: () {
+              ref.read(homeViewModelProvider.notifier).refresh();
+            },
+          ),
+        ],
         title: Text(
           'Home',
           style: AppTheme.bodyEmphasis.copyWith(
@@ -71,76 +94,90 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         centerTitle: true,
       ),
-      body: homeState.when(
-        data: (data) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: 180,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(32),
-                      bottomRight: Radius.circular(32),
-                    ),
-                  ),
-                  child: Center(
-                    child: CreditScoreCard(
-                      currentScore: data.creditScore.currentScore,
-                      creditScoreStatus: data.creditScoreStatus,
-                      scoreChange: data.creditScore.scoreChange,
-                      lastUpdated: data.creditScore.lastUpdated,
-                      nextUpdate: data.creditScore.nextUpdate,
-                      creditAgency: data.creditScore.creditAgency,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    width: LayoutUtils.constrainedWidth(context),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Constants.paddingDefault,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const AvaTitle(title: 'Chart'),
-                        CreditHistoryCard(
-                          scoreChange: data.creditScore.scoreChange,
-                          lastUpdated: data.creditScore.lastUpdated,
-                          nextUpdate: data.creditScore.nextUpdate,
-                          creditAgency: data.creditScore.creditAgency,
-                          creditScoreGraphData: data.creditScoreGraphData,
-                        ),
-                        const AvaTitle(title: 'Credit Factors'),
-                        CreditFactorsCard(
-                          creditFactorsDisplay: data.creditFactorsDisplay,
-                        ),
-                        const AvaTitle(title: 'Account Details'),
-                        AccountDetailsCard(accountDetails: data.accountDetails),
-                        const SizedBox(height: 34),
-                        CreditCardBalanceCard(
-                          cCData: data.creditCardAccountsAggregate,
-                        ),
-                        const AvaTitle(title: 'Open credit card accounts'),
-                        CreditCardAccountsCard(
-                          cCAccounts:
-                              data
-                                  .creditCardAccountsAggregate
-                                  .creditCardAccountsDisplay,
-                        ),
-                        const SizedBox(height: 34),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+      body: Stack(
+        children: [
+          _bodyContent(homeState.value!),
+          if (homeState.isLoading)
+            const Center(
+              child: CircularProgressIndicator(),
             ),
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => Center(child: Text('Error: $err')),
+        ],
+      ),
+    );
+    
+  }
+
+  Widget _bodyContent(HomeState data) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            height: 180,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(32),
+                bottomRight: Radius.circular(32),
+              ),
+            ),
+            child: Center(
+              child: CreditScoreCard(
+                currentScore: data.creditScoreDisplay.currentScore,
+                creditScoreStatus:
+                data.creditScoreDisplay.creditScoreStatus,
+                scoreChangeDisplay:
+                data.creditScoreDisplay.scoreChangeDisplay,
+                scoreChangeColor:
+                data.creditScoreDisplay.scoreChangeColor,
+                lastUpdated: data.creditScoreDisplay.lastUpdated,
+                nextUpdate: data.creditScoreDisplay.nextUpdate,
+                creditAgency: data.creditScoreDisplay.creditAgency,
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: LayoutUtils.constrainedWidth(context),
+              padding: const EdgeInsets.symmetric(
+                horizontal: Constants.paddingDefault,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AvaTitle(title: 'Chart'),
+                  CreditHistoryCard(
+                    scoreChange:
+                    data.creditScoreDisplay.scoreChangeDisplay,
+                    scoreChangeColor:
+                    data.creditScoreDisplay.scoreChangeColor,
+                    lastUpdated: data.creditScoreDisplay.lastUpdated,
+                    nextUpdate: data.creditScoreDisplay.nextUpdate,
+                    creditAgency: data.creditScoreDisplay.creditAgency,
+                    creditScoreGraphData: data.creditScoreGraphData,
+                  ),
+                  const AvaTitle(title: 'Credit Factors'),
+                  CreditFactorsCard(
+                    creditFactorsDisplay: data.creditFactorsDisplay,
+                  ),
+                  const AvaTitle(title: 'Account Details'),
+                  AccountDetailsCard(details: data.accountDetails),
+                  const SizedBox(height: 34),
+                  CreditCardBalanceCard(
+                    cCData: data.creditCardAccountsAggregate,
+                  ),
+                  const AvaTitle(title: 'Open credit card accounts'),
+                  CreditCardAccountsCard(
+                    cCAccounts:
+                    data
+                        .creditCardAccountsAggregate
+                        .creditCardAccountsDisplay,
+                  ),
+                  const SizedBox(height: 34),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

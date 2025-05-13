@@ -3,16 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../constants/constants.dart';
-import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava.dart';
 import '../state/home_state.dart';
 
 class AccountDetailsCard extends StatelessWidget {
-  final AccountDetailsDisplay accountDetails;
+  final AccountDetailsDisplay details;
 
-  const AccountDetailsCard({super.key, required this.accountDetails});
+  const AccountDetailsCard({super.key, required this.details});
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +23,15 @@ class AccountDetailsCard extends StatelessWidget {
           Column(
             children: [
               _SpendLimitProgress(
-                balanceDisplay: accountDetails.balanceDisplay,
-                progressPercent: accountDetails.balanceRatio,
-                width:
-                    LayoutUtils.constrainedWidth(context) -
-                    2 * Constants.paddingDefault,
+                balanceDisplay: details.balanceDisplay,
+                progressPercent: details.balanceRatio,
               ),
               const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Spend limit: \$${accountDetails.spendLimit}',
+                    'Spend limit: \$${details.spendLimitDisplay}',
                     style: AppTheme.detailRegular,
                   ),
                   const SizedBox(width: 4),
@@ -57,11 +53,11 @@ class AccountDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '\$${accountDetails.balance.toInt()}',
+                    '\$${details.balanceDisplay}',
                     style: AppTheme.bodyEmphasis,
                   ),
                   Text(
-                    '\$${accountDetails.spendLimit}',
+                    '\$${details.creditLimitDisplay}',
                     style: AppTheme.bodyEmphasis,
                   ),
                 ],
@@ -81,7 +77,7 @@ class AccountDetailsCard extends StatelessWidget {
             children: [
               const Text('Utilization', style: AppTheme.bodyRegular),
               Text(
-                '${accountDetails.utilization}%',
+                '${details.utilizationDisplay}%',
                 style: AppTheme.bodyEmphasis,
               ),
             ],
@@ -95,12 +91,10 @@ class AccountDetailsCard extends StatelessWidget {
 class _SpendLimitProgress extends StatefulWidget {
   final String balanceDisplay;
   final double progressPercent;
-  final double width;
 
   const _SpendLimitProgress({
     required this.balanceDisplay,
     required this.progressPercent,
-    required this.width,
   });
 
   @override
@@ -110,24 +104,34 @@ class _SpendLimitProgress extends StatefulWidget {
 class _SpendLimitProgressState extends State<_SpendLimitProgress>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
-  late final Animation<double> _progressAnim;
-  final double _speechWidth = 42;
+  late final CurvedAnimation _curve;
 
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(
-      vsync: this,
-      duration: Duration(
+    _ctrl = AnimationController(vsync: this);
+    _curve = CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut);
+    _startAnimation();
+  }
+
+  void _startAnimation() {
+    // configure duration based on widget params
+    _ctrl
+      ..stop()
+      ..duration = Duration(
         milliseconds:
             (Constants.animationDuration * widget.progressPercent).toInt(),
-      ),
-    );
-    _progressAnim = Tween<double>(
-      begin: 0,
-      end: widget.progressPercent,
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
-    _ctrl.forward();
+      )
+      ..value = 0
+      ..forward();
+  }
+
+  @override
+  void didUpdateWidget(covariant _SpendLimitProgress oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.progressPercent != widget.progressPercent) {
+      _startAnimation();
+    }
   }
 
   @override
@@ -138,57 +142,70 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.width,
-      child: AnimatedBuilder(
-        animation: _progressAnim,
-        builder: (_, __) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                // TODO: Handle dynamic speech width
-                padding: EdgeInsets.only(
-                  left: max(
-                    widget.progressPercent * widget.width - _speechWidth / 2,
-                    0,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        return AnimatedBuilder(
+          animation: _curve,
+          builder: (_, __) {
+            final animatedValue = _curve.value * widget.progressPercent;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Show speech bubble centered around the progress bar
+                Padding(
+                  padding: EdgeInsets.only(
+                    // Stop near edge of the card
+                    left: min(
+                      max(widget.progressPercent * width, 16),
+                      width - widget.balanceDisplay.length * 8 - 30,
+                    ),
+                    bottom: 8,
                   ),
-                  bottom: 8,
-                ),
-                child: Opacity(
-                  opacity: _progressAnim.value / widget.progressPercent,
-                  child: AvaSpeechBubble(
-                    text: '\$${widget.balanceDisplay}',
-                    width: _speechWidth,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 8,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.avaSecondaryLight,
-                        borderRadius: BorderRadius.circular(999),
+                  child: Align(
+                    alignment: const FractionalOffset(-0.5, 0),
+                    widthFactor: 2,
+                    child: Opacity(
+                      opacity:
+                          widget.progressPercent == 0
+                              ? 1
+                              : animatedValue / widget.progressPercent,
+                      child: AvaSpeechBubble(
+                        text: '\$${widget.balanceDisplay}',
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: max(widget.width * _progressAnim.value - 2, 0),
-                      ),
-                      width: 4,
-                      decoration: const BoxDecoration(
-                        color: AppColors.avaSecondary,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
-      ),
+                SizedBox(
+                  height: 8,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.avaSecondaryLight,
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: min(
+                            max(width * animatedValue - 2, 0),
+                            width - 4,
+                          ),
+                        ),
+                        width: 4,
+                        decoration: const BoxDecoration(
+                          color: AppColors.avaSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
