@@ -122,7 +122,8 @@ class HomeViewModel extends _$HomeViewModel {
     var maxScore = ((data.reduce(max) + 49) ~/ 50) * 50;
     var midScore = ((maxScore + minScore) / 2).round();
     var duration = Duration(
-      milliseconds: (Constants.animationDuration / maxIntervals * data.length).toInt(),
+      milliseconds:
+          (Constants.animationDuration / maxIntervals * data.length).toInt(),
     );
 
     // Normalize the data to a 0-1 scale

@@ -97,6 +97,7 @@ abstract final class AppTheme {
             fontWeight: FontWeight.w600,
             color: AppColors.textWhite,
           ),
+          fixedSize: const Size.fromHeight(44),
         ),
       );
 
@@ -114,6 +115,7 @@ abstract final class AppTheme {
             fontWeight: FontWeight.w600,
             color: AppColors.avaPrimary,
           ),
+          fixedSize: const Size.fromHeight(44),
         ),
       );
 

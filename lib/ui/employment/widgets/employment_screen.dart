@@ -507,7 +507,6 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           visible: !_isEditing,
           child: Container(
             width: double.infinity,
-            height: 44,
             margin: const EdgeInsets.only(bottom: 8),
             child: OutlinedButton(
               onPressed: () {
@@ -523,7 +522,6 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           visible: !_isEditing,
           child: SizedBox(
             width: double.infinity,
-            height: 44,
             child: ElevatedButton(
               onPressed: () {
                 context.router.push(HomeRoute(requestFeedback: true));
@@ -536,7 +534,6 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           visible: _isEditing,
           child: SizedBox(
             width: double.infinity,
-            height: 44,
             child: ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {

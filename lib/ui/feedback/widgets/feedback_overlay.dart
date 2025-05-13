@@ -71,7 +71,6 @@ class _FeedbackOverlayState extends ConsumerState<FeedbackOverlay> {
                   ),
                   const SizedBox(height: Constants.paddingDefault),
                   SizedBox(
-                    height: 44,
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
