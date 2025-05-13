@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import '../../../constants/constants.dart';
 import '../../../models/employment.dart';
 import '../../../routing/router.gr.dart';
+import '../../../utils/format_utils.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava.dart';
 import '../state/employment_state.dart';
@@ -111,7 +112,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        controller.text = widget.eVM.getFormattedDate(_selectedDate!);
+        controller.text = FormatUtils.formatDateFull(_selectedDate!);
       });
     }
   }
@@ -193,7 +194,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   ),
                   validator: widget.eVM.validateGrossAnnualIncome,
                   onChanged: (value) {
-                    final formattedValue = widget.eVM.getFormattedNumber(
+                    final formattedValue = FormatUtils.formatNumberComma(
                       int.tryParse(value) ?? 0,
                     );
                     _controllerMap[_TextInputs.grossAnnualIncome]!.text =
@@ -236,7 +237,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                 enabled: _isEditing,
               ),
               AvaInputWrapper(
-                displayValue: widget.eState?.payFrequencyDisplay,
+                displayValue: widget.eState?.nextPayDayDisplay,
                 label: 'My next payday is',
                 inputWidget: TextFormField(
                   controller: _controllerMap[_TextInputs.nextPayday],

@@ -1,8 +1,8 @@
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../data/repositories/employment_repository.dart';
 import '../../../models/employment.dart';
+import '../../../utils/format_utils.dart';
 import '../state/employment_state.dart';
 
 part 'employment_viewmodel.g.dart';
@@ -46,12 +46,12 @@ class EmploymentViewModel extends _$EmploymentViewModel {
     var employmentTypeDisplay = _mapEmploymentTypeDisplay(
       employment.employmentType,
     );
-    var grossAnnualIncomeString = getFormattedNumber(
+    var grossAnnualIncomeString = FormatUtils.formatNumberComma(
       employment.grossAnnualIncome,
     );
     var grossAnnualIncomeDisplay = '\$$grossAnnualIncomeString/year';
     var payFrequencyDisplay = _mapPayFrequencyDisplay(employment.payFrequency);
-    var nextPayDayDisplay = getFormattedDate(employment.nextPayDay);
+    var nextPayDayDisplay = FormatUtils.formatDateFull(employment.nextPayDay);
     var yearsEmp = employment.monthsWithEmployer ~/ 12;
     var monthsEmp = employment.monthsWithEmployer % 12;
     var timeWithEmployerDisplay =
@@ -101,19 +101,6 @@ class EmploymentViewModel extends _$EmploymentViewModel {
     }
   }
 
-  String _getDaySuffix(int day) {
-    if (day >= 11 && day <= 13) return 'th';
-    switch (day % 10) {
-      case 1:
-        return 'st';
-      case 2:
-        return 'nd';
-      case 3:
-        return 'rd';
-      default:
-        return 'th';
-    }
-  }
 
   Map<EmploymentType, String> getEmploymentTypes() {
     return EmploymentType.values.asMap().map(
@@ -125,16 +112,6 @@ class EmploymentViewModel extends _$EmploymentViewModel {
     return PayFrequency.values.asMap().map(
       (_, value) => MapEntry(value, _mapPayFrequencyDisplay(value)),
     );
-  }
-
-  String getFormattedDate(DateTime date) {
-    return DateFormat(
-      "MMM d'${_getDaySuffix(date.day)}', y (EEEE)",
-    ).format(date);
-  }
-
-  String getFormattedNumber(num number) {
-    return NumberFormat('#,###').format(number);
   }
 
   /// Validate Employment Type dropdown

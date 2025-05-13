@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import '../../../models/account_details.dart';
-
 class HomeState {
   final CreditScoreDisplay creditScoreDisplay;
   final CreditScoreGraphData creditScoreGraphData;
@@ -69,15 +67,17 @@ class CreditFactorDisplay {
 }
 
 class AccountDetailsDisplay {
-  final AccountDetails accountDetails;
   final String balanceDisplay;
   final double balanceRatio;
+  final String creditLimitDisplay;
+  final String spendLimitDisplay;
   final String utilizationDisplay;
 
   AccountDetailsDisplay({
-    required this.accountDetails,
     required this.balanceDisplay,
     required this.balanceRatio,
+    required this.creditLimitDisplay,
+    required this.spendLimitDisplay,
     required this.utilizationDisplay,
   });
 }

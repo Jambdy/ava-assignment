@@ -31,7 +31,7 @@ class AccountDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Spend limit: \$${details.accountDetails.spendLimit}',
+                    'Spend limit: \$${details.spendLimitDisplay}',
                     style: AppTheme.detailRegular,
                   ),
                   const SizedBox(width: 4),
@@ -53,11 +53,11 @@ class AccountDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '\$${details.accountDetails.balance.toInt()}',
+                    '\$${details.balanceDisplay}',
                     style: AppTheme.bodyEmphasis,
                   ),
                   Text(
-                    '\$${details.accountDetails.creditLimit}',
+                    '\$${details.creditLimitDisplay}',
                     style: AppTheme.bodyEmphasis,
                   ),
                 ],
@@ -146,7 +146,7 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
                     // Stop near edge of the card
                     left: min(
                       max(widget.progressPercent * width, 16),
-                      width - widget.balanceDisplay.length * 12 - 16,
+                      width - widget.balanceDisplay.length * 8 - 30,
                     ),
                     bottom: 8,
                   ),

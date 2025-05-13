@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../constants/constants.dart';
@@ -9,6 +8,7 @@ import '../../../data/repositories/account_details_repository.dart';
 import '../../../data/repositories/credit_score_repository.dart';
 import '../../../models/account_details.dart';
 import '../../../models/credit_score.dart';
+import '../../../utils/format_utils.dart';
 import '../../core/themes/color.dart';
 import '../state/home_state.dart';
 
@@ -47,8 +47,8 @@ class HomeViewModel extends _$HomeViewModel {
       currentScore: creditScore.currentScore,
       creditScoreStatus: _mapCreditScoreStatus(creditScore.currentScore),
       creditAgency: creditScore.creditAgency,
-      lastUpdated: formatRelativeDate(creditScore.lastUpdated),
-      nextUpdate: formatRelativeDate(creditScore.nextUpdate),
+      lastUpdated: FormatUtils.formatDateRelative(creditScore.lastUpdated),
+      nextUpdate: FormatUtils.formatDateRelative(creditScore.nextUpdate),
       scoreChange: creditScore.scoreChange,
     );
   }
@@ -158,13 +158,17 @@ class HomeViewModel extends _$HomeViewModel {
     var utilization =
         (accountDetails.balance / accountDetails.creditLimit * 100).toInt();
     var balanceRatio = accountDetails.balance / accountDetails.spendLimit;
-    var balanceDisplay = accountDetails.balance.toInt().toString();
 
     return AccountDetailsDisplay(
-      accountDetails: accountDetails.copyWith(),
       utilizationDisplay: utilization.toString(),
       balanceRatio: balanceRatio,
-      balanceDisplay: balanceDisplay,
+      balanceDisplay: FormatUtils.formatNumberComma(accountDetails.balance),
+      creditLimitDisplay: FormatUtils.formatNumberComma(
+        accountDetails.creditLimit,
+      ),
+      spendLimitDisplay: FormatUtils.formatNumberComma(
+        accountDetails.spendLimit,
+      ),
     );
   }
 
@@ -200,10 +204,10 @@ class HomeViewModel extends _$HomeViewModel {
       totalLimit += account.limit;
       totalBalance += account.balance;
     }
-    var totalBalanceDisplay = NumberFormat(
-      '#,###',
-    ).format(totalBalance.toInt());
-    var totalLimitDisplay = NumberFormat('#,###').format(totalLimit);
+    var totalBalanceDisplay = FormatUtils.formatNumberComma(
+      totalBalance.toInt(),
+    );
+    var totalLimitDisplay = FormatUtils.formatNumberComma(totalLimit);
     var totalUtilization = (totalBalance / totalLimit * 100).toInt();
     var utilizationGrade = _mapCreditUtilization(totalUtilization);
 
@@ -214,15 +218,15 @@ class HomeViewModel extends _$HomeViewModel {
                 accountName: account.accountName,
                 limit: account.limit,
                 balance: account.balance,
-                formattedReportedDate: DateFormat(
-                  'MMMM d, y',
-                ).format(account.reportedDate),
-                balanceDisplay: NumberFormat(
-                  '#,###',
-                ).format(account.balance.toInt()),
-                limitDisplay: NumberFormat(
-                  '#,###',
-                ).format(account.limit.toInt()),
+                formattedReportedDate: FormatUtils.formatDateShort(
+                  account.reportedDate,
+                ),
+                balanceDisplay: FormatUtils.formatNumberComma(
+                  account.balance.toInt(),
+                ),
+                limitDisplay: FormatUtils.formatNumberComma(
+                  account.limit.toInt(),
+                ),
                 utilization: (account.balance / account.limit * 100).toInt(),
               ),
             )
@@ -234,19 +238,5 @@ class HomeViewModel extends _$HomeViewModel {
       utilizationGrade: utilizationGrade,
       creditCardAccountsDisplay: creditCardAccountsDisplay,
     );
-  }
-
-  /// Formats the date to a relative format or MMM d.
-  String formatRelativeDate(DateTime date) {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final input = DateTime(date.year, date.month, date.day);
-    final difference = input.difference(today).inDays;
-
-    if (difference == 0) return 'Today';
-    if (difference == -1) return 'Yesterday';
-    if (difference == 1) return 'Tomorrow';
-
-    return DateFormat('MMM d').format(date); // e.g. May 12
   }
 }
