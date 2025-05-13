@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/constants.dart';
-import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava.dart';
@@ -51,9 +50,6 @@ class _CreditCardAccount extends StatelessWidget {
           ),
           _AnimatedProgressBar(
             progressPercent: cCAccount.balance / cCAccount.limit,
-            width:
-                LayoutUtils.constrainedWidth(context) -
-                2 * Constants.paddingDefault,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,13 +77,9 @@ class _CreditCardAccount extends StatelessWidget {
 }
 
 class _AnimatedProgressBar extends StatefulWidget {
-  final double width;
   final double progressPercent;
 
-  const _AnimatedProgressBar({
-    required this.progressPercent,
-    required this.width,
-  });
+  const _AnimatedProgressBar({required this.progressPercent});
 
   @override
   _AnimatedProgressBarState createState() => _AnimatedProgressBarState();
@@ -123,40 +115,49 @@ class _AnimatedProgressBarState extends State<_AnimatedProgressBar>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.width,
-      height: 8,
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.gray,
-              borderRadius: BorderRadius.circular(999),
-            ),
-          ),
-          AnimatedBuilder(
-            animation: _progressAnim,
-            builder: (_, __) {
-              // Check if the progress is at the end of the bar
-              var roundedEnd = _progressAnim.value >= 1 - (4 / widget.width);
-              return Container(
-                width: widget.width * _progressAnim.value,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        return SizedBox(
+          width: width,
+          height: 8,
+          child: Stack(
+            children: [
+              Container(
                 decoration: BoxDecoration(
-                  color: AppColors.avaSecondary,
-                  borderRadius: BorderRadius.only(
-                    topLeft: const Radius.circular(999),
-                    bottomLeft: const Radius.circular(999),
-                    topRight:
-                        roundedEnd ? const Radius.circular(999) : Radius.zero,
-                    bottomRight:
-                        roundedEnd ? const Radius.circular(999) : Radius.zero,
-                  ),
+                  color: AppColors.gray,
+                  borderRadius: BorderRadius.circular(999),
                 ),
-              );
-            },
+              ),
+              AnimatedBuilder(
+                animation: _progressAnim,
+                builder: (_, __) {
+                  // Check if the progress is at the end of the bar
+                  var roundedEnd = _progressAnim.value >= 1 - (4 / width);
+                  return Container(
+                    width: width * _progressAnim.value,
+                    decoration: BoxDecoration(
+                      color: AppColors.avaSecondary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(999),
+                        bottomLeft: const Radius.circular(999),
+                        topRight:
+                            roundedEnd
+                                ? const Radius.circular(999)
+                                : Radius.zero,
+                        bottomRight:
+                            roundedEnd
+                                ? const Radius.circular(999)
+                                : Radius.zero,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

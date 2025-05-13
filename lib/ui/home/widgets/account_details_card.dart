@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../constants/constants.dart';
-import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava.dart';
@@ -26,9 +25,6 @@ class AccountDetailsCard extends StatelessWidget {
               _SpendLimitProgress(
                 balanceDisplay: details.balanceDisplay,
                 progressPercent: details.balanceRatio,
-                width:
-                    LayoutUtils.constrainedWidth(context) -
-                    4 * Constants.paddingDefault,
               ),
               const SizedBox(height: 8),
               Row(
@@ -95,12 +91,10 @@ class AccountDetailsCard extends StatelessWidget {
 class _SpendLimitProgress extends StatefulWidget {
   final String balanceDisplay;
   final double progressPercent;
-  final double width;
 
   const _SpendLimitProgress({
     required this.balanceDisplay,
     required this.progressPercent,
-    required this.width,
   });
 
   @override
@@ -137,65 +131,69 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.width,
-      child: AnimatedBuilder(
-        animation: _progressAnim,
-        builder: (_, __) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Show speech bubble centered around the progress bar
-              Padding(
-                padding: EdgeInsets.only(
-                  // Stop near edge of the card
-                  left: min(
-                    max(widget.progressPercent * widget.width, 16),
-                    widget.width - widget.balanceDisplay.length * 12 - 16,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        return AnimatedBuilder(
+          animation: _progressAnim,
+          builder: (_, __) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Show speech bubble centered around the progress bar
+                Padding(
+                  padding: EdgeInsets.only(
+                    // Stop near edge of the card
+                    left: min(
+                      max(widget.progressPercent * width, 16),
+                      width - widget.balanceDisplay.length * 12 - 16,
+                    ),
+                    bottom: 8,
                   ),
-                  bottom: 8,
-                ),
-                child: Align(
-                  alignment: const FractionalOffset(-0.5, 0),
-                  widthFactor: 2,
-                  child: Opacity(
-                    opacity:
-                        widget.progressPercent == 0
-                            ? 1
-                            : _progressAnim.value / widget.progressPercent,
-                    child: AvaSpeechBubble(text: '\$${widget.balanceDisplay}'),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 8,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.avaSecondaryLight,
-                        borderRadius: BorderRadius.circular(999),
+                  child: Align(
+                    alignment: const FractionalOffset(-0.5, 0),
+                    widthFactor: 2,
+                    child: Opacity(
+                      opacity:
+                          widget.progressPercent == 0
+                              ? 1
+                              : _progressAnim.value / widget.progressPercent,
+                      child: AvaSpeechBubble(
+                        text: '\$${widget.balanceDisplay}',
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: min(
-                          max(widget.width * _progressAnim.value - 2, 0),
-                          widget.width - 4,
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.avaSecondaryLight,
+                          borderRadius: BorderRadius.circular(999),
                         ),
                       ),
-                      width: 4,
-                      decoration: const BoxDecoration(
-                        color: AppColors.avaSecondary,
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: min(
+                            max(width * _progressAnim.value - 2, 0),
+                            width - 4,
+                          ),
+                        ),
+                        width: 4,
+                        decoration: const BoxDecoration(
+                          color: AppColors.avaSecondary,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
-      ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

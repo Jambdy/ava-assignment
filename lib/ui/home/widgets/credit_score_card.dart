@@ -42,7 +42,7 @@ class CreditScoreCard extends ConsumerWidget {
           ),
           AvaOutlinedCircleAnimation(
             currentValue: currentScore,
-            maxValue: 850,
+            maxValue: Constants.creditScoreMax,
             underText: creditScoreStatus,
           ),
         ],
