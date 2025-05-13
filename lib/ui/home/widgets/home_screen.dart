@@ -98,13 +98,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         children: [
           _bodyContent(homeState.value!),
           if (homeState.isLoading)
-            const Center(
-              child: CircularProgressIndicator(),
-            ),
+            const Center(child: CircularProgressIndicator()),
         ],
       ),
     );
-    
   }
 
   Widget _bodyContent(HomeState data) {
@@ -123,12 +120,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Center(
               child: CreditScoreCard(
                 currentScore: data.creditScoreDisplay.currentScore,
-                creditScoreStatus:
-                data.creditScoreDisplay.creditScoreStatus,
-                scoreChangeDisplay:
-                data.creditScoreDisplay.scoreChangeDisplay,
-                scoreChangeColor:
-                data.creditScoreDisplay.scoreChangeColor,
+                creditScoreStatus: data.creditScoreDisplay.creditScoreStatus,
+                scoreChangeDisplay: data.creditScoreDisplay.scoreChangeDisplay,
+                scoreChangeColor: data.creditScoreDisplay.scoreChangeColor,
                 lastUpdated: data.creditScoreDisplay.lastUpdated,
                 nextUpdate: data.creditScoreDisplay.nextUpdate,
                 creditAgency: data.creditScoreDisplay.creditAgency,
@@ -146,10 +140,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   const AvaTitle(title: 'Chart'),
                   CreditHistoryCard(
-                    scoreChange:
-                    data.creditScoreDisplay.scoreChangeDisplay,
-                    scoreChangeColor:
-                    data.creditScoreDisplay.scoreChangeColor,
+                    scoreChange: data.creditScoreDisplay.scoreChangeDisplay,
+                    scoreChangeColor: data.creditScoreDisplay.scoreChangeColor,
                     lastUpdated: data.creditScoreDisplay.lastUpdated,
                     nextUpdate: data.creditScoreDisplay.nextUpdate,
                     creditAgency: data.creditScoreDisplay.creditAgency,
@@ -168,9 +160,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   const AvaTitle(title: 'Open credit card accounts'),
                   CreditCardAccountsCard(
                     cCAccounts:
-                    data
-                        .creditCardAccountsAggregate
-                        .creditCardAccountsDisplay,
+                        data
+                            .creditCardAccountsAggregate
+                            .creditCardAccountsDisplay,
                   ),
                   const SizedBox(height: 34),
                 ],
