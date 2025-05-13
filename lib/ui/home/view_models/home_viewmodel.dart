@@ -20,9 +20,7 @@ class HomeViewModel extends _$HomeViewModel {
   Future<HomeState> build() async {
     final creditScore =
         await ref.read(creditScoreRepositoryProvider).getCreditScore();
-    final creditScoreStatus = _mapCreditScoreStatus(
-      creditScore.currentScore,
-    );
+    final creditScoreStatus = _mapCreditScoreStatus(creditScore.currentScore);
     final creditScoreGraphData = _mapCreditScoreGraphData(
       creditScore.scoreHistory.map((e) => e.copyWith()).toList(),
     );
