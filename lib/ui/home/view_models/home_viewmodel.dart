@@ -62,17 +62,17 @@ class HomeViewModel extends _$HomeViewModel {
         case Impact.high:
           displayColor = AppColors.textGreen;
           textColor = AppColors.textWhite;
-          impactText = 'High Impact';
+          impactText = 'HIGH IMPACT';
           break;
         case Impact.medium:
           displayColor = AppColors.avaSecondary;
           textColor = AppColors.textWhite;
-          impactText = 'Medium Impact';
+          impactText = 'MEDIUM IMPACT';
           break;
         case Impact.low:
           displayColor = AppColors.avaSecondaryLight;
           textColor = AppColors.textGreen;
-          impactText = 'Low Impact';
+          impactText = 'LOW IMPACT';
           break;
       }
       String displayValue;
