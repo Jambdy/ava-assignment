@@ -27,7 +27,6 @@ class CreditScoreGraphData {
   final int maxScore;
   final int midScore;
   final Duration duration;
-  final int maxIntervals;
 
   CreditScoreGraphData({
     required this.data,
@@ -35,7 +34,6 @@ class CreditScoreGraphData {
     required this.maxScore,
     required this.midScore,
     required this.duration,
-    required this.maxIntervals,
   });
 }
 

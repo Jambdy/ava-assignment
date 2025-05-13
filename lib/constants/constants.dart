@@ -2,6 +2,9 @@ class Constants {
   /// The default duration for animations in the app in milliseconds.
   static const int animationDuration = 2000;
 
+  /// The max number of intervals for the credit score history chart.
+  static const int historyIntervalMax = 12;
+
   /// The max value for the credit score.
   static const int creditScoreMax = 850;
 

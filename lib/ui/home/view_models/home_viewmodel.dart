@@ -101,7 +101,18 @@ class HomeViewModel extends _$HomeViewModel {
   }
 
   CreditScoreGraphData _mapCreditScoreGraphData(List<ScoreEntry> scoreHistory) {
-    var maxIntervals = 12;
+    var maxIntervals = Constants.historyIntervalMax;
+
+    // Handle empty score history
+    if (scoreHistory.isEmpty) {
+      return CreditScoreGraphData(
+        data: [],
+        minScore: 600,
+        maxScore: 800,
+        midScore: 700,
+        duration: Duration(milliseconds: 0),
+      );
+    }
 
     // Sort the score history by date in descending order
     scoreHistory.sort((a, b) => b.date.compareTo(a.date));
@@ -130,7 +141,6 @@ class HomeViewModel extends _$HomeViewModel {
       maxScore: maxScore,
       midScore: midScore,
       duration: duration,
-      maxIntervals: maxIntervals,
     );
   }
 
