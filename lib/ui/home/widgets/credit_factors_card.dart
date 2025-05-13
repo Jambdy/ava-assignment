@@ -29,7 +29,10 @@ class CreditFactorsCard extends StatelessWidget {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 6,
+                              horizontal: 2,
+                            ),
                             child: Text(
                               factor.name,
                               textAlign: TextAlign.center,
@@ -46,18 +49,23 @@ class CreditFactorsCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Container(
+                      SizedBox(
                         height: 28,
                         width: 112,
-                        decoration: BoxDecoration(
-                          color: factor.displayColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          factor.impactText,
-                          style: AppTheme.interSmallBold.copyWith(
-                            color: factor.textColor,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: factor.displayColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            padding: const EdgeInsets.all(0),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            factor.impactText,
+                            style: AppTheme.interSmallBold.copyWith(
+                              color: factor.textColor,
+                            ),
                           ),
                         ),
                       ),
