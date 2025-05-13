@@ -111,7 +111,6 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
   late final Animation<double> _progressAnim;
-  final double _speechWidth = 42;
 
   @override
   void initState() {
@@ -147,19 +146,16 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                // TODO: Handle dynamic speech width
                 padding: EdgeInsets.only(
-                  left: max(
-                    widget.progressPercent * widget.width - _speechWidth / 2,
-                    0,
-                  ),
+                  left: max(widget.progressPercent * widget.width, 0),
                   bottom: 8,
                 ),
-                child: Opacity(
-                  opacity: _progressAnim.value / widget.progressPercent,
-                  child: AvaSpeechBubble(
-                    text: '\$${widget.balanceDisplay}',
-                    width: _speechWidth,
+                child: Align(
+                  alignment: const FractionalOffset(-0.5, 0),
+                  widthFactor: 2,
+                  child: Opacity(
+                    opacity: _progressAnim.value / widget.progressPercent,
+                    child: AvaSpeechBubble(text: '\$${widget.balanceDisplay}'),
                   ),
                 ),
               ),
