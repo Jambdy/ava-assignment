@@ -1,4 +1,7 @@
 class Constants {
+  /// The default duration for animations in the app in milliseconds.
+  static const int animationDuration = 2000;
+
   /// The maximum width of the app.
   static const double widthMax = 600;
 

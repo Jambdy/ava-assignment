@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../constants/constants.dart';
 import '../../../data/repositories/account_details_repository.dart';
 import '../../../data/repositories/credit_score_repository.dart';
 import '../../../models/account_details.dart';
@@ -121,7 +122,7 @@ class HomeViewModel extends _$HomeViewModel {
     var maxScore = ((data.reduce(max) + 49) ~/ 50) * 50;
     var midScore = ((maxScore + minScore) / 2).round();
     var duration = Duration(
-      milliseconds: (2000 / maxIntervals * data.length).toInt(),
+      milliseconds: (Constants.animationDuration / maxIntervals * data.length).toInt(),
     );
 
     // Normalize the data to a 0-1 scale

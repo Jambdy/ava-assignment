@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+import '../../../constants/constants.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 
@@ -33,7 +34,7 @@ class AvaOutlinedCircleAnimation extends StatefulWidget {
     this.size = 72,
     this.strokeWidth = 6,
     this.underText,
-    this.durationInMilliseconds = 2000,
+    this.durationInMilliseconds = Constants.animationDuration,
     this.textSuffix = '',
   });
 

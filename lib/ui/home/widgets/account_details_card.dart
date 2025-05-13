@@ -119,7 +119,7 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
     super.initState();
     _ctrl = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: (2000 * widget.progressPercent).toInt()),
+      duration: Duration(milliseconds: (Constants.animationDuration * widget.progressPercent).toInt()),
     );
     _progressAnim = Tween<double>(
       begin: 0,
