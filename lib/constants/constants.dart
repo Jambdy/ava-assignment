@@ -8,6 +8,9 @@ class Constants {
   /// The max value for the credit score.
   static const int creditScoreMax = 850;
 
+  /// The mock API delay in milliseconds.
+  static const int mockAPIDelay = 500;
+
   /// The default padding value used for vertical and horizontal spacing.
   static const double paddingDefault = 16;
 

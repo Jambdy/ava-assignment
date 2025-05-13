@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../constants/constants.dart';
 import '../../models/account_details.dart';
 import '../../models/credit_score.dart';
 import '../../models/employment.dart';
@@ -22,7 +23,7 @@ class ApiClient {
 
   Future<AccountDetails> getAccountDetails() async {
     // Simulate a network call
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: Constants.mockAPIDelay));
     return AccountDetails(
       balance: Random().nextInt(101).toDouble(),
       spendLimit: 100,
@@ -32,7 +33,7 @@ class ApiClient {
 
   Future<CreditScore> getCreditScore() async {
     // Simulate a network call
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: Constants.mockAPIDelay));
     // Dummy score history
     List<ScoreEntry> scoreHistory = [];
     var currentScore = Random().nextInt(850 - 300) + 300;
@@ -119,11 +120,11 @@ class ApiClient {
 
   Future<void> updateEmploymentInfo(Employment employment) async {
     // Simulate a network call
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: Constants.mockAPIDelay));
   }
 
   Future<void> sendFeedback(String message) async {
     // Simulate a network call
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: Constants.mockAPIDelay));
   }
 }
