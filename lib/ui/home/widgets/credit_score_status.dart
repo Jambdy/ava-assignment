@@ -44,7 +44,7 @@ class CreditScoreStatus extends StatelessWidget {
           style: AppTheme.detailRegular.copyWith(color: AppColors.textLight),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 4),
           child: Text(
             creditAgency,
             style: AppTheme.overlineEmphasis.copyWith(
