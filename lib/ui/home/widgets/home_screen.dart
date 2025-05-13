@@ -63,6 +63,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             context.router.push(const EmploymentRoute());
           },
         ),
+        /// TODO: Remove if app actually released
+        /// Included to demonstrate the animations during refresh
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh_outlined),
+            color: Theme.of(context).colorScheme.onPrimary,
+            onPressed: () {
+              ref.read(homeViewModelProvider.notifier).refresh();
+            },
+          ),
+        ],
         title: Text(
           'Home',
           style: AppTheme.bodyEmphasis.copyWith(
