@@ -9,7 +9,7 @@ class Constants {
   static const int creditScoreMax = 850;
 
   /// The mock API delay in milliseconds.
-  static const int mockAPIDelay = 500;
+  static const int mockAPIDelay = 200;
 
   /// The default padding value used for vertical and horizontal spacing.
   static const double paddingDefault = 16;
