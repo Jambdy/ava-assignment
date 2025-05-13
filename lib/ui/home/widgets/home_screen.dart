@@ -87,12 +87,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                   child: Center(
                     child: CreditScoreCard(
-                      currentScore: data.creditScore.currentScore,
-                      creditScoreStatus: data.creditScoreStatus,
-                      scoreChange: data.creditScore.scoreChange,
-                      lastUpdated: data.creditScore.lastUpdated,
-                      nextUpdate: data.creditScore.nextUpdate,
-                      creditAgency: data.creditScore.creditAgency,
+                      currentScore: data.creditScoreDisplay.currentScore,
+                      creditScoreStatus:
+                          data.creditScoreDisplay.creditScoreStatus,
+                      scoreChange: data.creditScoreDisplay.scoreChange,
+                      lastUpdated: data.creditScoreDisplay.lastUpdated,
+                      nextUpdate: data.creditScoreDisplay.nextUpdate,
+                      creditAgency: data.creditScoreDisplay.creditAgency,
                     ),
                   ),
                 ),
@@ -107,10 +108,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       children: [
                         const AvaTitle(title: 'Chart'),
                         CreditHistoryCard(
-                          scoreChange: data.creditScore.scoreChange,
-                          lastUpdated: data.creditScore.lastUpdated,
-                          nextUpdate: data.creditScore.nextUpdate,
-                          creditAgency: data.creditScore.creditAgency,
+                          scoreChange: data.creditScoreDisplay.scoreChange,
+                          lastUpdated: data.creditScoreDisplay.lastUpdated,
+                          nextUpdate: data.creditScoreDisplay.nextUpdate,
+                          creditAgency: data.creditScoreDisplay.creditAgency,
                           creditScoreGraphData: data.creditScoreGraphData,
                         ),
                         const AvaTitle(title: 'Credit Factors'),

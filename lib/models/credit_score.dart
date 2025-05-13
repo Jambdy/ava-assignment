@@ -8,8 +8,8 @@ abstract class CreditScore with _$CreditScore {
   const factory CreditScore({
     required int currentScore,
     required int scoreChange,
-    required String lastUpdated,
-    required String nextUpdate,
+    required DateTime lastUpdated,
+    required DateTime nextUpdate,
     required List<ScoreEntry> scoreHistory,
     required String creditAgency,
     required List<CreditFactor> creditFactors,

@@ -1,23 +1,38 @@
 import 'dart:ui';
 
 import '../../../models/account_details.dart';
-import '../../../models/credit_score.dart';
 
 class HomeState {
-  final CreditScore creditScore;
-  final String creditScoreStatus;
+  final CreditScoreDisplay creditScoreDisplay;
   final CreditScoreGraphData creditScoreGraphData;
   final List<CreditFactorDisplay> creditFactorsDisplay;
   final AccountDetailsDisplay accountDetails;
   final CreditCardAccountsAggregate creditCardAccountsAggregate;
 
   HomeState({
-    required this.creditScore,
-    required this.creditScoreStatus,
+    required this.creditScoreDisplay,
     required this.creditScoreGraphData,
     required this.creditFactorsDisplay,
     required this.accountDetails,
     required this.creditCardAccountsAggregate,
+  });
+}
+
+class CreditScoreDisplay {
+  final int currentScore;
+  final String creditScoreStatus;
+  final String creditAgency;
+  final String lastUpdated;
+  final String nextUpdate;
+  final int scoreChange;
+
+  CreditScoreDisplay({
+    required this.currentScore,
+    required this.creditScoreStatus,
+    required this.creditAgency,
+    required this.lastUpdated,
+    required this.nextUpdate,
+    required this.scoreChange,
   });
 }
 

@@ -20,7 +20,7 @@ class HomeViewModel extends _$HomeViewModel {
   Future<HomeState> build() async {
     final creditScore =
         await ref.read(creditScoreRepositoryProvider).getCreditScore();
-    final creditScoreStatus = _mapCreditScoreStatus(creditScore.currentScore);
+    final creditScoreDisplay = _mapCreditScoreDisplay(creditScore);
     final creditScoreGraphData = _mapCreditScoreGraphData(
       creditScore.scoreHistory.map((e) => e.copyWith()).toList(),
     );
@@ -34,12 +34,22 @@ class HomeViewModel extends _$HomeViewModel {
       creditScore.creditCardAccounts,
     );
     return HomeState(
-      creditScore: creditScore.copyWith(),
-      creditScoreStatus: creditScoreStatus,
+      creditScoreDisplay: creditScoreDisplay,
       creditScoreGraphData: creditScoreGraphData,
       creditFactorsDisplay: creditFactorDisplays,
       accountDetails: accountDetails,
       creditCardAccountsAggregate: creditCardAccountsAggregate,
+    );
+  }
+
+  CreditScoreDisplay _mapCreditScoreDisplay(CreditScore creditScore) {
+    return CreditScoreDisplay(
+      currentScore: creditScore.currentScore,
+      creditScoreStatus: _mapCreditScoreStatus(creditScore.currentScore),
+      creditAgency: creditScore.creditAgency,
+      lastUpdated: formatRelativeDate(creditScore.lastUpdated),
+      nextUpdate: formatRelativeDate(creditScore.nextUpdate),
+      scoreChange: creditScore.scoreChange,
     );
   }
 
@@ -110,7 +120,7 @@ class HomeViewModel extends _$HomeViewModel {
         minScore: 600,
         maxScore: 800,
         midScore: 700,
-        duration: Duration(milliseconds: 0),
+        duration: const Duration(milliseconds: 0),
       );
     }
 
@@ -224,5 +234,19 @@ class HomeViewModel extends _$HomeViewModel {
       utilizationGrade: utilizationGrade,
       creditCardAccountsDisplay: creditCardAccountsDisplay,
     );
+  }
+
+  /// Formats the date to a relative format or MMM d.
+  String formatRelativeDate(DateTime date) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final input = DateTime(date.year, date.month, date.day);
+    final difference = input.difference(today).inDays;
+
+    if (difference == 0) return 'Today';
+    if (difference == -1) return 'Yesterday';
+    if (difference == 1) return 'Tomorrow';
+
+    return DateFormat('MMM d').format(date); // e.g. May 12
   }
 }

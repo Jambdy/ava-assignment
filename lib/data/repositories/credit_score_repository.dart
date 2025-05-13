@@ -14,8 +14,8 @@ class CreditScoreRepository {
     return CreditScore(
       currentScore: 720,
       scoreChange: 2,
-      lastUpdated: 'Today',
-      nextUpdate: 'May 12',
+      lastUpdated: DateTime.now().subtract(const Duration(days: 1)),
+      nextUpdate: DateTime.now().add(const Duration(days: 30)),
       scoreHistory: [
         ScoreEntry(
           score: 650,
@@ -83,7 +83,7 @@ class CreditScoreRepository {
           accountName: 'Chase Freedom',
           reportedDate: DateTime.now().subtract(const Duration(days: 30)),
           limit: 5000,
-          balance: 200,
+          balance: 5000,
         ),
         CreditCardAccount(
           accountName: 'Discover It',

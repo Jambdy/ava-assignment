@@ -33,6 +33,7 @@ class CreditScoreStatus extends StatelessWidget {
             AvaChip(text: '+${scoreChange}pts'),
           ],
         ),
+        const SizedBox(width: 4),
         Text(
           'Updated $lastUpdated | Next $nextUpdate',
           style: AppTheme.detailRegular.copyWith(color: AppColors.textLight),
