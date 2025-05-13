@@ -52,18 +52,7 @@ class EmploymentScreen extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 32),
-                    EmploymentInfoForm(
-                      eState: data,
-                      employmentTypeOptions:
-                          employmentViewModel.getEmploymentTypes(),
-                      payFrequencyOptions:
-                          employmentViewModel.getPayFrequencies(),
-                      getFormattedDate: employmentViewModel.getFormattedDate,
-                      getFormattedNumber:
-                          employmentViewModel.getFormattedNumber,
-                      updateEmploymentInfo:
-                          employmentViewModel.updateEmploymentInfo,
-                    ),
+                    EmploymentInfoForm(eState: data, eVM: employmentViewModel),
                   ],
                 ),
               ),
@@ -76,6 +65,3 @@ class EmploymentScreen extends ConsumerWidget {
     );
   }
 }
-
-
-

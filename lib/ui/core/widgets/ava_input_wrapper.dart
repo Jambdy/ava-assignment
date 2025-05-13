@@ -35,11 +35,11 @@ class AvaInputWrapper extends StatelessWidget {
           child: Text(
             label,
             style:
-            enabled
-                ? AppTheme.detailEmphasis
-                : AppTheme.overlineRegular.copyWith(
-              color: AppColors.textLight,
-            ),
+                enabled
+                    ? AppTheme.detailEmphasis
+                    : AppTheme.overlineRegular.copyWith(
+                      color: AppColors.textLight,
+                    ),
           ),
         ),
         enabled

@@ -8,6 +8,7 @@ import '../../../routing/router.gr.dart';
 import '../../core/themes/theme.dart';
 import '../../core/widgets/ava.dart';
 import '../state/employment_state.dart';
+import '../view_models/employment_viewmodel.dart';
 
 enum _TextInputs {
   employer,
@@ -19,20 +20,12 @@ enum _TextInputs {
 
 class EmploymentInfoForm extends StatefulWidget {
   final EmploymentState? eState;
-  final Map<EmploymentType, String> employmentTypeOptions;
-  final Map<PayFrequency, String> payFrequencyOptions;
-  final Function(DateTime) getFormattedDate;
-  final Function(num) getFormattedNumber;
-  final Function(EmploymentUpdate) updateEmploymentInfo;
+  final EmploymentViewModel eVM;
 
   const EmploymentInfoForm({
     super.key,
     required this.eState,
-    required this.employmentTypeOptions,
-    required this.payFrequencyOptions,
-    required this.getFormattedDate,
-    required this.getFormattedNumber,
-    required this.updateEmploymentInfo,
+    required this.eVM,
   });
 
   @override
@@ -118,7 +111,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        controller.text = widget.getFormattedDate(_selectedDate!);
+        controller.text = widget.eVM.getFormattedDate(_selectedDate!);
       });
     }
   }
@@ -142,7 +135,9 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   ),
                   value: _selectedEmploymentType,
                   items:
-                      widget.employmentTypeOptions.entries
+                      widget.eVM
+                          .getEmploymentTypes()
+                          .entries
                           .map(
                             (entry) => DropdownMenuItem(
                               value: entry.key,
@@ -218,7 +213,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                     return null;
                   },
                   onChanged: (value) {
-                    final formattedValue = widget.getFormattedNumber(
+                    final formattedValue = widget.eVM.getFormattedNumber(
                       int.tryParse(value) ?? 0,
                     );
                     _controllerMap[_TextInputs.grossAnnualIncome]!.text =
@@ -240,7 +235,9 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                   ),
                   value: _selectedPayFrequency,
                   items:
-                      widget.payFrequencyOptions.entries
+                      widget.eVM
+                          .getPayFrequencies()
+                          .entries
                           .map(
                             (entry) => DropdownMenuItem<PayFrequency>(
                               value: entry.key,
@@ -466,7 +463,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
             child: ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  widget.updateEmploymentInfo(
+                  widget.eVM.updateEmploymentInfo(
                     EmploymentUpdate(
                       employmentType: _selectedEmploymentType!,
                       employer: _controllerMap[_TextInputs.employer]!.text,
