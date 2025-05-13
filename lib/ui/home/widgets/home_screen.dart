@@ -8,7 +8,7 @@ import '../../../constants/constants.dart';
 import '../../../routing/router.gr.dart';
 import '../../../utils/layout_utils.dart';
 import '../../core/themes/theme.dart';
-import '../../core/widgets/ava_title.dart';
+import '../../core/widgets/ava.dart';
 import '../../feedback/widgets/feedback_overlay.dart';
 import '../view_models/home_viewmodel.dart';
 import 'account_details_card.dart';

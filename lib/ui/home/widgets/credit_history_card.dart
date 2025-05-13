@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
-import '../../core/widgets/ava_card.dart';
+import '../../core/widgets/ava.dart';
 import '../state/home_state.dart';
 import 'credit_score_status.dart';
 

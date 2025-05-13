@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/widgets/ava_card.dart';
-import '../../core/widgets/ava_outlined_circle_animation.dart';
+import '../../core/widgets/ava.dart';
 import 'credit_score_status.dart';
 
 class CreditScoreCard extends ConsumerWidget {

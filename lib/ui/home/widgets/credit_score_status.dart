@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
-import '../../core/widgets/ava_chip.dart';
+import '../../core/widgets/ava.dart';
 
 class CreditScoreStatus extends StatelessWidget {
   const CreditScoreStatus({

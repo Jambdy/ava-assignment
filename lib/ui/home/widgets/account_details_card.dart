@@ -6,8 +6,7 @@ import '../../../constants/constants.dart';
 import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
-import '../../core/widgets/ava_card.dart';
-import '../../core/widgets/ava_speech_bubble.dart';
+import '../../core/widgets/ava.dart';
 import '../state/home_state.dart';
 
 class AccountDetailsCard extends StatelessWidget {
@@ -119,7 +118,10 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
     super.initState();
     _ctrl = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: (Constants.animationDuration * widget.progressPercent).toInt()),
+      duration: Duration(
+        milliseconds:
+            (Constants.animationDuration * widget.progressPercent).toInt(),
+      ),
     );
     _progressAnim = Tween<double>(
       begin: 0,

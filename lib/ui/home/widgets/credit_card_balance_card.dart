@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
-import '../../core/widgets/ava_card.dart';
-import '../../core/widgets/ava_grade_bar.dart';
-import '../../core/widgets/ava_outlined_circle_animation.dart';
+import '../../core/widgets/ava.dart';
 import '../state/home_state.dart';
 
 class CreditCardBalanceCard extends StatelessWidget {
