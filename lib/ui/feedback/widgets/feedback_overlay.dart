@@ -52,7 +52,7 @@ class _FeedbackOverlayState extends ConsumerState<FeedbackOverlay> {
                 Constants.paddingDefault,
                 Constants.paddingDefault,
                 Constants.paddingDefault,
-                32.0,
+                32,
               ),
               child: Column(
                 children: [

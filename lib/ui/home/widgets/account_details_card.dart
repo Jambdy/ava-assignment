@@ -151,7 +151,7 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
                     widget.progressPercent * widget.width - _speechWidth / 2,
                     0,
                   ),
-                  bottom: 8.0,
+                  bottom: 8,
                 ),
                 child: Opacity(
                   opacity: _progressAnim.value / widget.progressPercent,

@@ -12,6 +12,6 @@ AccountDetailsRepository accountDetailsRepository(Ref ref) =>
 class AccountDetailsRepository {
   Future<AccountDetails> getAccountDetails() async {
     // TODO: Implement conversion from mock API response
-    return AccountDetails(balance: 75.0, spendLimit: 100, creditLimit: 6000);
+    return AccountDetails(balance: 75, spendLimit: 100, creditLimit: 6000);
   }
 }

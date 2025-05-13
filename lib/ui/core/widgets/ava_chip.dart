@@ -16,7 +16,7 @@ class AvaChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6.0),
+        padding: const EdgeInsets.symmetric(horizontal: 6),
         child: Text(
           text,
           style: AppTheme.detailEmphasis.copyWith(

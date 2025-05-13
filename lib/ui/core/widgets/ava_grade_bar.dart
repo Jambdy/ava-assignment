@@ -53,7 +53,7 @@ class AvaGradeBar extends StatelessWidget {
             Spacer(flex: 6 - (section * 2 - 1)),
           ],
         ),
-        const SizedBox(height: 4.0),
+        const SizedBox(height: 4),
         Row(
           children: [
             Expanded(
@@ -89,7 +89,7 @@ class AvaGradeBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 2.0),
+        const SizedBox(height: 2),
         Row(
           children: [
             ...Iterable<int>.generate(5)
@@ -104,7 +104,7 @@ class AvaGradeBar extends StatelessWidget {
                 .expand((e) => e),
           ],
         ),
-        const SizedBox(height: 2.0),
+        const SizedBox(height: 2),
         Row(
           children: [
             ...Iterable<int>.generate(5)

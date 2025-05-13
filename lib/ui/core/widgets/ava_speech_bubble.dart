@@ -16,7 +16,7 @@ class AvaSpeechBubble extends StatelessWidget {
         Container(
           width: width,
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 6.0),
+          padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(4),

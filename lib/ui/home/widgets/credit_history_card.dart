@@ -110,7 +110,7 @@ class _CreditHistoryChartState extends State<_CreditHistoryChart>
                         children: [
                           Container(
                             width: 40,
-                            padding: const EdgeInsets.only(right: 8.0),
+                            padding: const EdgeInsets.only(right: 8),
                             child: Text(
                               e.toString(),
                               style: AppTheme.graphSmall,
@@ -128,7 +128,7 @@ class _CreditHistoryChartState extends State<_CreditHistoryChart>
                   .toList(),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(44.0, 16.0, 18.0, 22.0),
+          padding: const EdgeInsets.fromLTRB(44, 16, 18, 22),
           child: AnimatedBuilder(
             animation: _anim,
             builder: (_, __) {

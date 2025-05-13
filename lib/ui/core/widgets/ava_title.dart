@@ -10,7 +10,7 @@ class AvaTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
+      padding: const EdgeInsets.only(top: 40, bottom: 20),
       child: Text(title, style: AppTheme.title),
     );
   }

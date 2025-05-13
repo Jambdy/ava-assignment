@@ -40,7 +40,7 @@ class EmploymentScreen extends ConsumerWidget {
                 width: LayoutUtils.constrainedWidth(context),
                 padding: const EdgeInsets.fromLTRB(
                   Constants.paddingDefault,
-                  0.0,
+                  0,
                   Constants.paddingDefault,
                   Constants.paddingDefault,
                 ),
@@ -54,7 +54,7 @@ class EmploymentScreen extends ConsumerWidget {
                         color: AppColors.textLight,
                       ),
                     ),
-                    const SizedBox(height: 32.0),
+                    const SizedBox(height: 32),
                     EmploymentInfoForm(
                       eState: data,
                       employmentTypeOptions:
@@ -508,7 +508,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
           child: Container(
             width: double.infinity,
             height: 44,
-            margin: const EdgeInsets.only(bottom: 8.0),
+            margin: const EdgeInsets.only(bottom: 8),
             child: OutlinedButton(
               onPressed: () {
                 setState(() {
@@ -598,7 +598,7 @@ class InputWrapper extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 2.0),
+          padding: const EdgeInsets.only(bottom: 2),
           child: Text(
             label,
             style:

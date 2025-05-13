@@ -19,7 +19,7 @@ class CreditFactorsCard extends StatelessWidget {
         children:
             creditFactorsDisplay.map((factor) {
               return Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8),
                 child: AvaCard(
                   height: 160,
                   width: 144,
@@ -29,7 +29,7 @@ class CreditFactorsCard extends StatelessWidget {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6.0),
+                            padding: const EdgeInsets.symmetric(vertical: 6),
                             child: Text(
                               factor.name,
                               textAlign: TextAlign.center,
@@ -47,8 +47,8 @@ class CreditFactorsCard extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        height: 28.0,
-                        width: 112.0,
+                        height: 28,
+                        width: 112,
                         decoration: BoxDecoration(
                           color: factor.displayColor,
                           borderRadius: BorderRadius.circular(4),

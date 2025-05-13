@@ -26,7 +26,7 @@ class CreditCardBalanceCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 4.0),
+                  const SizedBox(height: 4),
                   Text.rich(
                     TextSpan(
                       children: [
