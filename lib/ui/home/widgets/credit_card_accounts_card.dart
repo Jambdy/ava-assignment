@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants/constants.dart';
 import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
@@ -20,7 +21,7 @@ class CreditCardAccountsCard extends StatelessWidget {
         itemBuilder: (_, i) => _CreditCardAccount(cCAccount: cCAccounts[i]),
         separatorBuilder:
             (_, __) => const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: EdgeInsets.symmetric(vertical: Constants.paddingDefault),
               child: Divider(color: AppColors.gray, height: 1),
             ),
       ),
@@ -50,7 +51,9 @@ class _CreditCardAccount extends StatelessWidget {
           ),
           _AnimatedProgressBar(
             progressPercent: cCAccount.balance / cCAccount.limit,
-            width: LayoutUtils.constrainedWidth(context) - 2 * 16,
+            width:
+                LayoutUtils.constrainedWidth(context) -
+                2 * Constants.paddingDefault,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

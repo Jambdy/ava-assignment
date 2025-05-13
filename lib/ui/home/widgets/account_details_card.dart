@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../../../constants/constants.dart';
 import '../../../utils/layout_utils.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
@@ -26,7 +27,9 @@ class AccountDetailsCard extends StatelessWidget {
               _SpendLimitProgress(
                 balanceDisplay: accountDetails.balanceDisplay,
                 progressPercent: accountDetails.balanceRatio,
-                width: LayoutUtils.constrainedWidth(context) - 2 * 16,
+                width:
+                    LayoutUtils.constrainedWidth(context) -
+                    2 * Constants.paddingDefault,
               ),
               const SizedBox(height: 8),
               Row(

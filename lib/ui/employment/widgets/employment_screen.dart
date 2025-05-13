@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../constants/constants.dart';
 import '../../../models/employment.dart';
 import '../../../routing/router.gr.dart';
 import '../../../utils/layout_utils.dart';
@@ -37,7 +38,12 @@ class EmploymentScreen extends ConsumerWidget {
             child: Center(
               child: Container(
                 width: LayoutUtils.constrainedWidth(context),
-                padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+                padding: const EdgeInsets.fromLTRB(
+                  Constants.paddingDefault,
+                  0.0,
+                  Constants.paddingDefault,
+                  Constants.paddingDefault,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -411,7 +417,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                       ),
                     ),
-                    const SizedBox(width: 16.0),
+                    const SizedBox(width: Constants.paddingDefault),
                     Expanded(
                       child: DropdownButtonFormField<int>(
                         decoration: const InputDecoration(
@@ -496,7 +502,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
             ],
           ),
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: Constants.paddingDefault),
         Visibility(
           visible: !_isEditing,
           child: Container(
@@ -559,7 +565,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
             ),
           ),
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: Constants.paddingDefault),
       ],
     );
   }
@@ -606,7 +612,7 @@ class InputWrapper extends StatelessWidget {
         enabled
             ? inputWidget
             : Text(displayValue ?? '', style: AppTheme.bodyRegular),
-        const SizedBox(height: 16),
+        const SizedBox(height: Constants.paddingDefault),
       ],
     );
   }

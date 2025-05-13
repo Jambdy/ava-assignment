@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../constants/constants.dart';
 import '../../core/themes/color.dart';
 import '../../core/themes/theme.dart';
 import '../view_models/feedback_viewmodel.dart';
@@ -47,7 +48,12 @@ class _FeedbackOverlayState extends ConsumerState<FeedbackOverlay> {
                 color: AppColors.manilla,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
-              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32.0),
+              padding: const EdgeInsets.fromLTRB(
+                Constants.paddingDefault,
+                Constants.paddingDefault,
+                Constants.paddingDefault,
+                32.0,
+              ),
               child: Column(
                 children: [
                   const Text('Give us feedback', style: AppTheme.bodyRegular),
@@ -63,7 +69,7 @@ class _FeedbackOverlayState extends ConsumerState<FeedbackOverlay> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: Constants.paddingDefault),
                   SizedBox(
                     height: 44,
                     width: double.infinity,

@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../constants/constants.dart';
 import '../../../routing/router.gr.dart';
 import '../../../utils/layout_utils.dart';
 import '../../core/themes/theme.dart';
@@ -98,7 +99,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 Center(
                   child: Container(
                     width: LayoutUtils.constrainedWidth(context),
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Constants.paddingDefault,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
