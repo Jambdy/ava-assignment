@@ -198,19 +198,18 @@ class HomeViewModel extends _$HomeViewModel {
         section: 0,
       );
     }
-    if (utilization < 75) {
+    if (utilization < 50) {
       return CreditUtilizationGrade(
         gradeText: 'Fair',
         gradeRank: 2,
-        section:
-            (utilization < 30)
-                ? 1
-                : (utilization < 50)
-                ? 2
-                : 3,
+        section: (utilization < 30) ? 1 : 2,
       );
     }
-    return CreditUtilizationGrade(gradeText: 'Poor', gradeRank: 3, section: 4);
+    return CreditUtilizationGrade(
+      gradeText: 'Poor',
+      gradeRank: 3,
+      section: (utilization < 75) ? 3 : 4,
+    );
   }
 
   CreditCardAccountsAggregate _mapCreditCardAccountsAggregate(

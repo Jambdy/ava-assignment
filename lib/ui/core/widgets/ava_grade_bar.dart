@@ -43,14 +43,14 @@ class AvaGradeBar extends StatelessWidget {
       children: [
         Row(
           children: [
-            Spacer(flex: section * 2 - 1),
+            Spacer(flex: gradeRank * 2 - 1),
             Text(
               gradeText,
               style: AppTheme.overlineEmphasis.copyWith(
                 color: _gradeColors[gradeRank],
               ),
             ),
-            Spacer(flex: 6 - (section * 2 - 1)),
+            Spacer(flex: 6 - (gradeRank * 2 - 1)),
           ],
         ),
         const SizedBox(height: 4),
