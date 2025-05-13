@@ -137,7 +137,6 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
 
   @override
   Widget build(BuildContext context) {
-    print('Progress: ${widget.progressPercent}, Width: ${widget.width}');
     return SizedBox(
       width: widget.width,
       child: AnimatedBuilder(

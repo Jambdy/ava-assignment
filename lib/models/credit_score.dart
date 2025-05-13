@@ -1,60 +1,64 @@
-class CreditScore {
-  final int currentScore;
-  final int scoreChange;
-  final String lastUpdated;
-  final String nextUpdate;
-  final List<ScoreEntry> scoreHistory;
-  final String creditAgency;
-  final List<CreditFactor> creditFactors;
-  final List<CreditCardAccount> creditCardAccounts;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  CreditScore({
-    required this.currentScore,
-    required this.scoreChange,
-    required this.lastUpdated,
-    required this.nextUpdate,
-    required this.scoreHistory,
-    required this.creditAgency,
-    required this.creditFactors,
-    required this.creditCardAccounts,
-  });
+part 'credit_score.freezed.dart';
+part 'credit_score.g.dart';
+
+@freezed
+abstract class CreditScore with _$CreditScore {
+  const factory CreditScore({
+    required int currentScore,
+    required int scoreChange,
+    required String lastUpdated,
+    required String nextUpdate,
+    required List<ScoreEntry> scoreHistory,
+    required String creditAgency,
+    required List<CreditFactor> creditFactors,
+    required List<CreditCardAccount> creditCardAccounts,
+  }) = _CreditScore;
+
+  factory CreditScore.fromJson(Map<String, dynamic> json) =>
+      _$CreditScoreFromJson(json);
 }
 
-class ScoreEntry {
-  final int score;
-  final DateTime date;
+@freezed
+abstract class ScoreEntry with _$ScoreEntry {
+  const factory ScoreEntry({required int score, required DateTime date}) =
+      _ScoreEntry;
 
-  ScoreEntry({required this.score, required this.date});
+  factory ScoreEntry.fromJson(Map<String, dynamic> json) =>
+      _$ScoreEntryFromJson(json);
 }
 
-class CreditFactor {
-  final String name;
-  final int value;
-  final Impact impact;
-  final Type type;
+@freezed
+abstract class CreditFactor with _$CreditFactor {
+  const factory CreditFactor({
+    required String name,
+    required int value,
+    required Impact impact,
+    required Type type,
+  }) = _CreditFactor;
 
-  CreditFactor({
-    required this.name,
-    required this.value,
-    required this.impact,
-    required this.type,
-  });
+  factory CreditFactor.fromJson(Map<String, dynamic> json) =>
+      _$CreditFactorFromJson(json);
 }
 
+@freezed
+abstract class CreditCardAccount with _$CreditCardAccount {
+  const factory CreditCardAccount({
+    required String accountName,
+    required DateTime reportedDate,
+    required int limit,
+    required double balance,
+  }) = _CreditCardAccount;
+
+  factory CreditCardAccount.fromJson(Map<String, dynamic> json) =>
+      _$CreditCardAccountFromJson(json);
+}
+
+/// Impact level of a credit factor
+@JsonEnum()
 enum Impact { high, medium, low }
 
+/// Value type of a credit factor
+@JsonEnum()
 enum Type { number, percentage, months }
-
-class CreditCardAccount {
-  final String accountName;
-  final DateTime reportedDate;
-  final int limit;
-  final double balance;
-
-  CreditCardAccount({
-    required this.accountName,
-    required this.reportedDate,
-    required this.limit,
-    required this.balance,
-  });
-}

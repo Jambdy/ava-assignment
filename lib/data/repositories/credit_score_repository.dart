@@ -41,37 +41,37 @@ class CreditScoreRepository {
       ],
       creditAgency: 'Experian',
       creditFactors: [
-        CreditFactor(
+        const CreditFactor(
           name: 'Payment History',
           value: 100,
           impact: Impact.high,
           type: Type.percentage,
         ),
-        CreditFactor(
+        const CreditFactor(
           name: 'Credit Card Utilization',
           value: 4,
           impact: Impact.low,
           type: Type.percentage,
         ),
-        CreditFactor(
+        const CreditFactor(
           name: 'Derogatory Marks',
           value: 0,
           impact: Impact.medium,
           type: Type.number,
         ),
-        CreditFactor(
+        const CreditFactor(
           name: 'Age of Credit History',
           value: 68,
           impact: Impact.medium,
           type: Type.months,
         ),
-        CreditFactor(
+        const CreditFactor(
           name: 'Hard Inquiries',
           value: 0,
           impact: Impact.low,
           type: Type.number,
         ),
-        CreditFactor(
+        const CreditFactor(
           name: 'Total Accounts',
           value: 15,
           impact: Impact.low,
