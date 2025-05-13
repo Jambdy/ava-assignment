@@ -92,9 +92,6 @@ class HomeViewModel extends _$HomeViewModel {
 
       return CreditFactorDisplay(
         name: factor.name,
-        value: factor.value,
-        impact: factor.impact,
-        type: factor.type,
         displayValue: displayValue,
         displayColor: displayColor,
         textColor: textColor,
@@ -139,13 +136,13 @@ class HomeViewModel extends _$HomeViewModel {
 
   AccountDetailsDisplay _mapAccountDetails(AccountDetails accountDetails) {
     var utilization =
-        (accountDetails.balance / accountDetails.creditLimit).toInt() * 100;
+        (accountDetails.balance / accountDetails.creditLimit * 100).toInt();
     var balanceRatio = accountDetails.balance / accountDetails.spendLimit;
     var balanceDisplay = accountDetails.balance.toInt().toString();
 
     return AccountDetailsDisplay(
       accountDetails: accountDetails.copyWith(),
-      utilization: utilization,
+      utilizationDisplay: utilization.toString(),
       balanceRatio: balanceRatio,
       balanceDisplay: balanceDisplay,
     );
@@ -195,7 +192,6 @@ class HomeViewModel extends _$HomeViewModel {
             .map(
               (account) => CreditCardAccountDisplay(
                 accountName: account.accountName,
-                reportedDate: account.reportedDate,
                 limit: account.limit,
                 balance: account.balance,
                 formattedReportedDate: DateFormat(

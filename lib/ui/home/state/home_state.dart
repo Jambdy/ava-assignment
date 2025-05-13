@@ -39,17 +39,15 @@ class CreditScoreGraphData {
   });
 }
 
-class CreditFactorDisplay extends CreditFactor {
+class CreditFactorDisplay {
+  final String name;
   final String displayValue;
   final Color displayColor;
   final Color textColor;
   final String impactText;
 
   CreditFactorDisplay({
-    required super.name,
-    required super.value,
-    required super.impact,
-    required super.type,
+    required this.name,
     required this.displayValue,
     required this.displayColor,
     required this.textColor,
@@ -59,15 +57,15 @@ class CreditFactorDisplay extends CreditFactor {
 
 class AccountDetailsDisplay {
   final AccountDetails accountDetails;
-  final int utilization;
-  final double balanceRatio;
   final String balanceDisplay;
+  final double balanceRatio;
+  final String utilizationDisplay;
 
   AccountDetailsDisplay({
     required this.accountDetails,
-    required this.utilization,
-    required this.balanceRatio,
     required this.balanceDisplay,
+    required this.balanceRatio,
+    required this.utilizationDisplay,
   });
 }
 
@@ -99,17 +97,19 @@ class CreditUtilizationGrade {
   });
 }
 
-class CreditCardAccountDisplay extends CreditCardAccount {
+class CreditCardAccountDisplay {
+  final String accountName;
+  final int limit;
+  final double balance;
   final String formattedReportedDate;
   final String balanceDisplay;
   final String limitDisplay;
   final int utilization;
 
   CreditCardAccountDisplay({
-    required super.accountName,
-    required super.reportedDate,
-    required super.limit,
-    required super.balance,
+    required this.accountName,
+    required this.limit,
+    required this.balance,
     required this.formattedReportedDate,
     required this.balanceDisplay,
     required this.limitDisplay,

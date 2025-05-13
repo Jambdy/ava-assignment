@@ -28,7 +28,7 @@ class AccountDetailsCard extends StatelessWidget {
                 progressPercent: details.balanceRatio,
                 width:
                     LayoutUtils.constrainedWidth(context) -
-                    2 * Constants.paddingDefault,
+                    4 * Constants.paddingDefault,
               ),
               const SizedBox(height: 8),
               Row(
@@ -61,7 +61,7 @@ class AccountDetailsCard extends StatelessWidget {
                     style: AppTheme.bodyEmphasis,
                   ),
                   Text(
-                    '\$${details.accountDetails.spendLimit}',
+                    '\$${details.accountDetails.creditLimit}',
                     style: AppTheme.bodyEmphasis,
                   ),
                 ],
@@ -81,7 +81,7 @@ class AccountDetailsCard extends StatelessWidget {
             children: [
               const Text('Utilization', style: AppTheme.bodyRegular),
               Text(
-                '${details.utilization}%',
+                '${details.utilizationDisplay}%',
                 style: AppTheme.bodyEmphasis,
               ),
             ],
@@ -137,6 +137,7 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
 
   @override
   Widget build(BuildContext context) {
+    print('Progress: ${widget.progressPercent}, Width: ${widget.width}');
     return SizedBox(
       width: widget.width,
       child: AnimatedBuilder(
@@ -145,16 +146,24 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Show speech bubble centered around the progress bar
               Padding(
                 padding: EdgeInsets.only(
-                  left: max(widget.progressPercent * widget.width, 0),
+                  // Stop near edge of the card
+                  left: min(
+                    max(widget.progressPercent * widget.width, 16),
+                    widget.width - widget.balanceDisplay.length * 12 - 16,
+                  ),
                   bottom: 8,
                 ),
                 child: Align(
                   alignment: const FractionalOffset(-0.5, 0),
                   widthFactor: 2,
                   child: Opacity(
-                    opacity: _progressAnim.value / widget.progressPercent,
+                    opacity:
+                        widget.progressPercent == 0
+                            ? 1
+                            : _progressAnim.value / widget.progressPercent,
                     child: AvaSpeechBubble(text: '\$${widget.balanceDisplay}'),
                   ),
                 ),
@@ -171,7 +180,10 @@ class _SpendLimitProgressState extends State<_SpendLimitProgress>
                     ),
                     Container(
                       margin: EdgeInsets.only(
-                        left: max(widget.width * _progressAnim.value - 2, 0),
+                        left: min(
+                          max(widget.width * _progressAnim.value - 2, 0),
+                          widget.width - 4,
+                        ),
                       ),
                       width: 4,
                       decoration: const BoxDecoration(

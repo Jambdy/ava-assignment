@@ -6,9 +6,9 @@ part 'account_details.g.dart';
 @freezed
 abstract class AccountDetails with _$AccountDetails {
   const factory AccountDetails({
-    required int spendLimit,
+    required double spendLimit,
     required double balance,
-    required int creditLimit,
+    required double creditLimit,
   }) = _AccountDetails;
 
   factory AccountDetails.fromJson(Map<String, dynamic> json) =>
