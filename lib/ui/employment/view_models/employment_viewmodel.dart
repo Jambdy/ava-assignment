@@ -101,8 +101,6 @@ class EmploymentViewModel extends _$EmploymentViewModel {
     }
   }
 
-
-
   /// Get Employment Type dropdown values
   Map<EmploymentType, String> getEmploymentTypes() {
     return EmploymentType.values.asMap().map(

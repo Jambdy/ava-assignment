@@ -8,7 +8,8 @@ import '../state/home_state.dart';
 import 'credit_score_status.dart';
 
 class CreditHistoryCard extends StatelessWidget {
-  final int scoreChange;
+  final String scoreChange;
+  final Color scoreChangeColor;
   final String lastUpdated;
   final String nextUpdate;
   final String creditAgency;
@@ -17,6 +18,7 @@ class CreditHistoryCard extends StatelessWidget {
   const CreditHistoryCard({
     super.key,
     required this.scoreChange,
+    required this.scoreChangeColor,
     required this.lastUpdated,
     required this.nextUpdate,
     required this.creditAgency,
@@ -32,7 +34,8 @@ class CreditHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CreditScoreStatus(
-            scoreChange: scoreChange,
+            scoreChangeDisplay: scoreChange,
+            scoreChangeColor: scoreChangeColor,
             lastUpdated: lastUpdated,
             nextUpdate: nextUpdate,
             creditAgency: creditAgency,

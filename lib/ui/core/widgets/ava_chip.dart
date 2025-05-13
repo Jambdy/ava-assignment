@@ -6,14 +6,17 @@ class AvaChip extends StatelessWidget {
   /// Text to display in the chip.
   final String text;
 
-  const AvaChip({super.key, required this.text});
+  /// Background color of the chip.
+  final Color backgroundColor;
+
+  const AvaChip({super.key, required this.text, required this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 20,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(

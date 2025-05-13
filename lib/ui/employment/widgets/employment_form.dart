@@ -281,7 +281,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ...['Yes', 'No'].map(
-                                  (value) => SizedBox(
+                              (value) => SizedBox(
                                 width: 130,
                                 child: RadioListTile<String>(
                                   title: Text(

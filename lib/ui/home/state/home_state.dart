@@ -22,7 +22,8 @@ class CreditScoreDisplay {
   final String creditAgency;
   final String lastUpdated;
   final String nextUpdate;
-  final int scoreChange;
+  final String scoreChangeDisplay;
+  final Color scoreChangeColor;
 
   CreditScoreDisplay({
     required this.currentScore,
@@ -30,7 +31,8 @@ class CreditScoreDisplay {
     required this.creditAgency,
     required this.lastUpdated,
     required this.nextUpdate,
-    required this.scoreChange,
+    required this.scoreChangeDisplay,
+    required this.scoreChangeColor,
   });
 }
 

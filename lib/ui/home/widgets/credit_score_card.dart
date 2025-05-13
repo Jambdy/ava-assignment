@@ -7,22 +7,24 @@ import '../../core/widgets/ava.dart';
 import 'credit_score_status.dart';
 
 class CreditScoreCard extends ConsumerWidget {
+  final int currentScore;
+  final String creditScoreStatus;
+  final String scoreChangeDisplay;
+  final Color scoreChangeColor;
+  final String lastUpdated;
+  final String nextUpdate;
+  final String creditAgency;
+
   const CreditScoreCard({
     super.key,
     required this.currentScore,
     required this.creditScoreStatus,
-    required this.scoreChange,
+    required this.scoreChangeDisplay,
+    required this.scoreChangeColor,
     required this.lastUpdated,
     required this.nextUpdate,
     required this.creditAgency,
   });
-
-  final int currentScore;
-  final String creditScoreStatus;
-  final int scoreChange;
-  final String lastUpdated;
-  final String nextUpdate;
-  final String creditAgency;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +37,8 @@ class CreditScoreCard extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CreditScoreStatus(
-            scoreChange: scoreChange,
+            scoreChangeDisplay: scoreChangeDisplay,
+            scoreChangeColor: scoreChangeColor,
             lastUpdated: lastUpdated,
             nextUpdate: nextUpdate,
             creditAgency: creditAgency,

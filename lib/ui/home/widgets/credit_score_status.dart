@@ -5,18 +5,20 @@ import '../../core/themes/theme.dart';
 import '../../core/widgets/ava.dart';
 
 class CreditScoreStatus extends StatelessWidget {
+  final String scoreChangeDisplay;
+  final Color scoreChangeColor;
+  final String lastUpdated;
+  final String nextUpdate;
+  final String creditAgency;
+
   const CreditScoreStatus({
     super.key,
-    required this.scoreChange,
+    required this.scoreChangeDisplay,
+    required this.scoreChangeColor,
     required this.lastUpdated,
     required this.nextUpdate,
     required this.creditAgency,
   });
-
-  final int scoreChange;
-  final String lastUpdated;
-  final String nextUpdate;
-  final String creditAgency;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,10 @@ class CreditScoreStatus extends StatelessWidget {
               padding: EdgeInsets.only(right: 8),
               child: Text('Credit Score', style: AppTheme.bodyEmphasis),
             ),
-            AvaChip(text: '+${scoreChange}pts'),
+            AvaChip(
+              text: scoreChangeDisplay,
+              backgroundColor: scoreChangeColor,
+            ),
           ],
         ),
         const SizedBox(width: 4),

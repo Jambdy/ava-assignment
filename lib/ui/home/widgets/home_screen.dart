@@ -63,6 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             context.router.push(const EmploymentRoute());
           },
         ),
+
         /// TODO: Remove if app actually released
         /// Included to demonstrate the animations during refresh
         actions: [
@@ -101,7 +102,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       currentScore: data.creditScoreDisplay.currentScore,
                       creditScoreStatus:
                           data.creditScoreDisplay.creditScoreStatus,
-                      scoreChange: data.creditScoreDisplay.scoreChange,
+                      scoreChangeDisplay:
+                          data.creditScoreDisplay.scoreChangeDisplay,
+                      scoreChangeColor:
+                          data.creditScoreDisplay.scoreChangeColor,
                       lastUpdated: data.creditScoreDisplay.lastUpdated,
                       nextUpdate: data.creditScoreDisplay.nextUpdate,
                       creditAgency: data.creditScoreDisplay.creditAgency,
@@ -119,7 +123,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       children: [
                         const AvaTitle(title: 'Chart'),
                         CreditHistoryCard(
-                          scoreChange: data.creditScoreDisplay.scoreChange,
+                          scoreChange:
+                              data.creditScoreDisplay.scoreChangeDisplay,
+                          scoreChangeColor:
+                              data.creditScoreDisplay.scoreChangeColor,
                           lastUpdated: data.creditScoreDisplay.lastUpdated,
                           nextUpdate: data.creditScoreDisplay.nextUpdate,
                           creditAgency: data.creditScoreDisplay.creditAgency,

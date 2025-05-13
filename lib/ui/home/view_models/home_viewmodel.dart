@@ -67,7 +67,12 @@ class HomeViewModel extends _$HomeViewModel {
       creditAgency: creditScore.creditAgency,
       lastUpdated: FormatUtils.formatDateRelative(creditScore.lastUpdated),
       nextUpdate: FormatUtils.formatDateRelative(creditScore.nextUpdate),
-      scoreChange: creditScore.scoreChange,
+      scoreChangeDisplay:
+          '${creditScore.scoreChange >= 0 ? '+' : '-'}${creditScore.scoreChange.abs()}pts',
+      scoreChangeColor:
+          creditScore.scoreChange >= 0
+              ? AppColors.avaSecondary
+              : AppColors.lightRed,
     );
   }
 
