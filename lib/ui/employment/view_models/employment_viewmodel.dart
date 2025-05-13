@@ -11,7 +11,6 @@ part 'employment_viewmodel.g.dart';
 class EmploymentViewModel extends _$EmploymentViewModel {
   @override
   Future<EmploymentState?> build() async {
-    print('Building EmploymentViewModel');
     final employment =
         await ref.read(employmentRepositoryProvider).getEmploymentInfo();
     return employment != null ? _mapToEmploymentState(employment) : null;
