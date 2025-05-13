@@ -418,6 +418,7 @@ class _EmploymentInfoFormState extends State<EmploymentInfoForm> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
+                widget.eVM.persistEmploymentInfo();
                 context.router.push(HomeRoute(requestFeedback: true));
               },
               child: const Text('Confirm'),

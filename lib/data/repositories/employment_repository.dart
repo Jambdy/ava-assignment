@@ -32,9 +32,8 @@ class EmploymentRepository {
     return null;
   }
 
-  Future<Employment> updateEmploymentInfo(Employment employment) async {
+  Future<void> persistEmploymentInfo(Employment employment) async {
     await _apiClient.updateEmploymentInfo(employment);
     await _sharedPrefService.setValue(_key, jsonEncode(employment.toJson()));
-    return employment;
   }
 }
